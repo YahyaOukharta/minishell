@@ -13,7 +13,8 @@
         - Split into pipeline : split |
         - Get inputs and outputs in order : 
             { "< input_file" }  { "> output_file" } { ">> output_file" }
-        - Input and output file names include the redirection sign, so we can distinguish 
+        - Output file names include the redirection sign, so we can know if we should truncate or not
+        - input file names shouldn't include the redirection sign
     ## single command structure :
         
         typedef struct s_command
