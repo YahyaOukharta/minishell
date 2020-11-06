@@ -31,4 +31,4 @@
 
 ## References:
 
-- [Minishell structure](../blob/master/structure.md)
+- [Minishell structure](../master/structure.md)
