@@ -7,6 +7,10 @@
 ### Misc :
 - [ ] Split tasks
 - [ ] Header file 
+    - [x] Prototypes
+    - [x] Include gnl and ft_printf 
+    - [ ] Includes for syscalls
+- [x] Makefile 
 
 ### Parser :
 
@@ -16,6 +20,7 @@
 ### Executer : 
 
 - [ ] Environment
+- [ ] Signals
 - [ ] Builtins
 - [ ] `$PATH` utilities
 - [ ] `dup2()` Redirecting I/O

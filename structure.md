@@ -37,7 +37,6 @@
 
         }   t_pipeline;
 
-
     ## line structure ( Everything the user types before hitting Enter ) :
 
         t_pipeline *parsed_line;
@@ -46,7 +45,7 @@
 
 
 # Executer
- 
+
  * Execute pipeline :
     -   first command of the pipeline reads from stdin
     -   last command writes on stdout, unless it has an output specified, ex : ls | grep 'Desktop' > output_file
@@ -68,11 +67,19 @@
             for each output in outputs:
                 execute_cmd(cmd, input, output); ####
         ```
+
+        ```
+        for each output in outputs:
+            for each input in inputs:
+                execute_cmd(cmd, input, output); 
+          #### This is what we're gonna do, 
+          ### this is better because we will open the output files only once nd we will read from every input and append
+        ```
     -  do this for each pipeline in parsed_line
 
  * Execute command :
     - returns status, error code, stored in global g_status
-    - takes input and output fd 
+    - takes input and output fd
     - is the command a builtin ? 
         if so, execute in child process, to allow output redirection, (only for env, echo, pwd, builtins that produce an output, maybe this should be the case for every builtin, error messages should be redirectable, error msgs are normally logged on stderr ...)
     - is the command not a builtin ?
@@ -187,7 +194,7 @@
   ```
         void    redirect_in_out(int in, int out);
             // only redirect stdin if in != 0   
-            // only redirect stdiout if out != 1  
+            // only redirect stdout if out != 1  
   ```
 
 ## Fork, Execve: Spawning processes :
