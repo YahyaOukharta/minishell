@@ -2,6 +2,13 @@
 # define MINISHELL_H
 # include "ft_printf/ft_printf.h" 
 # include "gnl/get_next_line.h"
+# include <stdbool.h>
+
+# define STDOUT 1
+# define STDIN  0
+# define STDERR 2
+
+# define QUOTE(x)   (x == '\'' || x == '\"') ? 1 : 0
 
 typedef struct  s_command
 {
@@ -30,7 +37,11 @@ typedef struct      s_env
 
 t_env               *g_env;                 //Environment global variable
 
-void    init_environment(char **envp);      //Get all envs from extern char *environ[] // push them to linked list
+int     status;                             // main loop status
+
+int         ft_prompt(char *msg, char **line); // prompt user to input 
+char        *check_syntax(char *s);             // check input syntax
+void        init_environment(char **envp);      //Get all envs from extern char *environ[] // push them to linked list
 
 int     get_env_len();   // get number of env vars
 t_env   *new_env(char *key, char *value);   // used by set_env()

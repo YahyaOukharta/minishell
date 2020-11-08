@@ -1,6 +1,9 @@
 NAME = minishell
 
-SRCS = main.c
+SRCS = main.c\
+	   environnement.c\
+	   builtins.c\
+	   check_syntax.c
 
 GNL_SRCS = gnl/get_next_line.c gnl/get_next_line_utils.c
 
@@ -15,7 +18,8 @@ all: $(NAME)
 $(NAME):
 	make -C $(FT_PRINTF_PATH)
 	gcc $(FLAGS) $(SRCS) $(GNL_SRCS) $(GNL_BUFFER_SIZE) -L$(FT_PRINTF_PATH) -lftprintf  -o $(NAME)
-
+	# remove \^
+	stty -ctlecho
 clean:
 	make -C $(FT_PRINTF_PATH) clean
 	rm -rf *.o
