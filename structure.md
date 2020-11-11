@@ -27,21 +27,15 @@
 
     ## pipeline structure :
 
-        t_command ***cmd_list; //array of commands
-            or
-        t_command ***pipeline;  // pipeline[0] = first command of the pipeline
-            or
         typedef struct s_pipeline
         {
             t_command** cmds;
 
         }   t_pipeline;
 
-    ## line structure ( Everything the user types before hitting Enter ) :
+    ## line structure ( Everything the user types before hitting Enter) :
 
         t_pipeline **parsed_line;
-            or
-        t_command ***parsed_line;
 
 
 # Executer
@@ -271,7 +265,7 @@
   - Function:
 
     ```
-        int redirect_inputs(char **cmd_tokens, int pipe_in, int out, char **inputs);
+        int redirect_inputs(char **cmd_tokens, int pipe_in, int out, char **input_files);
     ``` 
 
   - So we will write a function that executes the command while
@@ -300,7 +294,7 @@
   - This function will take care of executing the command with the right output file descriptors.
   - It will call `redirect_inputs()` for each output file, plus `pipe_out`.
 
-  - it will first loop over the output files array (`cmd->outputs`):
+  - it will first loop over the output files array (`cmd->output_files`):
     - Remove the `> >>` redirection signs, and store those in variable because the way the files are opened depend on them
     - Open the file:
         - Allow file creation if doesnt exist
@@ -309,14 +303,14 @@
         - Truncate the file only if the stored redirection sign is `>`
         - Make sure the file is opened/created with the right permissions, (reproduce on bash and compare)
     - Execute `redirect_inputs()`, passing it the file descriptor we just opened as third argument, and store its return in `g_status`
-    - Its arguments would be: `(cmd->tokens, pipe_in, the_fd_we_just_opened, cmd->inputs)`
+    - Its arguments would be: `(cmd->tokens, pipe_in, the_fd_we_just_opened, cmd->input_files)`
     - Close the file
 
   - **NOTE** : 
    - Consider `ls | grep 'something' > out1 > out2`, in this case we will not output anything to `pipe_out`, which would be STDOUT, because it is the last command and it has output files.
    - Which means a command doesnt output to `pipe_out` if the command is the last in the pipeline and the are output files specified
 
-  - Then we have to write to `pipe_out`, to do that we execute `redirect_inputs()` again, but this time only if `!(pipe_out == 0 && tab_len(cmd->outputs) > 0)`; once again storing its return value in `g_status`.
+  - Then we have to write to `pipe_out`, to do that we execute `redirect_inputs()` again, but this time only if `!(pipe_out == 0 && tab_len(cmd->output_files) > 0)`; once again storing its return value in `g_status`.
   - Return `g_status`
 
 ## Pipeline, Oahu:
@@ -333,11 +327,6 @@
     ```
         int execute_pipeline(t_pipeline *pipeline); 
          // access command using pipeline->cmds[i]
-
-            //or 
-
-        int execute_pipeline(t_command *pipeline);
-         // access command using pipeline[i]
     ```
 
   - This function will iterate over the commands in the pipeline and execute them in order while passing them the right file descriptor depending on their position in the pipeline.
@@ -387,7 +376,7 @@
   - Loop while `g_status > -1`:
     - Print the prompt
     - Read line using `get_next_line`
-    - Parse line using parser to get `t_pipeline *parsed_line` or `t_command **parsed_line`, which would be an array of pipelines.
+    - Parse line using parser to get `t_pipeline **parsed_line`, which would be an array of pipelines.
     - Loop over pipelines, execute them using `execute_pipeline`.
   - Return (0)
 
