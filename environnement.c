@@ -4,7 +4,8 @@ t_env   *new_env(char *key, char *value)
 {
 	t_env *new;
 
-	new = (t_env *)malloc(sizeof(t_env));
+	if (!(new = (t_env *)malloc(sizeof(t_env))))
+		return(0);
 	new->key = key;
 	new->value = value;
 	new->next = NULL;
@@ -53,6 +54,8 @@ char        *ft_value(char *s)
 		/*
 			3gzt nzid Function it would be better if we had a 
 			struct for key, value inside our linked list 
+
+			Linked list nodes are already a struct
 		*/
 		if (!(value = ft_strdup(ft_strchr(s, '=') + 1)))
 			return (NULL);
@@ -73,9 +76,107 @@ void        init_environment(char **envp)
 		g_env = new;
 		i++;
 	}
-	// while (g_env != NULL)
-	// {
-	// 	ft_printf("%s | %s\n", g_env->key, g_env->value);
-	// 	g_env = g_env->next;
-	// }
+}
+
+void	set_env(char *key, char *value)
+{
+	t_env *tmp;
+
+	if (!key || !value)
+		return ;
+	if (!g_env)
+		return;
+	else
+	{
+		tmp = g_env;
+		while (tmp->next && !string_equal(tmp->key, key))
+			tmp = tmp->next;
+		if (!tmp->next && !string_equal(tmp->key, key))
+			tmp->next = new_env(key, value);
+		else
+		{
+			free(tmp->value);
+			tmp->value = ft_strdup(value);
+		}
+	}
+}
+
+void	unset_env(char *key)
+{
+	t_env *tmp;
+	t_env *trash;
+
+	tmp = g_env;
+	if (!g_env)
+		return;
+	if (string_equal(tmp->key, key))
+		g_env = tmp->next;
+	else
+	{
+		while (tmp->next)
+		{
+			if (string_equal(tmp->next->key, key))
+			{
+				trash = tmp->next;
+				tmp->next = trash->next;
+				free(trash);
+				return ;
+			}
+			tmp = tmp->next;
+		}
+	}
+}
+
+
+t_env	*env_with_key(char *key)
+{
+	t_env *tmp;
+
+	if (!g_env)
+		return (0);
+	tmp = g_env;
+	while (tmp)
+	{
+		if (string_equal(tmp->key, key))
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int		get_env_len()
+{
+	int i;
+	t_env *tmp;
+	
+	i = 0;
+	tmp = g_env;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+char	**get_env_tab()
+{
+	char **tab;
+	t_env	*tmp;
+	int		i;
+
+	if (!g_env)
+		return (0);
+	if (!(tab = (char **)malloc(sizeof(char *) * (get_env_len() + 1))))
+		return (0);
+	i = 0;
+	tmp = g_env;
+	while (tmp)
+	{
+		tab[i] = ft_strjoin_va(3, tmp->key, "=", tmp->value);
+		i++;
+		tmp = tmp->next;
+	}
+	tab[i] = 0;
+	return (tab);
 }

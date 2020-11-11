@@ -3,7 +3,9 @@ NAME = minishell
 SRCS = main.c\
 	   environnement.c\
 	   builtins.c\
-	   check_syntax.c
+	   check_syntax.c\
+	   utils.c\
+	   parser.c
 
 GNL_SRCS = gnl/get_next_line.c gnl/get_next_line_utils.c
 

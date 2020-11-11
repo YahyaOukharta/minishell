@@ -10,21 +10,41 @@
 
 # define QUOTE(x)   (x == '\'' || x == '\"') ? 1 : 0
 
+# define max(a , b) (a > b ? a : b)
+# define min(a , b) (a < b ? a : b)
+
+int     g_status;                             // main loop status
+
 typedef struct  s_command
 {
-    char        *tokens;
+    char        **tokens;
     char        **input_files;
     char        **output_files; 
 }               t_command;
 
 typedef struct  s_pipeline
 {
-    t_command*  cmds;
+    t_command**  cmds;
 }               t_pipeline;                 //parser returns (t_pipeline* parsed_line)
 
 // Here any utility function we need 
 
-int     tab_len(char **tab);                //get len of array of strings
+int         ft_prompt(char *msg, char **line); // prompt user to input 
+char        *check_syntax(char *s);             // check input syntax
+
+//miniparser utils
+void print_parsed_line(t_pipeline **parsed_line);
+
+char        *get_command(char *line);
+t_command *new_cmd(char *line);
+t_pipeline **mini_parser(char *line);
+int		tab_len(char **tab);
+int		exists_in_tab(char *s, char **tab);
+int		index_of_in_tab(char *s, char **tab);
+int		free_s_tab(char **tab);
+void	*free_and_return(void *ptr, void *ret);
+int 	string_equal(char *s1, char *s2);
+int     is_blank(char c);
 
 // Environment
 
@@ -37,13 +57,9 @@ typedef struct      s_env
 
 t_env               *g_env;                 //Environment global variable
 
-int     status;                             // main loop status
-
-int         ft_prompt(char *msg, char **line); // prompt user to input 
-char        *check_syntax(char *s);             // check input syntax
 void        init_environment(char **envp);      //Get all envs from extern char *environ[] // push them to linked list
 
-int     get_env_len();   // get number of env vars
+int     get_env_len();                      // get number of env vars
 t_env   *new_env(char *key, char *value);   // used by set_env()
 void    set_env(char *key, char *value);    //add new variable if doesnt exist // else updates value
 void    unset_env(char *key);               //removes variable if exists // else does nothing 

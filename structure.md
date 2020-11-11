@@ -19,7 +19,7 @@
         
         typedef struct s_command
         {
-            char *tokens;
+            char **tokens;
             char **input_files;
             char **output_files; 
 
@@ -27,21 +27,21 @@
 
     ## pipeline structure :
 
-        t_command *cmd_list; //array of commands
+        t_command ***cmd_list; //array of commands
             or
-        t_command *pipeline;  // pipeline[0] = first command of the pipeline
+        t_command ***pipeline;  // pipeline[0] = first command of the pipeline
             or
         typedef struct s_pipeline
         {
-            t_command* cmds;
+            t_command** cmds;
 
         }   t_pipeline;
 
     ## line structure ( Everything the user types before hitting Enter ) :
 
-        t_pipeline *parsed_line;
+        t_pipeline **parsed_line;
             or
-        t_command **parsed_line;
+        t_command ***parsed_line;
 
 
 # Executer

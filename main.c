@@ -1,18 +1,5 @@
 #include "minishell.h"
 
-void    signal_handler(int signal)
-{
-    if (signal == SIGINT)
-    {
-        // print prompt and set a var to print /r if needed
-    }
-    if (signal == SIGQUIT)
-    {
-        // get pid 
-        //kill pid
-    }
-}
-
 int         ft_prompt(char *msg, char **line)
 {
     ft_putstr_fd(msg, STDOUT);
@@ -55,25 +42,29 @@ void        ft_minishell(char **env)
     init_environment(env);
     init_builtins();
     // ctrl + c
-    signal(SIGINT, signal_handler);
+    //signal(SIGINT, signal_handler);
     // ctrl + d 
-    signal(SIGQUIT, signal_handler);
+    //signal(SIGQUIT, signal_handler);
     // main loop
-    status = 1;
-    while (status) // status is global var defined in header
+
+
+    g_status = 1;
+
+    t_pipeline **parsed_line;
+
+
+    while (g_status) // status is global var defined in header
     {
-        rt = ft_prompt(getcwd(cwd, 1024), &line);
+        rt = ft_prompt("$> ", &line);
         if (rt == 0 || rt == -1) // gnl return 0 when there is no \n (EOF)
-        {
             if (line == NULL)
                 exit(1);
-        }
-        status = ft_parser(line);
-        ft_putstr_fd(line, 1);
+
+        //g_status = ft_parser(line);
+        parsed_line = mini_parser(line);
+        print_parsed_line(parsed_line);
+        //ft_printf("cmd = %s\n", line);
     }
-    // char *line;
-    // get_next_line(0, &line);
-    // ft_printf("Success : %s !\n",line);
 }
 
 int     main(int ac, char **argv, char **env)
