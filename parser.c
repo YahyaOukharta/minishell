@@ -59,7 +59,7 @@ int get_file_name_len(char *str)
 	int i;
 
 	i = 0;
-	while (!is_blank(str[i]) && !ft_strchr("<>", str[i]))
+	while (str[i] && !is_blank(str[i]) && !ft_strchr("<>", str[i]))
 		i++;
 	return (i);
 }
@@ -102,11 +102,13 @@ char **get_output_files(char *line, int index)
 	int quotes;
 	char **tab;
 	int j;
+	int k;
 
 	quotes = 0;
 	tab = (char **)malloc(sizeof(char *) * (get_n_output_files(line, index) + 1));
 	i = index;
 	j = 0;
+
 	while (line[i])
 	{
 		if (line[i] == '\"')
@@ -114,9 +116,19 @@ char **get_output_files(char *line, int index)
 		if (line[i] == '>' && !quotes)
 		{
 			i++;
-			while (is_blank(line[i]))
+			if(line[i] == '>')
+			{
+				k = 2;
 				i++;
-			tab[j] = ft_substr(line, i, get_file_name_len(&line[i]));
+			}
+			else
+				k = 1;
+			while (is_blank(line[i]))
+			{
+				i++;
+				k++;
+			}
+			tab[j] = ft_substr(line, i - k, get_file_name_len(&line[i]) + k);
 			j++;
 			i += get_file_name_len(&line[i]) - 1;
 		}

@@ -21,7 +21,7 @@ $(NAME):
 	make -C $(FT_PRINTF_PATH)
 	gcc $(FLAGS) $(SRCS) $(GNL_SRCS) $(GNL_BUFFER_SIZE) -L$(FT_PRINTF_PATH) -lftprintf  -o $(NAME)
 	# remove \^
-	stty -ctlecho
+	#stty -ctlecho
 clean:
 	make -C $(FT_PRINTF_PATH) clean
 	rm -rf *.o
