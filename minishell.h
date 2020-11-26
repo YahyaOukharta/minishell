@@ -3,6 +3,11 @@
 # include "ft_printf/ft_printf.h" 
 # include "gnl/get_next_line.h"
 # include <stdbool.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <signal.h>
 
 # define STDOUT 1
 # define STDIN  0
@@ -25,6 +30,7 @@ typedef struct  s_command
 typedef struct  s_pipeline
 {
     t_command**  cmds;
+    int n_commands;
 }               t_pipeline;                 //parser returns (t_pipeline* parsed_line)
 
 // Here any utility function we need 
@@ -100,8 +106,8 @@ int     execute_command(int in, int out, char **argv);
 
 // Redirections
 
-int redirect_inputs(char **cmd_tokens, int pipe_in, int out, char **inputs);
-int  redirect_outputs(int pipe_in, int pipe_out, t_command *cmd); 
+int redirect_inputs(char **tokens, int out, int pipe_in, char **inputs);
+int  redirect_outputs(t_command *cmd, int pipe_in, int pipe_out); 
 
 // Pipeline
 

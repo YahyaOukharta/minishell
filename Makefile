@@ -5,7 +5,11 @@ SRCS = main.c\
 	   builtins.c\
 	   check_syntax.c\
 	   utils.c\
-	   parser.c
+	   parser.c\
+	   processes.c\
+	   path.c\
+	   redirections.c\
+	   pipelines.c\
 
 GNL_SRCS = gnl/get_next_line.c gnl/get_next_line_utils.c
 

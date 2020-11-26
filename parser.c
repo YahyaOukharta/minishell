@@ -143,10 +143,8 @@ t_command *new_cmd(char *line)
     t_command *cmd = (t_command *)malloc(sizeof(t_command));
 
     char *s = get_command(line);
-	printf("cmd without io <%s>\n",s);
     cmd->tokens = ft_split(s, ' ');
     cmd->input_files = get_input_files(line,ft_strlen(s));
-
     cmd->output_files = get_output_files(line,ft_strlen(s));
 
     return (cmd);
@@ -164,6 +162,7 @@ t_pipeline *new_pipeline(char **lines)
 		i++;
 	}
 	pipeline->cmds[i] = 0;
+	pipeline->n_commands = i;
 	return (pipeline);
 }
 
@@ -230,4 +229,5 @@ void print_parsed_line(t_pipeline **parsed_line)
 		}
 		i++;
 	}
+	ft_printf("\n");
 }

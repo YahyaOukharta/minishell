@@ -36,24 +36,25 @@ void        ft_minishell(char **env)
     char    *line;
     char    cwd[1024];
     int     rt;
+    int     i;
 
     rt = 0;
     line = NULL;
     init_environment(env);
     init_builtins();
     // ctrl + c
-    //signal(SIGINT, signal_handler);
+    // signal(SIGINT, signal_handler);
     // ctrl + d 
-    //signal(SIGQUIT, signal_handler);
+    // signal(SIGQUIT, signal_handler);
     // main loop
 
 
-    g_status = 1;
+    g_status = 0;
 
     t_pipeline **parsed_line;
 
 
-    while (g_status) // status is global var defined in header
+    while (g_status != -1) // status is global var defined in header
     {
         rt = ft_prompt("$> ", &line);
         if (rt == 0 || rt == -1) // gnl return 0 when there is no \n (EOF)
@@ -63,7 +64,17 @@ void        ft_minishell(char **env)
         //g_status = ft_parser(line);
         parsed_line = mini_parser(line);
         print_parsed_line(parsed_line);
-        //ft_printf("cmd = %s\n", line);
+
+        //execute_command(0, 1, parsed_line[0]->cmds[0]->tokens);
+        //redirect_inputs(parsed_line[0]->cmds[0]->tokens, 1,0,parsed_line[0]->cmds[0]->input_files);
+        //redirect_outputs(parsed_line[0]->cmds[0],0,1);
+        //execute_pipeline(parsed_line[0]);
+        i = 0;
+        while (parsed_line[i])
+        {
+            g_status = execute_pipeline(parsed_line[i]);
+            i++;
+        }
     }
 }
 

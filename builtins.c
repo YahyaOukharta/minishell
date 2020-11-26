@@ -17,7 +17,7 @@ void    init_builtins()
     g_builtins_str[i] = NULL;
 
     g_builtins[0] = &builtin_echo;
-	//g_builtins[1] = &builtin_cd;
+	g_builtins[1] = &builtin_cd;
 	g_builtins[2] = &builtin_pwd;
 	g_builtins[3] = &builtin_export;
 	g_builtins[4] = &builtin_unset;
@@ -31,7 +31,7 @@ int     builtin_echo(int in, int out, char **argv)
 	int i;
 	
 	endl = 1;
-	//redirect_in_out(in, out);
+	redirect_in_out(in, out);
 	if (tab_len(argv) == 1)
 		write(1, "\n", 1);
 	else
@@ -64,7 +64,7 @@ int     builtin_pwd(int in, int out, char **argv)
 		printf("pwd: too many arguments\n");
 		return(1);
 	}
-	//redirect_in_out(in, out);
+	redirect_in_out(in, out);
 	ft_bzero(buf, 1024);
 	getcwd(buf, 1024);
 	write(1, buf, ft_strlen(buf));
@@ -101,7 +101,7 @@ int     builtin_env(int in, int out, char **argv)
 		printf("env: too many arguments\n");
 		return (1);
 	}
-	//redirect_in_out(in, out);
+	redirect_in_out(in, out);
 	env = g_env;
 	while (env)
 	{
@@ -142,7 +142,7 @@ int     builtin_unset(int in, int out, char **argv)
 
 	if (tab_len(argv) > 1)
 	{
-		//redirect_in_out(in, out);
+		redirect_in_out(in, out);
 		i = 1;
 		while (argv[i])
 		{
@@ -159,5 +159,5 @@ int     builtin_unset(int in, int out, char **argv)
 int     builtin_exit(int in, int out, char **argv)
 {
 	(void)argv;
-	exit(-1);
+	exit(0);
 }

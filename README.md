@@ -14,15 +14,15 @@
 
 ### Parser :
 
-- [ ] Mini-Parser for unit-testing
+- [x] Mini-Parser for unit-testing
 - [ ] Parser
 
 ### Executer : 
 
-- [ ] Environment
+- [x] Environment
 - [ ] Signals
-- [ ] Builtins
-- [ ] `$PATH` utilities
+- [x] Builtins
+- [x] `$PATH` utilities
 - [ ] `dup2()` Redirecting I/O
 - [ ] Spawning processes
     - [ ] Builtin processes

@@ -30,6 +30,7 @@
         typedef struct s_pipeline
         {
             t_command** cmds;
+            int n_commands;
 
         }   t_pipeline;
 
@@ -346,7 +347,7 @@
     - `in` is already set to the reading end of the pipe, where we will read what the N-1 command has written
     - execute the command, once again using `redirect_outputs()`, passing it the same arguments
     - **Always store `redirect_outputs()`'s return in `g_status` (this should be a habit by now)**
-    
+
 ## The main function (finally):
 
 ### Global variables:
@@ -379,7 +380,3 @@
     - Parse line using parser to get `t_pipeline **parsed_line`, which would be an array of pipelines.
     - Loop over pipelines, execute them using `execute_pipeline`.
   - Return (0)
-
-
-
-
