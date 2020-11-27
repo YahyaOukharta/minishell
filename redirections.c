@@ -56,6 +56,10 @@ int  redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 		i++;
 	}
 	if (!(pipe_out == 1  && tab_len(cmd->output_files))) // ls | grep 'filename' > out , doesnt print anything
+	{
 		g_status = redirect_inputs(cmd->tokens, pipe_out, pipe_in, cmd->input_files);
+		//printf("\t input = <%s>\n", (pipe_out == 1 ? "stdout" : "pipe out"));
+	}
+
 	return (g_status);
 }

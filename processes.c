@@ -5,7 +5,7 @@ void    redirect_in_out(int in, int out)
     if (in != 0)
     {
         dup2(in, 0);
-        close(in);
+        //close(in);
     }
     if (out != 1)
     {
