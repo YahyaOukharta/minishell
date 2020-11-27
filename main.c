@@ -62,7 +62,6 @@ void        ft_minishell(char **env)
     signal_d = 1;
     while (g_status != -1) // status is global var defined in header
     {
-        signal_c = 0;
         rt = ft_prompt("$> ", &line);
         if (rt == 0) // gnl return 0 when there is no \n (EOF)
         {

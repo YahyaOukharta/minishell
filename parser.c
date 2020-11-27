@@ -229,5 +229,6 @@ void print_parsed_line(t_pipeline **parsed_line)
 		}
 		i++;
 	}
-	ft_printf("\n");
+	// Wh y??? 7m9atni had printf
+	//ft_printf("\n");
 }
