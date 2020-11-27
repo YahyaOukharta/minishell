@@ -5,11 +5,11 @@
 ## TO-DO list :
 
 ### Misc :
-- [ ] Split tasks
-- [ ] Header file 
+- [x] Split tasks
+- [x] Header file 
     - [x] Prototypes
     - [x] Include gnl and ft_printf 
-    - [ ] Includes for syscalls
+    - [x] Includes for syscalls
 - [x] Makefile 
 
 ### Parser :
@@ -23,15 +23,15 @@
 - [ ] Signals
 - [x] Builtins
 - [x] `$PATH` utilities
-- [ ] `dup2()` Redirecting I/O
-- [ ] Spawning processes
-    - [ ] Builtin processes
-    - [ ] Executable files processes
-    - [ ] `Execute_command()`
-- [ ] Redirections
-    - [ ] `redirect_inputs()`
-    - [ ] `redirect_outputs()`
-- [ ] Pipelines
+- [x] `dup2()` Redirecting I/O
+- [x] Spawning processes
+    - [x] Builtin processes
+    - [x] Executable files processes
+    - [x] `Execute_command()`
+- [x] Redirections
+    - [x] `redirect_inputs()`
+    - [x] `redirect_outputs()`
+- [x] Pipelines
 - [ ] Main loop
 
 ## References:
