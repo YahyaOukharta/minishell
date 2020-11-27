@@ -282,7 +282,7 @@
      - We close the file
   - After the loop is over, return `g_status`
   
-  - **memo** : Maybe inputs dont need to be stored as `"< fname"` 
+  - **memo** : Maybe inputs dont need to be stored as `"< fname"`
 
 ### redirect_outputs()
 
@@ -311,7 +311,7 @@
    - Consider `ls | grep 'something' > out1 > out2`, in this case we will not output anything to `pipe_out`, which would be STDOUT, because it is the last command and it has output files.
    - Which means a command doesnt output to `pipe_out` if the command is the last in the pipeline and the are output files specified
 
-  - Then we have to write to `pipe_out`, to do that we execute `redirect_inputs()` again, but this time only if `!(pipe_out == 0 && tab_len(cmd->output_files) > 0)`; once again storing its return value in `g_status`.
+  - Then we have to write to `pipe_out`, to do that we execute `redirect_inputs()` again, but this time only if `!(pipe_out == 1 && tab_len(cmd->output_files) > 0)`; once again storing its return value in `g_status`.
   - Return `g_status`
 
 ## Pipeline, Oahu:
