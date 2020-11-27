@@ -2,8 +2,13 @@
 
 int         ft_prompt(char *msg, char **line)
 {
-    ft_putstr_fd(msg, STDOUT);
-    ft_putchar_fd(' ', STDOUT);
+    if (signal_c == 1)
+        ft_putchar_fd('\r', STDOUT);
+    if (signal_d == 1)
+    {
+        ft_putstr_fd(msg, STDOUT);
+        ft_putchar_fd(' ', STDOUT);
+    }
     return (get_next_line(STDIN, line));
 }
 
@@ -43,9 +48,9 @@ void        ft_minishell(char **env)
     init_environment(env);
     init_builtins();
     // ctrl + c
-    // signal(SIGINT, signal_handler);
+    signal(SIGINT, signal_handler);
     // ctrl + d 
-    // signal(SIGQUIT, signal_handler);
+    signal(SIGQUIT, signal_handler);
     // main loop
 
 
@@ -53,14 +58,21 @@ void        ft_minishell(char **env)
 
     t_pipeline **parsed_line;
 
-
+    signal_c = 0;
+    signal_d = 1;
     while (g_status != -1) // status is global var defined in header
     {
+        signal_c = 0;
         rt = ft_prompt("$> ", &line);
-        if (rt == 0 || rt == -1) // gnl return 0 when there is no \n (EOF)
-            if (line == NULL)
+        if (rt == 0) // gnl return 0 when there is no \n (EOF)
+        {
+            if (ft_strlen(line) == 0)
                 exit(1);
-
+            else
+                signal_d = 0;
+            continue ;
+        }
+        signal_d = 1;
         //g_status = ft_parser(line);
         parsed_line = mini_parser(line);
         print_parsed_line(parsed_line);

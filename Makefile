@@ -10,6 +10,7 @@ SRCS = main.c\
 	   path.c\
 	   redirections.c\
 	   pipelines.c\
+	   signals.c
 
 GNL_SRCS = gnl/get_next_line.c gnl/get_next_line_utils.c
 

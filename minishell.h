@@ -19,6 +19,9 @@
 # define min(a , b) (a < b ? a : b)
 
 int     g_status;                             // main loop status
+int     signal_c;                            // ctrl -c
+int     signal_d;                           // ctrl-D
+pid_t   g_child;                             // get pid to kill procces on Sigquit
 
 typedef struct  s_command
 {
@@ -112,5 +115,9 @@ int  redirect_outputs(t_command *cmd, int pipe_in, int pipe_out);
 // Pipeline
 
 int execute_pipeline(t_pipeline *pipeline); 
+
+// Signals
+
+void    signal_handler(int signal);
 
 #endif
