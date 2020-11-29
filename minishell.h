@@ -38,9 +38,9 @@ typedef struct  s_pipeline
 
 // Here any utility function we need 
 
-int         ft_prompt(char *msg, char **line); // prompt user to input 
+int         ft_prompt(char *msg, char **line);   // prompt user to input 
 char        *check_syntax(char *s);             // check input syntax
-
+char         *check_line(char *line);          // Fix imput ;=
 //miniparser utils
 void print_parsed_line(t_pipeline **parsed_line);
 
