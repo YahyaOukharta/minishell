@@ -42,6 +42,9 @@ int                 ft_prompt(char *msg, char **line);   // prompt user to input
 char                *check_syntax(char *s);             // check input syntax
 char                *check_line(char *line);           // Fix imput ;=
 
+
+char                *env_to_str(char *line);        // Get $var value
+
 //miniparser utils
 
 void        print_parsed_line(t_pipeline **parsed_line);

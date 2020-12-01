@@ -6,7 +6,6 @@ int         ft_prompt(char *msg, char **line)
         ft_putchar_fd('\r', STDOUT);
     if (signal_d == 1)
     {
-        ft_printf("sig_c %d | sig_d %d\n", signal_c, signal_d);
         ft_putstr_fd(msg, STDOUT);
         ft_putchar_fd(' ', STDOUT);
     }
@@ -32,25 +31,23 @@ void        ft_minishell(char **env)
 
 
     g_status = 0;
-
+    signal_c = 0;
+    signal_d = 1;
     t_pipeline **parsed_line;
-
     // Cntrl D problem when cmd is not found 
     while (g_status != -1) // status is global var defined in header
     {
         g_child = MAX_INT;
         line = NULL;
-        signal_c = 0;
-        signal_d = 1;
         getcwd(cwd, 1000);
         rt = ft_prompt(cwd, &line);
         if (rt == 0) // gnl return 0 when there is no \n (EOF)
         {
-            ft_printf("Got line <%s> | lenght : %d\n", line, ft_strlen(line));
-            if (ft_strlen(line) != 0)
+            if (ft_strlen(line) > 0)
             {
                 free(line);
                 line = NULL;
+                signal_d = 0;
                 continue ;
             }
             else

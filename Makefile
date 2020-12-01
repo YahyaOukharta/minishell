@@ -11,7 +11,8 @@ SRCS = main.c\
 	   redirections.c\
 	   pipelines.c\
 	   signals.c\
-	   check_line.c
+	   check_line.c\
+	   parser_env.c
 
 GNL_SRCS = gnl/get_next_line.c gnl/get_next_line_utils.c
 

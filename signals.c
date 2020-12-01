@@ -8,9 +8,7 @@ void    signal_handler(int signal)
     if (signal == SIGINT)
     {
         // print prompt and set a var to print /r if needed
-        ft_putchar_fd('\n', STDOUT);
-        ft_putstr_fd(s, STDOUT);
-        ft_putchar_fd(' ', STDOUT);
+        ft_printf("\n%s ", s);
         signal_c = 1;
     }
     if (signal == SIGQUIT)
