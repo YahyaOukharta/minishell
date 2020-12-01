@@ -91,6 +91,7 @@ char         *env_to_str(char *line)
     int     len;
     char    *s;
     t_env   *env;
+    int holder = 0;
 
     i = 0;
     len = 0;
@@ -100,13 +101,16 @@ char         *env_to_str(char *line)
         if (line[i] == '$')
         {
             i++;
-            ft_printf("Looking For%s\n", line + i);
+            holder = i;
+            // inside " or ' to check later 
             env = get_env(line + i, &(i));
-            if (env != NULL)
+            if (env != NULL && ft_isalpha(line[holder]) != 0)
                 len += ft_strlen(env->value);
-            else
+            else if (env == NULL && ft_isalpha(line[holder]) != 0)
                 while (ft_isalpha(line[i]) != 0)
                     i++;
+            else
+                len += 1;
         }
         else
         {
@@ -118,19 +122,27 @@ char         *env_to_str(char *line)
         return (NULL);
     i = 0;
     int j = 0;
+    holder = 0;
     while (line[i] != '\0' && j < len)
     {
         if (line[i] == '$')
         {
             i++;
+            holder = i;
             env = get_env(line + i, &(i));
-            if (env == NULL)
+            if (env == NULL && ft_isalpha(line[holder]) != 0)
                 while (ft_isalpha(line[i]) != 0)
                     i++;
-            else
+            else if (env != NULL && ft_isalpha(line[holder]) != 0)
             {
+                //inside single or Double Quotes ?? hmm
                 ft_strlcpy(s + j, env->value, ft_strlen(env->value) + 1);
                 j += ft_strlen(env->value);
+            }
+            else
+            {
+                ft_strlcpy(s + j, "$", 2);
+                j += 1;
             }
         }
         else
@@ -157,7 +169,6 @@ char         *check_line(char *line)
         rt = env_to_str(line);
     else
         rt = line;
-    
     // append " "
     /*if (ft_strchr(line, '\"') || ft_strchr(line, '\''))
     {
@@ -166,4 +177,5 @@ char         *check_line(char *line)
     // get $ var 
     return (rt);
 }
+
 
