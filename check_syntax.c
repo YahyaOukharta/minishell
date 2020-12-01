@@ -23,7 +23,7 @@ int			check_quotes(char	*s)
 	start = 0;
 	end = ft_strlen(s);
 	quote = '0';
-	while (start < end)
+	while (start < end / 2)
 	{
 		if (s[start] == '\'' || s[start] == '\"')
 		{

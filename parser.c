@@ -174,7 +174,7 @@ t_pipeline **mini_parser(char *line)
 	line = ft_strtrim(line," \t");
     pipelines = ft_split(line,';');
 
-	t_pipeline **parsed_line = (t_pipeline **)malloc(sizeof(t_pipeline*) * (tab_len(pipelines)+1));
+	t_pipeline **parsed_line = (t_pipeline **)malloc(sizeof(t_pipeline*) * (tab_len(pipelines) + 1));
 
 	int i = 0;
 	while(pipelines[i])
@@ -196,10 +196,10 @@ void print_parsed_line(t_pipeline **parsed_line)
 	while (parsed_line[i])
 	{
 		j = 0;
-		ft_printf("Pipeline %d : \n" ,i+1 );
+		ft_printf("***Pipeline %d ***\n" ,i+1 );
 		while (parsed_line[i]->cmds[j])
 		{
-			ft_printf("\tCommand %d :\n", j+1);
+			ft_printf("\t**** Command %d ****\n", j+1);
 
 			k=0;
 			ft_printf("\t  Tokens : ");
@@ -229,6 +229,5 @@ void print_parsed_line(t_pipeline **parsed_line)
 		}
 		i++;
 	}
-	// Wh y??? 7m9atni had printf
 	//ft_printf("\n");
 }

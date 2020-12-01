@@ -6,34 +6,11 @@ int         ft_prompt(char *msg, char **line)
         ft_putchar_fd('\r', STDOUT);
     if (signal_d == 1)
     {
+        ft_printf("sig_c %d | sig_d %d\n", signal_c, signal_d);
         ft_putstr_fd(msg, STDOUT);
         ft_putchar_fd(' ', STDOUT);
     }
     return (get_next_line(STDIN, line));
-}
-
-// to do list xD 3yiit
-
-int         ft_get_info(char *cmd)
-{
-    return (1);
-}
-
-int         ft_parser(char *line)
-{
-    char    *cmd;
-
-    // quotes
-    // pipes
-    // redirection
-    if (!(cmd = check_syntax(line))) // still need to free 
-    {
-        ft_putstr_fd("THIS SHELL ISN'T FOR YOU STUPID LINE\n", STDOUT);
-        // keep the loop for the moment 
-        return (2);
-    }
-    // getting all info needed before exec 
-    return (ft_get_info(cmd));
 }
 
 void        ft_minishell(char **env)
@@ -49,7 +26,7 @@ void        ft_minishell(char **env)
     init_builtins();
     // ctrl + c
     signal(SIGINT, signal_handler);
-    // ctrl + d 
+    // ctrl + '\'
     signal(SIGQUIT, signal_handler);
     // main loop
 
@@ -58,26 +35,26 @@ void        ft_minishell(char **env)
 
     t_pipeline **parsed_line;
 
-    signal_c = 0;
-    signal_d = 1;
     // Cntrl D problem when cmd is not found 
     while (g_status != -1) // status is global var defined in header
     {
         g_child = MAX_INT;
         line = NULL;
-        rt = ft_prompt("$> ", &line);
+        signal_c = 0;
+        signal_d = 1;
+        getcwd(cwd, 1000);
+        rt = ft_prompt(cwd, &line);
         if (rt == 0) // gnl return 0 when there is no \n (EOF)
         {
             ft_printf("Got line <%s> | lenght : %d\n", line, ft_strlen(line));
             if (ft_strlen(line) != 0)
             {
-                signal_d = 0;
                 free(line);
                 line = NULL;
                 continue ;
             }
             else
-                exit(-1);
+                exit(1);
         }
 
         signal_d = 1;
