@@ -125,10 +125,8 @@ char         *env_to_str(char *line)
             i++;
             env = get_env(line + i, &(i));
             if (env == NULL)
-            {
-                ft_strlcpy(s + j, "", 0);
-                i++;
-            }
+                while (ft_isalpha(line[i]) != 0)
+                    i++;
             else
             {
                 ft_strlcpy(s + j, env->value, ft_strlen(env->value) + 1);
