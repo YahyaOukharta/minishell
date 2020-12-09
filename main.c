@@ -2,13 +2,15 @@
 
 int         ft_prompt(char *msg, char **line)
 {
-    if (signal_c == 1)
+    // struggle of ctrl D  and ctrl 
+    if (signal_c == 1 || signal_d == 1)
         ft_putchar_fd('\r', STDOUT);
     if (signal_d == 1)
     {
         ft_putstr_fd(msg, STDOUT);
-        ft_putchar_fd(' ', STDOUT);
+        ft_putstr_fd(" $ ", STDOUT);
     }
+    ft_printf("\033[0m");
     return (get_next_line(STDIN, line));
 }
 
@@ -40,10 +42,11 @@ void        ft_minishell(char **env)
         g_child = MAX_INT;
         line = NULL;
         getcwd(cwd, 1000);
+        ft_printf("\033[0;32m");
         rt = ft_prompt(cwd, &line);
         if (rt == 0) // gnl return 0 when there is no \n (EOF)
         {
-            if (ft_strlen(line) > 0)
+            if (ft_strlen(line))
             {
                 free(line);
                 line = NULL;
@@ -61,13 +64,11 @@ void        ft_minishell(char **env)
             free(line);
             continue ;
         }
+        parser(checked_line);
+        //parsed_line = parser(checked_line);
         parsed_line = mini_parser(checked_line);
         print_parsed_line(parsed_line);
 
-        //execute_command(0, 1, parsed_line[0]->cmds[0]->tokens);
-        //redirect_inputs(parsed_line[0]->cmds[0]->tokens, 1,0,parsed_line[0]->cmds[0]->input_files);
-        //redirect_outputs(parsed_line[0]->cmds[0],0,1);
-        //execute_pipeline(parsed_line[0]);
         i = 0;
         while (parsed_line[i])
         {

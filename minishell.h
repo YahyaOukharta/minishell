@@ -45,6 +45,19 @@ char                *check_line(char *line);           // Fix imput ;=
 
 char                *env_to_str(char *line);        // Get $var value
 
+// Parser
+char        *inside_quotes(char *s, int *start, char quote);
+char        *outside_quotes(char *s, int *start);
+t_pipeline  **parser(char *line);
+
+typedef struct          parser
+{
+    int                 inside;
+    int                 outside;
+	char				*args;
+}                       t_parser;
+
+
 //miniparser utils
 
 void        print_parsed_line(t_pipeline **parsed_line);

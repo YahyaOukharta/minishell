@@ -1,18 +1,18 @@
 #include "minishell.h"
 
 
-int			have_end(char *s, char quote, int start)
+int			have_end(char *s, char quote, int *start)
 {
-	while (start < ft_strlen(s))
+	while (*start < ft_strlen(s))
 	{
-		if (s[start] == quote)
+		if (s[*start] == quote)
 			return (1);
-		start++;
+		*start += 1;
 	}
 	return (0);
 }
 
-int			check_quotes(char	*s)
+int			check_quotes(char	*s, int *pos)
 {
 	int 	i;
 	int 	start;
@@ -23,12 +23,13 @@ int			check_quotes(char	*s)
 	start = 0;
 	end = ft_strlen(s);
 	quote = '0';
-	while (start < end / 2)
+	while (start < end)
 	{
 		if (s[start] == '\'' || s[start] == '\"')
 		{
+			*pos = start;
 			quote = s[start++];
-			if (have_end(s, quote, start) == 0)
+			if (have_end(s, quote, &start) == 0)
 				return (0);
 		}
 		start++;
@@ -66,6 +67,8 @@ int			check_arg(char *s)
 	i = 0;
 	if (s)
 	{
+		while (s[i] == ' ' && s[i] != '\0')
+			i++;
 		while (s[i] != '\0')
 		{
 			if (ft_isalpha(s[i]) || ft_isdigit(s[i]))
@@ -82,20 +85,20 @@ int			check_redir(char *s)
 {
 	if (ft_strchr(s, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
 	{
-		//ft_printf("Checking %s\n", ft_strchr(s, '>') + 1);
+		ft_printf("Checking0 %s\n", ft_strchr(s, '>') + 1);
 		if (check_arg(ft_strchr(s, '>') + 1))
 			return (0);
 	}
 	if (ft_strchr(s, '<') && !ft_strnstr(s, "<<", ft_strlen(s)))
 	{
-		//ft_printf("Checking %s\n", check_arg(ft_strchr(s, '<')));
+		ft_printf("Checking1 %s\n", ft_strchr(s, '<'));
 		if (check_arg(ft_strchr(s, '<') + 1))
 			return (0);
 	}
 	if (ft_strnstr(s, ">>", ft_strlen(s)) != NULL)
 	{
-		//ft_printf("Checking %s\n", ft_strnstr(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
-		if (check_arg(ft_strnstr(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s))))
+		ft_printf("Checking2 %s\n", ft_strnstr(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
+		if (check_arg(ft_strnstr(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) + 2))
 			return (0);
 	}
 	// need to recheck n (number of redir in cmd)
@@ -105,14 +108,16 @@ int			check_redir(char *s)
 char        *check_syntax(char *s)
 {
 	char	*line;
+	int 	pos;
 
+	pos = 0;
 	line = NULL;
 	// This part is only to check Syntax Errors No Appending Yet ? 
 	if (ft_strchr(s, '\"') || ft_strchr(s, '\''))
 	{
-		if (check_quotes(s) == 0)
+		if (check_quotes(s, &pos) == 0)
 		{
-			ft_printf("Syntax Error Near %s\n", ft_strchr(s, '\'') == NULL ? ft_strchr(s, '\"') : ft_strchr(s, '\''));
+			ft_printf("Syntax Error Near %s\n", s + pos);
 			return (NULL);
 		}
 	}
@@ -133,7 +138,7 @@ char        *check_syntax(char *s)
 			return (NULL);
 		}
 	}
-	/*// check $
+	/*// check $ (hmm doesn't seem to  prone error)
 	if (ft_strchr(s, '$'))
 	{
 

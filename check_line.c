@@ -29,21 +29,47 @@ char        *outside_quotes(char *s, int *start)
 {
     int     i;
     char    *m;
-
+    char    *rt;
+    char    *tmp;
+    char    p[2];
+    tmp = NULL;
     i = 0;
     m = NULL;
+    rt = NULL;
     while (s[i] != '\0')
     {
-        if (QUOTE((s[i])))
+        if (s[i] == ' ' && i != 0)
         {
             *start += i;
             break ;
         }
-        i++;
+        if (QUOTE(s[i]))
+        {
+            tmp = ft_strdup(rt);
+            if (rt != NULL)
+                free(rt);
+            rt = ft_strjoin(tmp, inside_quotes(s + i, &i, s[i]));
+            if (tmp)
+                free(tmp);
+        }
+        else
+        {
+            p[0] = s[i];
+            p[1] = '\0';
+            if (rt == NULL)
+                rt = ft_strdup("");
+            tmp = ft_strjoin(rt, p);
+            if (rt != NULL)
+                free(rt);
+            rt = ft_strdup(tmp);
+            if (tmp)
+                free(tmp);
+            i++;
+        }
     }
-    if (!(m = ft_substr(s, 0, i)))
-        return (NULL);
-    return (m);
+    if (s[i] == '\0')
+        *start += i - 1;
+    return (rt);
 }
 
 char        *quotes_to_hell(char *line)
