@@ -41,14 +41,15 @@ typedef struct  s_pipeline
 int                 ft_prompt(char *msg, char **line);   // prompt user to input 
 char                *check_syntax(char *s);             // check input syntax
 char                *check_line(char *line);           // Fix imput ;=
-
-
+int			        have_end(char *s, char quote, int *start);
+char	            **parser_split(char *line, char c);
 char                *env_to_str(char *line);        // Get $var value
 
 // Parser
 char        *inside_quotes(char *s, int *start, char quote);
 char        *outside_quotes(char *s, int *start);
 t_pipeline  **parser(char *line);
+char		**fml_parser(char *line);
 
 typedef struct          parser
 {
@@ -64,7 +65,6 @@ void        print_parsed_line(t_pipeline **parsed_line);
 
 char        *get_command(char *line);
 t_command   *new_cmd(char *line);
-t_pipeline  **mini_parser(char *line);
 int         tab_len(char **tab);
 int         exists_in_tab(char *s, char **tab);
 int         index_of_in_tab(char *s, char **tab);

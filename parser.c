@@ -142,8 +142,9 @@ t_command *new_cmd(char *line)
 {
     t_command *cmd = (t_command *)malloc(sizeof(t_command));
 
+	ft_printf("|%s|\n", line);
     char *s = get_command(line);
-    cmd->tokens = ft_split(s, ' ');
+    cmd->tokens = fml_parser(line);
     cmd->input_files = get_input_files(line,ft_strlen(s));
     cmd->output_files = get_output_files(line,ft_strlen(s));
 
@@ -166,20 +167,20 @@ t_pipeline *new_pipeline(char **lines)
 	return (pipeline);
 }
 
-t_pipeline **mini_parser(char *line)
+t_pipeline **parser(char *line)
 {
     char **pipelines;
     char **cmds;
 
 	line = ft_strtrim(line," \t");
-    pipelines = ft_split(line,';');
+    pipelines = parser_split(line,';');
 
 	t_pipeline **parsed_line = (t_pipeline **)malloc(sizeof(t_pipeline*) * (tab_len(pipelines) + 1));
 
 	int i = 0;
-	while(pipelines[i])
+	while(pipelines[i] != NULL)
 	{
-		parsed_line[i] = new_pipeline(ft_split(pipelines[i], '|'));
+		parsed_line[i] = new_pipeline(parser_split(pipelines[i], '|'));
 		i++;
 	}	
 	parsed_line[i] = 0;

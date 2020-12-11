@@ -1,123 +1,170 @@
 #include "minishell.h"
 
-int		fml_parser(char *line, t_parser *parsed)
+char		**fml_parser(char *line)
 {
 	int     i;
     char    quote;
     int     k;
+	char	**s;
+
 
     k = 0;
     i = 0;
     quote = 0;
+	s = NULL;
     while (line[i] != '\0')
     {
-        parsed->inside = 0;
-        parsed->outside = 0;
         if (QUOTE(line[i]))
         {
             i++;
-            parsed[k].args = inside_quotes(line + i, &i, line[i - 1]);
-            parsed->inside = 1;
+            inside_quotes(line + i, &i, line[i - 1]);
             k++;
         }
         else
         {
-            parsed[k].args =  outside_quotes(line + i, &i);
-            parsed->outside = 1;
+            outside_quotes(line + i, &i);
             k++;
             i++;
         }
     }
-	return (k);
-}
-
-t_command *get_n_pipes(char *line)
-{
-return NULL;
-}
-
-t_pipeline	*get_n_commands(t_parser *parsed, int start, int end)
-{
-	t_pipeline *pipeline = (t_pipeline *)malloc(sizeof(t_pipeline));
-	int i = start;
-	int n_pipes = 0;
-	while (i < end)
-	{
-		if (ft_strchr(parsed[i].args, '|') && parsed[i].outside == 1)
-			n_pipes += 1;
-		i++;
-	}
-	pipeline->cmds = (t_command **)malloc(sizeof(t_command *) * (n_pipes + 1));
+	if (!(s = (char **)malloc(sizeof(char *) * (k + 1))))
+		return (NULL);
 	i = 0;
-	while (i < n_pipes)
-	{
-		//pipeline->cmds[i] = get_n_pipes();
-		i++;
-	}
+	k = 0;
+	while (line[i] != '\0')
+    {
+        if (QUOTE(line[i]))
+        {
+            i++;
+            s[k] = inside_quotes(line + i, &i, line[i - 1]);
+            k++;
+        }
+        else
+        {
+            s[k] = outside_quotes(line + i, &i);
+            k++;
+            i++;
+        }
+    }
+	s[k] = NULL;
+	return (s);
 }
 
-int		has_char(char *s, char c)
+int		have_endd(char *s, char c, int *pos)
 {
 	int i;
 
 	i = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == c)
+		if (s[i++] == c)
+		{
+			*pos += i - 1;
 			return (1);
-		i++;
+		}
 	}
 	return (0);
 }
 
-t_pipeline  **parser(char *line)
+int		cparser(char *s, char q)
 {
-    t_parser    parsed[50];
-    int c = fml_parser(line, parsed);
-    int i = 0;
-	int n_cmds = 0;
-	int n_pipes = 0;
-	int	n_redir = 0;
-    while (i < c)
-    {
-        parsed[i].inside == 1 ? ft_printf("inside |%s|\n", parsed[i].args) : ft_printf("outside |%s|\n", parsed[i].args);
-		ft_printf("Looking in : %s| GOT %d\n", ft_strchr(parsed[i].args, ';'), has_char(parsed[i].args, ';'));
-	    if (has_char(parsed[i].args, ';') == 1 && parsed[i].outside == 1)
-			n_cmds += 1;
-		// if (ft_strchr(parsed[i].args, '|') && parsed[i].outside == 1)
-		// 	n_pipes += 1;clear
-		
-		/*
-			Redirs To check after unit test
-			if (ft_strchr(parsed[i].args, ';') && parsed[i].outside == 1)
-				n_cmds += 1;
-		*/
-		i++;
-    }
-	ft_printf("Number of commands : %d | Number Of Pipes : %d\n", n_cmds, n_pipes);
-    t_pipeline **cmd;
+	int i;
+	int in;
+	int c;
 
-	cmd = (t_pipeline **)malloc(sizeof(t_pipeline *) * (n_cmds + 1));
 	i = 0;
-	int start = 0;
-
-	// while (i < c)
-	// {
-	// 	if (ft_strchr(parsed[i].args, ';') && parsed[i].outside == 1)
-	// 	{
-	// 		cmd[i] = get_n_commands(parsed, start, i);
-	// 		start = i;
-	// 	}
-	// 	i++;
-	// }
-	// Looking For ; && | then  Parse accordingly
-	// ; Create A new Pipeline
-	/*
-		get_n_pipelines();
-	*/
-	// | Create A new Command 
-	/*
-		get_n_command();
-	*/
-    return (cmd);
+	in = 0;
+	c = 0;
+	while (s[i] != '\0')
+	{
+		if (QUOTE(s[i]))
+		{
+			if (have_end(s + i + 1, s[i], &i))
+				in = 1;
+			else
+				in = 0;
+		}
+		if (in == 0 && s[i] == q)
+			c++;
+		i++;
+	}
+	return (c);
 }
+
+char	*append(char *s, char c)
+{
+	char	*str;
+	int		i;
+	int		len;
+
+	i = 0;
+	len = ft_strlen(s);
+	if (!(str = malloc(sizeof(char ) * (len + 2))))
+		return (NULL);
+	while (i < len)
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = c;
+	str[i + 1] = '\0';
+	return (str);
+}
+
+char	*get_arg(char *line, char c, int *pos)
+{
+	int 	i;
+	int 	end;
+	int 	in;
+	char	*s;
+	char 	*tmp;
+
+	i = 0;
+	end = 0;
+	in = 0;
+	s = NULL;
+	tmp = NULL;
+	while (line[i] != '\0')
+	{
+		if (QUOTE(line[i]))
+		{
+			end = i + 1;
+			if (have_end(line + i + 1, line[i], &end))
+				in = 1;
+		}
+		if (i == end + 1)
+			in = 0;
+		if (line[i] == c && in == 0)
+		{
+			*pos += i;
+			break ;
+		}
+		s = append(s, line[i]);
+		i++;
+	}
+	return (s);
+}
+
+char	**parser_split(char *line, char c)
+{
+	int	 	i;
+	int		nb_c;
+	char 	**split;
+	int		j;
+
+	i = 0;
+	j = 0;
+	nb_c = cparser(line, c) + 1;
+	if (!(split = (char **)malloc(sizeof(char *) * (nb_c + 1))))
+		return (NULL);
+	i = 0;
+	while (i < nb_c)
+	{
+		split[i] = get_arg(line + j, c, &j);
+		j++;
+		i++;
+	}
+	split[i] = NULL;
+	return (split);
+}
+ 

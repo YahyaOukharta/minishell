@@ -56,17 +56,13 @@ void        ft_minishell(char **env)
             else
                 exit(1);
         }
-
         signal_d = 1;
-        //g_status = ft_parser(line);
         if (!(checked_line = check_line(line)))
         {
             free(line);
             continue ;
         }
-        parser(checked_line);
-        //parsed_line = parser(checked_line);
-        parsed_line = mini_parser(checked_line);
+        parsed_line = parser(checked_line);
         print_parsed_line(parsed_line);
 
         i = 0;

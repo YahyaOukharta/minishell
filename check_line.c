@@ -52,7 +52,7 @@ char        *outside_quotes(char *s, int *start)
             if (tmp)
                 free(tmp);
         }
-        else
+        else 
         {
             p[0] = s[i];
             p[1] = '\0';
@@ -143,7 +143,7 @@ char         *check_line(char *line)
             free(tmp);
     }
     // append " "
-    if (ft_strchr(line, '\"') || ft_strchr(line, '\''))
+    /*if (ft_strchr(line, '\"') || ft_strchr(line, '\''))
     {
         tmp = ft_strdup(rt);
         if (rt)
@@ -151,7 +151,7 @@ char         *check_line(char *line)
         rt = quotes_to_hell(tmp);
         if (tmp)
             free(tmp);
-    }
+    }*/
     // get $ var 
     ft_printf("line to exec %s\n", rt);
     return (rt);
