@@ -206,7 +206,7 @@ void print_parsed_line(t_pipeline **parsed_line)
 			ft_printf("\t  Tokens : ");
 			while (parsed_line[i]->cmds[j]->tokens[k])
 			{	
-				ft_printf("%s ",parsed_line[i]->cmds[j]->tokens[k]);
+				ft_printf("|%s| ",parsed_line[i]->cmds[j]->tokens[k]);
 				k++;
 			}
 			ft_printf("\n");

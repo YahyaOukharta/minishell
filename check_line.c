@@ -32,6 +32,7 @@ char        *outside_quotes(char *s, int *start)
     char    *rt;
     char    *tmp;
     char    p[2];
+
     tmp = NULL;
     i = 0;
     m = NULL;
@@ -48,7 +49,7 @@ char        *outside_quotes(char *s, int *start)
             tmp = ft_strdup(rt);
             if (rt != NULL)
                 free(rt);
-            rt = ft_strjoin(tmp, inside_quotes(s + i, &i, s[i]));
+            rt = ft_strjoin(tmp, inside_quotes(s + i + 1, &i, s[i]));
             if (tmp)
                 free(tmp);
         }
@@ -64,8 +65,8 @@ char        *outside_quotes(char *s, int *start)
             rt = ft_strdup(tmp);
             if (tmp)
                 free(tmp);
-            i++;
         }
+        i++;
     }
     if (s[i] == '\0')
         *start += i - 1;
@@ -142,18 +143,7 @@ char         *check_line(char *line)
         if (tmp)
             free(tmp);
     }
-    // append " "
-    /*if (ft_strchr(line, '\"') || ft_strchr(line, '\''))
-    {
-        tmp = ft_strdup(rt);
-        if (rt)
-            free(rt);
-        rt = quotes_to_hell(tmp);
-        if (tmp)
-            free(tmp);
-    }*/
     // get $ var 
-    ft_printf("line to exec %s\n", rt);
     return (rt);
 }
 

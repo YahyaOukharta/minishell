@@ -1,5 +1,18 @@
 #include "minishell.h"
 
+
+int			quotes_attached(char *s)
+{
+	int i;
+
+	i = 0;
+	while (ft_isalpha(s[i]) && s[i] != '\0')
+		i++;
+	if (QUOTE(s[i]))
+		return (1);
+	return (0);
+}
+
 char		**fml_parser(char *line)
 {
 	int     i;
@@ -41,29 +54,16 @@ char		**fml_parser(char *line)
         }
         else
         {
-            s[k] = outside_quotes(line + i, &i);
+			if (quotes_attached(line + i))
+				s[k] = outside_quotes(line + i, &i);
+			else
+				s[k] = ft_strtrim(outside_quotes(line + i, &i), " ");
             k++;
             i++;
         }
     }
 	s[k] = NULL;
 	return (s);
-}
-
-int		have_endd(char *s, char c, int *pos)
-{
-	int i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i++] == c)
-		{
-			*pos += i - 1;
-			return (1);
-		}
-	}
-	return (0);
 }
 
 int		cparser(char *s, char q)
