@@ -138,16 +138,41 @@ char **get_output_files(char *line, int index)
 	return (tab);
 }
 
+char	**remove_extras(char **s)
+{
+	int i;
+	char **str;
+	int len;
+
+	i = 0;
+	len = tab_len(s);
+	if (!(str = (char **)malloc(sizeof(char *) * (tab_len(s) + 1))))
+		return (NULL);
+	while (i < len)
+	{
+		str[i] = ft_strtrim(s[i], " \"");
+		if (s[i])
+			free(s[i]);
+		i++;
+	}
+	if (s)
+		free(s);
+	str[i] = NULL;
+	return	(str);
+}
+
 t_command *new_cmd(char *line)
 {
     t_command *cmd = (t_command *)malloc(sizeof(t_command));
+	t_redir		redir;
 
 	ft_printf("|%s|\n", line);
     char *s = get_command(line);
-    cmd->tokens = fml_parser(line);
-    cmd->input_files = get_input_files(line,ft_strlen(s));
-    cmd->output_files = get_output_files(line,ft_strlen(s));
-
+	redir = get_tokens(line);
+    cmd->tokens = remove_extras(redir.tokens);
+	//cmd->tokens = redir.tokens;
+    cmd->input_files = redir.ins;
+    cmd->output_files = redir.outs;
     return (cmd);
 }
 
@@ -194,41 +219,56 @@ void print_parsed_line(t_pipeline **parsed_line)
 	int k;
 
 	i = 0;
-	while (parsed_line[i])
+	if (parsed_line)
 	{
-		j = 0;
-		ft_printf("***Pipeline %d ***\n" ,i+1 );
-		while (parsed_line[i]->cmds[j])
+		while (parsed_line[i])
 		{
-			ft_printf("\t**** Command %d ****\n", j+1);
+			j = 0;
+			ft_printf("***Pipeline %d ***\n" ,i+1 );
+			if (parsed_line[i]->cmds)
+			{
+				while (parsed_line[i]->cmds[j])
+				{
+					ft_printf("\t**** Command %d ****\n", j+1);
 
-			k=0;
-			ft_printf("\t  Tokens : ");
-			while (parsed_line[i]->cmds[j]->tokens[k])
-			{	
-				ft_printf("|%s| ",parsed_line[i]->cmds[j]->tokens[k]);
-				k++;
+					k=0;
+					ft_printf("\t  Tokens : ");
+					if (parsed_line[i]->cmds[j]->tokens)
+					{
+						while (parsed_line[i]->cmds[j]->tokens[k])
+						{	
+							ft_printf("|%s| ",parsed_line[i]->cmds[j]->tokens[k]);
+							k++;
+						}
+					}
+					ft_printf("\n");
+					k=0;
+					ft_printf("\t  Inputs : ");
+					if (parsed_line[i]->cmds[j]->input_files)
+					{
+						while (parsed_line[i]->cmds[j]->input_files[k])
+						{	
+							ft_printf("%s ",parsed_line[i]->cmds[j]->input_files[k]);
+							k++;
+						}
+					}
+					ft_printf("\n");
+					k=0;
+					ft_printf("\t  Outputs : ");
+					if (parsed_line[i]->cmds[j]->output_files)
+					{
+						while (parsed_line[i]->cmds[j]->output_files[k])
+						{	
+							ft_printf("%s ",parsed_line[i]->cmds[j]->output_files[k]);
+							k++;
+						}
+					}
+					ft_printf("\n");
+					j++;
+				}
 			}
-			ft_printf("\n");
-			k=0;
-			ft_printf("\t  Inputs : ");
-			while (parsed_line[i]->cmds[j]->input_files[k])
-			{	
-				ft_printf("%s ",parsed_line[i]->cmds[j]->input_files[k]);
-				k++;
-			}
-			ft_printf("\n");
-			k=0;
-			ft_printf("\t  Outputs : ");
-			while (parsed_line[i]->cmds[j]->output_files[k])
-			{	
-				ft_printf("%s ",parsed_line[i]->cmds[j]->output_files[k]);
-				k++;
-			}
-			ft_printf("\n");
-			j++;
+			i++;
 		}
-		i++;
 	}
 	//ft_printf("\n");
 }

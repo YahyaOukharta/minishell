@@ -3,10 +3,12 @@
 
 int			have_end(char *s, char quote, int *start)
 {
-	while (*start < ft_strlen(s))
+	while (*start < (int )ft_strlen(s))
 	{
 		if (s[*start] == quote)
+		{
 			return (1);
+		}
 		*start += 1;
 	}
 	return (0);
@@ -138,12 +140,5 @@ char        *check_syntax(char *s)
 			return (NULL);
 		}
 	}
-	/*// check $ (hmm doesn't seem to  prone error)
-	if (ft_strchr(s, '$'))
-	{
-
-	}
-	// check redir
-	*/
 	return (s);
 }

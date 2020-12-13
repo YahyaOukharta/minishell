@@ -46,17 +46,23 @@ char	            **parser_split(char *line, char c);
 char                *env_to_str(char *line);        // Get $var value
 
 // Parser
+
+typedef struct  s_redir
+{
+    char        **ins;
+    char        **outs;
+    char        **tokens;
+}               t_redir;
+
 char        *inside_quotes(char *s, int *start, char quote);
 char        *outside_quotes(char *s, int *start);
 t_pipeline  **parser(char *line);
 char		**fml_parser(char *line);
+int			check_arg(char *s);
+char	    *get_arg(char *line, char c, int *pos);
+t_redir     get_tokens(char *s);
+char	    *append(char *s, char c);
 
-typedef struct          parser
-{
-    int                 inside;
-    int                 outside;
-	char				*args;
-}                       t_parser;
 
 
 //miniparser utils

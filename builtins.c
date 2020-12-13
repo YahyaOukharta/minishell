@@ -28,7 +28,6 @@ void    init_builtins()
 int     builtin_echo(int in, int out, char **argv)
 {
 	int endl;
-	int i;
 	
 	endl = 1;
 	redirect_in_out(in, out);

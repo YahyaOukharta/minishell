@@ -13,7 +13,8 @@ SRCS = main.c\
 	   signals.c\
 	   check_line.c\
 	   parser_env.c\
-	   demo_parser.c
+	   demo_parser.c\
+	   parser_redir.c
 
 GNL_SRCS = gnl/get_next_line.c gnl/get_next_line_utils.c
 

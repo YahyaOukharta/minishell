@@ -1,5 +1,14 @@
 #include "minishell.h"
 
+/*
+    The primary problem is that if the signal interrupts malloc()
+    or some similar function, the internal state may be temporarily
+    inconsistent while it is moving blocks of memory
+    between the free and used list, or other similar operations.
+    If the code in the signal handler calls a function that then invokes malloc(),
+    this may completely wreck the memory management.
+*/
+
 void    signal_handler(int signal)
 {
     char    s[1024];
@@ -8,20 +17,15 @@ void    signal_handler(int signal)
     if (signal == SIGINT)
     {
         // print prompt and set a var to print /r if needed
-        ft_printf("\033[0;32m");
-        ft_printf("\n%s", s);
-        ft_putstr_fd(" $ ", STDOUT);
-        ft_printf("\033[0m");
+        write(STDOUT, "\033[0;32m\n", ft_strlen("\033[0;32m\n"));
+        write(STDOUT, s, ft_strlen(s));
+        write(STDOUT, " $ ", ft_strlen(" $ "));
+        write(STDOUT, "\033[0m", ft_strlen("\033[0m"));
         signal_c = 1;
     }
     if (signal == SIGQUIT)
     {
-        // doesn't seem to work
-        //g_child = getpid();
-        if (kill(g_child, 0) == 0)
-        {
-            ft_printf("%d\n", g_child);
-            kill(g_child, SIGQUIT);
-        }
+        /*if (kill(g_child, 0) == 0)
+            kill(g_child, SIGQUIT);*/
     }
 }
