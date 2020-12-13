@@ -1,163 +1,30 @@
 #include "minishell.h"
 
-char 	*get_command(char *line)
-{
-	int i;
-	int quotes;
-
-	quotes = 0;
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '\"')
-			quotes = (quotes + 1) % 2;
-		if ((line[i] == '<' || line[i] == '>') && !quotes)
-			break;
-		i++;
-	}
-	return (ft_substr(line, 0, i));
-}
-
-int get_n_input_files(char *line, int index)
-{
-	int count;
-	int quotes;
-
-	quotes = 0;
-	count = 0;
-	while (line[index])
-	{
-		if (line[index] == '\"')
-			quotes = (quotes + 1) % 2;
-		if (line[index] == '<' && !quotes)
-			count++;
-		index++;
-	}
-	return (count);
-}
-
-int get_n_output_files(char *line, int index)
-{
-	int count;
-	int quotes;
-
-	quotes = 0;
-	count = 0;
-	while (line[index])
-	{
-		if (line[index] == '\"')
-			quotes = (quotes + 1) % 2;
-		if (line[index] == '>'&& (!index || line[index - 1] != '>') && !quotes)
-			count++;
-		index++;
-	}
-	return (count);
-}
-
-int get_file_name_len(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i] && !is_blank(str[i]) && !ft_strchr("<>", str[i]))
-		i++;
-	return (i);
-}
-
-char **get_input_files(char *line, int index)
-{
-	int i;
-	int count;
-	int quotes;
-	char **tab;
-	int j;
-
-	quotes = 0;
-	tab = (char **)malloc(sizeof(char *) * (get_n_input_files(line, index) + 1));
-	i = index;
-	j = 0;
-	while (line[i])
-	{
-		if (line[i] == '\"')
-			quotes = (quotes + 1) % 2;
-		if (line[i] == '<' && !quotes)
-		{
-			i++;
-			while (is_blank(line[i]))
-				i++;
-			tab[j] = ft_substr(line, i, get_file_name_len(&line[i]));
-			j++;
-			i += get_file_name_len(&line[i]) - 1;
-		}
-		i++;
-	}
-	tab[j] = 0;
-	return (tab);
-}
-
-char **get_output_files(char *line, int index)
-{
-	int i;
-	int count;
-	int quotes;
-	char **tab;
-	int j;
-	int k;
-
-	quotes = 0;
-	tab = (char **)malloc(sizeof(char *) * (get_n_output_files(line, index) + 1));
-	i = index;
-	j = 0;
-
-	while (line[i])
-	{
-		if (line[i] == '\"')
-			quotes = (quotes + 1) % 2;
-		if (line[i] == '>' && !quotes)
-		{
-			i++;
-			if(line[i] == '>')
-			{
-				k = 2;
-				i++;
-			}
-			else
-				k = 1;
-			while (is_blank(line[i]))
-			{
-				i++;
-				k++;
-			}
-			tab[j] = ft_substr(line, i - k, get_file_name_len(&line[i]) + k);
-			j++;
-			i += get_file_name_len(&line[i]) - 1;
-		}
-		i++;
-	}
-	tab[j] = 0;
-	return (tab);
-}
-
 char	**remove_extras(char **s)
 {
 	int i;
 	char **str;
 	int len;
+	int	j;
 
 	i = 0;
 	len = tab_len(s);
+	j = 0;
 	if (!(str = (char **)malloc(sizeof(char *) * (tab_len(s) + 1))))
 		return (NULL);
 	while (i < len)
 	{
-		str[i] = ft_strtrim(s[i], " \"");
+		if (ft_strlen(s[i]) == 0)
+			i++;
+		str[j] = ft_strtrim(s[i], " \"");
 		if (s[i])
 			free(s[i]);
 		i++;
+		j++;
 	}
 	if (s)
 		free(s);
-	str[i] = NULL;
+	str[j] = NULL;
 	return	(str);
 }
 
@@ -167,7 +34,7 @@ t_command *new_cmd(char *line)
 	t_redir		redir;
 
 	ft_printf("|%s|\n", line);
-    char *s = get_command(line);
+    // char *s = get_command(line);
 	redir = get_tokens(line);
     cmd->tokens = remove_extras(redir.tokens);
 	//cmd->tokens = redir.tokens;
@@ -248,7 +115,8 @@ void print_parsed_line(t_pipeline **parsed_line)
 					{
 						while (parsed_line[i]->cmds[j]->input_files[k])
 						{	
-							ft_printf("%s ",parsed_line[i]->cmds[j]->input_files[k]);
+							if ((parsed_line[i]->cmds[j]->input_files[k]) != NULL)
+								ft_printf("%s ",parsed_line[i]->cmds[j]->input_files[k]);
 							k++;
 						}
 					}

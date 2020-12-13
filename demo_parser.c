@@ -105,8 +105,8 @@ char	*append(char *s, char c)
 		str[i] = s[i];
 		i++;
 	}
-	// if (s)
-	// 	free(s);
+	if (s)
+		free(s);
 	str[i] = c;
 	str[i + 1] = '\0';
 	return (str);
@@ -130,7 +130,7 @@ char	*get_arg(char *line, char c, int *pos)
 		if (in == 0 && QUOTE(line[i]))
 		{
 			end = i + 1;
-			if (have_end(line + i + 1, line[i], &end))
+			if (inside_quotes(line + i + 1, &end, line[i]))
 				in = 1;
 		}
 		if (i == end)

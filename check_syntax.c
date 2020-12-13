@@ -7,6 +7,7 @@ int			have_end(char *s, char quote, int *start)
 	{
 		if (s[*start] == quote)
 		{
+			*start += 1;
 			return (1);
 		}
 		*start += 1;

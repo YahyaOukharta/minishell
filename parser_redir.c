@@ -45,7 +45,7 @@ char            *get_rarg(char *line, int *pos)
 			if (have_end(line + i + 1, line[i], &end))
 				in = 1;
 		}
-		if (i == end + 1)
+		if (i == end)
 			in = 0;
 		if (ft_isalpha(line[i]) && in == 0)
 		{
@@ -72,8 +72,8 @@ t_redir          get_tokens(char *s)
     int         end;
     int         in;
     t_redir     redir;
-
-    i = 0;
+ 
+    i = 0; 
     end = 0;
     in = 0;
     redir.ins = NULL;
@@ -84,7 +84,7 @@ t_redir          get_tokens(char *s)
         if (QUOTE(s[i]) && in == 0)
         {
 			end = i + 1;
-			if (have_end(s + i + 1, s[i], &end))
+			if (inside_quotes(s + i + 1, &end, s[i]))
 				in = 1;
         }
         if (i == end + 1)
@@ -101,12 +101,12 @@ t_redir          get_tokens(char *s)
         }
         else
         {
-            // if (in == 1)
-            // {
-            //     ft_printf("|%c|\n", s[end + 1]);
-            //     redir.tokens = realloc__(redir.tokens, get_arg(s + i, s[end + 1], &i));
-            // }
-            // else
+            if (QUOTE(s[i]))
+            {
+                i++;
+                redir.tokens = realloc__(redir.tokens, inside_quotes(s + i, &i, s[i - 1]));
+            }
+            else
                 redir.tokens = realloc__(redir.tokens, get_arg(s + i, ' ', &i));
         }
         i++;

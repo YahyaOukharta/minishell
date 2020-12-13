@@ -7,7 +7,7 @@ int		tab_len(char **tab)
 	i = 0;
 	if (tab)
 	{
-		while (tab[i])
+		while (tab[i] != NULL)
 			i++;
 	}
 	return (i);

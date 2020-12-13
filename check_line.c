@@ -14,7 +14,7 @@ char        *inside_quotes(char *s, int *start, char quote)
     {
         if (s[i] == quote)
         {
-            end = i++;
+            end = i;
             *start += i;
             break ;
         }
