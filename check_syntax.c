@@ -119,44 +119,86 @@ int		 ft_strsearch(char *s, char n)
 	end = 0;
 	if (s)
 	{
-	while (s[i] != '\0')
-	{
-		if (QUOTE(s[i]) && in == 0)
-	    {
-			end = i + 1;
-			if (inside_quotes(s + i + 1, &end, s[i]))
-				in = 1;
+		while (s[i] != '\0')
+		{
+			if (QUOTE(s[i]) && in == 0)
+			{
+				end = i + 1;
+				if (inside_quotes(s + i + 1, &end, s[i]))
+					in = 1;
+			}
+			if (i == end)
+				in = 0;
+			if (s[i] == n && in == 0)
+				return (1);
+			i++;
 		}
-		if (i == end)
-			in = 0;
-		if (s[i] == n && in == 0)
-			return (1);
-		i++;
 	}
+	return (0);
+}
+
+int			has_redir(char *s, int *pos)
+{
+	if (s)
+	{
+		int 	i;
+		int		in;
+		int		end;
+
+		i = 0;
+		in = 0;
+		end = 0;
+		while (s[i] != '\0')
+		{
+			if (QUOTE(s[i]) && in == 0)
+			{
+				end = i + 1;
+				if (inside_quotes(s + i + 1, &end, s[i]))
+					in = 1;
+			}
+			if (i == end)
+				in = 0;
+			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
+			{
+				*pos += i;
+				return (1);
+			}
+			i++;
+		}
 	}
+	else
+		return (1);
 	return (0);
 }
 
 int			check_redir(char *s)
 {
+	int i;
+
+	i = 0;
 	/*** Error Handling Sucks ***\     -/-*-]*/
-	if (ft_strsearch(s, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
+	while (has_redir(s + i, &i) == 1 && s[i] != '\0')
 	{
-		ft_printf("Checking0 %s\n", ft_strchr(s, '>') + 1);
-		if (check_arg(s))
-			return (0);
-	}
-	if (ft_strsearch(s, '<') && !ft_strnstr(s, "<<", ft_strlen(s)))
-	{
-		ft_printf("Checking1 %s\n", ft_strchr(s, '<'));
-		if (check_arg(s))
-			return (0);
-	}
-	if (ft_strnstr(s, ">>", ft_strlen(s)) != NULL)
-	{
-		ft_printf("Checking2 %s\n", ft_strnstr(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
-		if (check_arg(s))
-			return (0);
+		if (ft_strsearch(s + i, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
+		{
+			ft_printf("Checking0 %s\n", ft_strchr(s + i, '>') + 1);
+			if (check_arg(s + i))
+				return (0);
+		}
+		if (ft_strsearch(s + i, '<') && !ft_strnstr(s + i, "<<", ft_strlen(s)))
+		{
+			ft_printf("Checking1 %s\n", ft_strchr(s + i, '<'));
+			if (check_arg(s + i))
+				return (0);
+		}
+		if (ft_strnstr(s + i, ">>", ft_strlen(s + i)) != NULL)
+		{
+			ft_printf("Checking2 %s\n", ft_strnstr(s + i, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
+			if (check_arg(s + i))
+				return (0);
+		}
+		if (s[i] != '\0')
+			i++;
 	}
 	// need to recheck n (number of redir in cmd)
 	

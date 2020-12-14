@@ -3,7 +3,10 @@
 int         ft_prompt(char *msg, char **line)
 {
     if (signal_c == 1)
+    {
         ft_putchar_fd('\r', STDOUT);
+        signal_c = 0;
+    }
     if (signal_d == 1)
     {
         ft_putstr_fd(msg, STDOUT);

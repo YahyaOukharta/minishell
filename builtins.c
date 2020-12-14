@@ -131,6 +131,16 @@ int     builtin_export(int in, int out, char **argv)
 			i++;
 		}
 	}
+	else if (tab_len(argv) == 1)
+	{
+		i = 0;
+		t_env *t = g_env;
+		while (t != NULL)
+		{
+			ft_printf("declare -x %s=%s\n", t->key, t->value);
+			t = t->next;
+		}
+	}
 	return (0);
 }
 
