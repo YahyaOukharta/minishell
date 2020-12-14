@@ -5,8 +5,9 @@ char *jump_redirection_sign(char *out)
 	char	*s;
 
 	s = NULL;
-    while (*out == '>' || is_blank(*out))
+    while (*out == '>' || *out == '<' || is_blank(*out))
         out++;
+	// hquotes
 	s = ft_strtrim(out, "\'\"");
     return (s);
 }
@@ -41,7 +42,8 @@ int truncate_file(char *out)
     int i = 0;
     while (out[i] == '>')
         i++;
-    return (i == 2 ? 0 : O_TRUNC); 
+	ft_printf("%d\n",i);
+    return (i == 2 ? O_APPEND : O_TRUNC); 
 }
 
 int  redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
@@ -54,7 +56,7 @@ int  redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	while (i < tab_len(cmd->output_files))
 	{
         tmp = cmd->output_files[i];
-		fd = open(jump_redirection_sign(tmp), truncate_file(tmp) | O_CREAT | O_WRONLY | O_APPEND, 0644); // O_TRUNC only if >
+		fd = open(jump_redirection_sign(tmp), truncate_file(tmp) | O_CREAT | O_WRONLY , 0644); // O_TRUNC only if >
 		g_status = redirect_inputs(cmd->tokens, fd, pipe_in, cmd->input_files);
 		close(fd);
 		i++;

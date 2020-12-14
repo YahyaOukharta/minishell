@@ -59,7 +59,7 @@ char            *get_rarg(char *line, int *pos)
 			break ;
 		}
         tmp = ft_strdup(s);
-        if (s)
+        if (s) 
             free(s);
 		s = append(tmp, line[i]);
         //if (tmp)
