@@ -16,7 +16,7 @@ char	**remove_extras(char **s)
 	{
 		if (ft_strlen(s[i]) == 0)
 			i++;
-		str[j] = ft_strtrim(s[i], " \"");
+		str[j] = ft_strtrim(s[i], "\'\"");
 		if (s[i])
 			free(s[i]);
 		i++;

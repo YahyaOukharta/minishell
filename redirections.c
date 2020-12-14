@@ -1,5 +1,16 @@
 #include "minishell.h"
 
+char *jump_redirection_sign(char *out)
+{
+	char	*s;
+
+	s = NULL;
+    while (*out == '>' || is_blank(*out))
+        out++;
+	s = ft_strtrim(out, "\'\"");
+    return (s);
+}
+
 int redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 {
     int i;
@@ -12,7 +23,7 @@ int redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 	i = 0;
 	while (i < tab_len(input_files))
 	{
-		fd = open(input_files[i], O_RDONLY);
+		fd = open(jump_redirection_sign(input_files[i]), O_RDONLY);
 		if (fd < 0)
         {
             ft_printf("minishell: no such file or directory: %s\n", input_files[i]);
@@ -23,13 +34,6 @@ int redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 		i++;
 	}
     return (g_status);
-}
-
-char *jump_redirection_sign(char *out)
-{
-    while (*out == '>' || is_blank(*out))
-        out++;
-    return (out);
 }
 
 int truncate_file(char *out)

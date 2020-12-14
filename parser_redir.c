@@ -39,10 +39,10 @@ char            *get_rarg(char *line, int *pos)
     end = 0;
     while (line[i] != '\0')
     {
-        if (QUOTE(line[i]))
+        if (QUOTE(line[i]) && in == 0)
 	    {
 			end = i + 1;
-			if (have_end(line + i + 1, line[i], &end))
+			if (inside_quotes(line + i + 1, &end, line[i]))
 				in = 1;
 		}
 		if (i == end)
@@ -87,6 +87,8 @@ t_redir          get_tokens(char *s)
 			if (inside_quotes(s + i + 1, &end, s[i]))
 				in = 1;
         }
+        while (s[i] == ' ' && in == 0)
+            i++;
         if (i == end + 1)
             in = 0; 
         if (in == 0 && ((s[i] == '>' && s[i + 1] == '>') ||

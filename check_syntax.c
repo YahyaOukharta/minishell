@@ -74,7 +74,7 @@ int			check_arg(char *s)
 			i++;
 		while (s[i] != '\0')
 		{
-			if (ft_isalpha(s[i]) || ft_isdigit(s[i]))
+			if ((ft_isalpha(s[i]) || ft_isdigit(s[i])))
 				return (0);
 			if (s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0)
 				return (1);
@@ -86,6 +86,7 @@ int			check_arg(char *s)
 
 int			check_redir(char *s)
 {
+	/*** Error Handling Sucks ***\     -/-*-]*/
 	if (ft_strchr(s, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
 	{
 		ft_printf("Checking0 %s\n", ft_strchr(s, '>') + 1);
