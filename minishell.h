@@ -62,7 +62,7 @@ int			check_arg(char *s);
 char	    *get_arg(char *line, char c, int *pos);
 t_redir     get_tokens(char *s);
 char	    *append(char *s, char c);
-
+int			quotes_attached(char *s);
 
 
 //miniparser utils

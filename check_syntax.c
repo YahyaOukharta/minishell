@@ -97,7 +97,7 @@ int			check_arg(char *s)
 				in = 0;
 			while (s[i] == ' ' && in == 0)
 				i++;
-			if ((ft_isalpha(s[i]) || ft_isdigit(s[i])) && in == 0)
+			if ((ft_isalpha(s[i]) || ft_isdigit(s[i])))
 				return (0);
 			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
 				return (1);
@@ -117,6 +117,8 @@ int		 ft_strsearch(char *s, char n)
 	i = 0;
 	in = 0;
 	end = 0;
+	if (s)
+	{
 	while (s[i] != '\0')
 	{
 		if (QUOTE(s[i]) && in == 0)
@@ -130,6 +132,7 @@ int		 ft_strsearch(char *s, char n)
 		if (s[i] == n && in == 0)
 			return (1);
 		i++;
+	}
 	}
 	return (0);
 }
@@ -156,6 +159,7 @@ int			check_redir(char *s)
 			return (0);
 	}
 	// need to recheck n (number of redir in cmd)
+	
 	return (1);
 }
 
@@ -175,7 +179,7 @@ char        *check_syntax(char *s)
 			return (NULL);
 		}
 	}
-	if (ft_strchr(s, '|'))
+	if (ft_strsearch(s, '|'))
 	{
 		if (check_pipe(s) == 0)
 		{

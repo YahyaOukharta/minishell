@@ -2,8 +2,7 @@
 
 int         ft_prompt(char *msg, char **line)
 {
-    // struggle of ctrl D  and ctrl 
-    if (signal_c == 1 || signal_d == 1)
+    if (signal_c == 1)
         ft_putchar_fd('\r', STDOUT);
     if (signal_d == 1)
     {

@@ -9,19 +9,26 @@ char        *inside_quotes(char *s, int *start, char quote)
 
     i = 0;
     end = 0;
-    m = NULL;
+    m = ft_strdup("");
     while (s[i] != '\0')
     {
-        if (s[i] == quote)
+        if (s[i] == quote && !(ft_isalpha(s[i + 1]) || ft_isdigit(s[i + 1])))
         {
-            end = i;
             *start += i;
             break ;
         }
+        else if (s[i] == quote && s[i] != '\0' && (ft_isalpha(s[i + 1]) || ft_isdigit(s[i + 1])))
+        {
+            i++;
+            // echo " f f f f  f " > sdf" v fedfsdf d d f"fdf
+            m = ft_strjoin(m, outside_quotes(s + i, &i));
+            i++;
+            *start += i;
+            break ;
+        }
+        m = append(m, s[i]);
         i++;
     }
-    if (!(m = ft_substr(s, 0, end)))
-        return (NULL);
     return (m);
 }
 

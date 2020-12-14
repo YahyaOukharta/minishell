@@ -6,7 +6,7 @@ char	**remove_extras(char **s)
 	char **str;
 	int len;
 	int	j;
-
+	char p[2];
 	i = 0;
 	len = tab_len(s);
 	j = 0;
@@ -16,7 +16,7 @@ char	**remove_extras(char **s)
 	{
 		if (ft_strlen(s[i]) == 0)
 			i++;
-		str[j] = ft_strtrim(s[i], "\'\"");
+		str[j] = ft_strdup(s[i]);
 		if (s[i])
 			free(s[i]);
 		i++;
@@ -36,7 +36,7 @@ t_command *new_cmd(char *line)
 	ft_printf("|%s|\n", line);
     // char *s = get_command(line);
 	redir = get_tokens(line);
-    cmd->tokens = remove_extras(redir.tokens);
+    cmd->tokens = redir.tokens;
 	//cmd->tokens = redir.tokens;
     cmd->input_files = redir.ins;
     cmd->output_files = redir.outs;
