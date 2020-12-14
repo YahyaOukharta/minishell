@@ -66,43 +66,93 @@ int			check_pipe(char *s)
 int			check_arg(char *s)
 {
 	int i;
+	int	end;
+	int in;
 
 	i = 0;
+	in = 0;
+	end = 0;
 	if (s)
 	{
-		while (s[i] == ' ' && s[i] != '\0')
+		while (!(s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
 			i++;
+		if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
+		{
+			if (s[i] == '>' && s[i + 1] == '>')
+				i += 2;
+			else if (s[i] == '<')
+				i += 1;
+			else
+				i++;
+		}
 		while (s[i] != '\0')
 		{
-			if ((ft_isalpha(s[i]) || ft_isdigit(s[i])))
+			if (QUOTE(s[i]) && in == 0)
+			{
+				end = i + 1;
+				if (inside_quotes(s + i + 1, &end, s[i]))
+					in = 1;
+			}
+			if (i == end)
+				in = 0;
+			while (s[i] == ' ' && in == 0)
+				i++;
+			if ((ft_isalpha(s[i]) || ft_isdigit(s[i])) && in == 0)
 				return (0);
-			if (s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0)
+			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
 				return (1);
-			i++;
+			if (s[i] != '\0')
+				i++;
 		}
 	}
 	return (1);
 }
 
+int		 ft_strsearch(char *s, char n)
+{
+	int 	i;
+	int		in;
+	int		end;
+
+	i = 0;
+	in = 0;
+	end = 0;
+	while (s[i] != '\0')
+	{
+		if (QUOTE(s[i]) && in == 0)
+	    {
+			end = i + 1;
+			if (inside_quotes(s + i + 1, &end, s[i]))
+				in = 1;
+		}
+		if (i == end)
+			in = 0;
+		if (s[i] == n && in == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int			check_redir(char *s)
 {
 	/*** Error Handling Sucks ***\     -/-*-]*/
-	if (ft_strchr(s, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
+	if (ft_strsearch(s, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
 	{
 		ft_printf("Checking0 %s\n", ft_strchr(s, '>') + 1);
-		if (check_arg(ft_strchr(s, '>') + 1))
+		if (check_arg(s))
 			return (0);
 	}
-	if (ft_strchr(s, '<') && !ft_strnstr(s, "<<", ft_strlen(s)))
+	if (ft_strsearch(s, '<') && !ft_strnstr(s, "<<", ft_strlen(s)))
 	{
 		ft_printf("Checking1 %s\n", ft_strchr(s, '<'));
-		if (check_arg(ft_strchr(s, '<') + 1))
+		if (check_arg(s))
 			return (0);
 	}
 	if (ft_strnstr(s, ">>", ft_strlen(s)) != NULL)
 	{
 		ft_printf("Checking2 %s\n", ft_strnstr(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
-		if (check_arg(ft_strnstr(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) + 2))
+		if (check_arg(s))
 			return (0);
 	}
 	// need to recheck n (number of redir in cmd)
