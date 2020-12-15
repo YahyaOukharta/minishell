@@ -12,6 +12,8 @@
 
 #include "get_next_line.h"
 
+extern	int	signal_d;
+
 char	*realloc_concat(char *s1, char *buf, size_t bufsize)
 {
 	char	*result;
@@ -52,8 +54,11 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i])
-		i++;
+	if (str)
+	{
+		while (str[i] != '\0')
+			i++;
+	}
 	return (i);
 }
 
@@ -79,7 +84,7 @@ int		read_file(int fd, char **line, char *buf, char **rem)
 	int		read_b;
 	int		rem_bytes;
 
-	while ((read_b = read(fd, buf, BUFFER_SIZE)))
+	while ((read_b = read(fd, buf, BUFFER_SIZE)) >= signal_d)
 	{
 		if (read_b < 0)
 			return (-1);

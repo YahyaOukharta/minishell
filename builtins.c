@@ -28,7 +28,6 @@ void    init_builtins()
 int     builtin_echo(int in, int out, char **argv)
 {
 	int endl;
-	int i;
 	
 	endl = 1;
 	redirect_in_out(in, out);
@@ -130,6 +129,16 @@ int     builtin_export(int in, int out, char **argv)
 				set_env(tab[0], ft_strdup(""));
 			//free_s_tab(tab);
 			i++;
+		}
+	}
+	else if (tab_len(argv) == 1)
+	{
+		i = 0;
+		t_env *t = g_env;
+		while (t != NULL)
+		{
+			ft_printf("declare -x %s=%s\n", t->key, t->value);
+			t = t->next;
 		}
 	}
 	return (0);

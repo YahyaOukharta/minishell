@@ -1,233 +1,243 @@
 #include "minishell.h"
 
+
+int			have_end(char *s, char quote, int *start)
+{
+	while (*start < (int )ft_strlen(s))
+	{
+		if (s[*start] == quote)
+		{
+			*start += 1;
+			return (1);
+		}
+		*start += 1; 
+	}
+	return (0);
+}
+
+int			check_quotes(char	*s, int *pos)
+{
+	int 	i;
+	int 	start;
+	int		end;
+	char	quote;
+
+	i = 0;
+	start = 0;
+	end = ft_strlen(s);
+	quote = '0';
+	while (start < end)
+	{
+		if (s[start] == '\'' || s[start] == '\"')
+		{
+			*pos = start;
+			quote = s[start++];
+			if (have_end(s, quote, &start) == 0)
+				return (0);
+			start--;
+		}
+		start++;
+	}
+	return (1);
+}
+
+int			check_pipe(char *s)
+{
+	char **pipes;
+	int i;
+	int	nb_pipes;
+
+	i = 0;
+	nb_pipes = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '|' && s[i + 1] != '|')
+			nb_pipes++;
+		else if (s[i] == '|' && s[i + 1] == '|')
+			return (0);
+		i++;
+	}
+	pipes = ft_split(s, '|');
+	i = tab_len(pipes);
+	if (nb_pipes == i - 1)
+		return (1);
+	return (0);
+}
+
 int			check_arg(char *s)
 {
 	int i;
+	int	end;
+	int in;
 
 	i = 0;
+	in = 0;
+	end = 0;
 	if (s)
 	{
+		while (!(s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
+			i++;
+		if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
+		{
+			if (s[i] == '>' && s[i + 1] == '>')
+				i += 2;
+			else if (s[i] == '<')
+				i += 1;
+			else
+				i++;
+		}
 		while (s[i] != '\0')
 		{
-			if (s[i] == ' ')
+			if (QUOTE(s[i]) && in == 0)
+			{
+				end = i + 1;
+				if (inside_quotes(s + i + 1, &end, s[i]))
+					in = 1;
+			}
+			if (i == end)
+				in = 0;
+			while (s[i] == ' ' && in == 0)
 				i++;
-			if (ft_isalnum(s[i]))
+			if ((ft_isalpha(s[i]) || ft_isdigit(s[i])))
 				return (0);
-			i++;
+			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
+				return (1);
+			if (s[i] != '\0')
+				i++;
 		}
 	}
 	return (1);
 }
 
-typedef     struct s_redir
+int		 ft_strsearch(char *s, char n)
 {
-    int to_fd;
-	int cc_fd;
-	int from_fd;
-}                  t_redir;
+	int 	i;
+	int		in;
+	int		end;
+
+	i = 0;
+	in = 0;
+	end = 0;
+	if (s)
+	{
+		while (s[i] != '\0')
+		{
+			if (QUOTE(s[i]) && in == 0)
+			{
+				end = i + 1;
+				if (inside_quotes(s + i + 1, &end, s[i]))
+					in = 1;
+			}
+			if (i == end)
+				in = 0;
+			if (s[i] == n && in == 0)
+				return (1);
+			i++;
+		}
+	}
+	return (0);
+}
+
+int			has_redir(char *s, int *pos)
+{
+	if (s)
+	{
+		int 	i;
+		int		in;
+		int		end;
+
+		i = 0;
+		in = 0;
+		end = 0;
+		while (s[i] != '\0')
+		{
+			if (QUOTE(s[i]) && in == 0)
+			{
+				end = i + 1;
+				if (inside_quotes(s + i + 1, &end, s[i]))
+					in = 1;
+			}
+			if (i == end)
+				in = 0;
+			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
+			{
+				*pos += i;
+				return (1);
+			}
+			i++;
+		}
+	}
+	else
+		return (1);
+	return (0);
+}
 
 int			check_redir(char *s)
 {
-	t_redir	dir;
-	int		i;
-
-	dir.to_fd = 0;
-	dir.cc_fd = 0;
-	dir.from_fd = 0;
-	i = 0;
-	if (ft_strchr(s, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
-	{
-		dir.to_fd = 1;
-		if (check_arg(ft_strchr(s, '>') + 1))
-			return (1);
-	}
-	else if (ft_strchr(s, '<'))
-	{
-		dir.from_fd = 1;
-		if (check_arg(ft_strchr(s, '<')))
-			return (1);
-	}
-	else if (ft_strnstr(s, ">>", ft_strlen(s)) != NULL)
-		dir.cc_fd = 1;
-	if (ft_strchr(s, '>') || ft_strchr(s, '<') || ft_strnstr(s, ">>", ft_strlen(s)))
-	{
-		if (dir.to_fd)
-			return (check_redir(ft_strchr(s, '>') + 1));
-		else if (dir.from_fd)
-			return (check_redir(ft_strchr(s, '<') + 1));
-		else
-			return (check_redir(ft_strnstr(s, ">>", ft_strlen(s)) + 1));
-	}
-	return (0);
-}
-
-int     ft_have_end(char *s, char c, int *pos)
-{
-    (*pos)++;
-    while (s[*pos] != '\0')
-    {
-        if (s[*pos] == c)
-            return (true);
-        (*pos)++;
-    }
-    return (false);
-}
-
-int     ft_need_data(char *s, int *pos)
-{
-
-    char    c;
-
-    while (s[*pos] != '\0' && !QUOTE(s[*pos]))
-        (*pos)++;
-    while (s[*pos] != '\0' && QUOTE(s[*pos]))
-    {
-        c = s[*pos];
-        if (ft_have_end(s, c, pos))
-            return (false);
-    }
-    return (true);
-}
-
-int     has_quotes(char *s)
-{
-    int  i;
-
-    i  = 0;
-    if (s)
-    {
-        while (s[i] != '\0')
-        {
-            if (QUOTE(s[i]))
-                return (1);
-            i++;
-        }
-    }
-    return (0);
-}
-
-char    *ft_check_quotes(char *s)
-{
-    int     i;
-    char    *data;
-    char    *tmp;
-    int     nd_data;
-
-    i = 0;
-    tmp = ft_strdup(s);
-    while (has_quotes(tmp + i) && s[i] != '\0')
-    {
-        if ((nd_data = ft_need_data(tmp, &i)))
-        {
-            ft_prompt(">", &data);
-            tmp = ft_strjoin(tmp, data);
-            tmp = ft_check_quotes(tmp);
-        }
-        i++;
-    }
-    return (tmp);
-}
-
-char		*complete_pipe(char *s)
-{
-	char *line;
-
-	ft_prompt("pipe> ", &line);
-	return (ft_strjoin(s, line));
-}
-
-int			check_str(char *s)
-{
 	int i;
 
 	i = 0;
-	while (s[i] != '\0')
+	/*** Error Handling Sucks ***\     -/-*-]*/
+	while (has_redir(s + i, &i) == 1 && s[i] != '\0')
 	{
-		if (ft_isalnum(s[i]))
-			return (1);
-		i++;
+		if (ft_strsearch(s + i, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
+		{
+			ft_printf("Checking0 %s\n", ft_strchr(s + i, '>') + 1);
+			if (check_arg(s + i))
+				return (0);
+		}
+		if (ft_strsearch(s + i, '<') && !ft_strnstr(s + i, "<<", ft_strlen(s)))
+		{
+			ft_printf("Checking1 %s\n", ft_strchr(s + i, '<'));
+			if (check_arg(s + i))
+				return (0);
+		}
+		if (ft_strnstr(s + i, ">>", ft_strlen(s + i)) != NULL)
+		{
+			ft_printf("Checking2 %s\n", ft_strnstr(s + i, ">>", ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
+			if (check_arg(s + i))
+				return (0);
+		}
+		if (s[i] != '\0')
+			i++;
 	}
-	return (0);
-}
-
-int			ft_cnt_pipe(char **s)
-{
-	int i;
-	int cnt;
-
-	i = 0;
-	cnt = 0;
-	while (s[i] != NULL)
-	{
-		if (check_str(s[i]))
-			cnt++;
-		i++;
-	}
-	return (cnt);
-}
-
-char		*check_pipe(char *s)
-{
-	int i;
-	int cnt;
-	char **l;
-	char	*cmp;
-	i = 0;
-	cnt = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == '|' && s[i + 1] != '|')
-			cnt++;
-		else if (s[i] == '|' && s[i + 1] == '|')
-			return (NULL);
-		i++;
-	}
-	if (!(l = ft_split(s, '|')))
-		return (NULL);
-	if (!(cnt == ft_cnt_pipe(l) - 1) && ft_cnt_pipe(l) != 0)
-	{
-		if (!(cmp = complete_pipe(s)))
-			return (NULL);
-		cmp = check_pipe(cmp);
-	}
-	if ((ft_cnt_pipe(l) == 0) && cnt == 1)
-		return (NULL);
-	return (cmp);
+	// need to recheck n (number of redir in cmd)
+	
+	return (1);
 }
 
 char        *check_syntax(char *s)
 {
-	char    *line;
+	char	*line;
+	int 	pos;
 
-	line = ft_strdup(s);
-	if (ft_strchr(s, '\'') || ft_strchr(s, '\"'))
+	pos = 0;
+	line = NULL;
+	// This part is only to check Syntax Errors No Appending Yet ? 
+	if (ft_strchr(s, '\"') || ft_strchr(s, '\''))
 	{
-		free(line);
-		line = ft_check_quotes(s);
-	}
-	if (ft_strchr(s, '>') || ft_strchr(s, '<') || ft_strnstr(s, ">>", ft_strlen(s)))
-	{
-		if (check_redir(s))
+		if (check_quotes(s, &pos) == 0)
 		{
-            free(line);
-            ft_putstr_fd("redirections Syntax error !!\n", 1);
-            return (NULL);
-        }
-		
-	}
-	// maybe later 
-	if (ft_strchr(s, '|'))
-	{
-		if (!(check_pipe(s)))
-		{
-            free(line);
-			ft_putstr_fd("Parse Error near |\n", STDOUT);
+			ft_printf("Syntax Error Near %s\n", s + pos);
 			return (NULL);
 		}
 	}
-	// if (env_var)
-	// t_cmd	shell;
-	// if (!(shell.cmds = ft_split(s, ';'))
-	// 	//////free_g();
-	return (line);
+	if (ft_strsearch(s, '|'))
+	{
+		if (check_pipe(s) == 0)
+		{
+			ft_printf("Syntax Error Near %s\n", ft_strchr(s, '|'));
+			return (NULL);
+		}
+	}
+	if (ft_strchr(s, '>') || ft_strchr(s, '<') || ft_strnstr(s, ">>", (ft_strlen(s) < 3 ? 3: ft_strlen(s))))
+	{
+		if (check_redir(s) == 0)
+		{
+			char *e = (ft_strchr(s, '>') == NULL ?  (ft_strchr(s, '<') == NULL ? ft_strnstr(s, ">>", (ft_strlen(s) < 3 ? 3: ft_strlen(s))) : ft_strchr(s, '<')) : ft_strchr(s, '>'));
+			ft_printf("Syntax Error Near %s\n", e);
+			return (NULL);
+		}
+	}
+	return (s);
 }

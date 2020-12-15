@@ -19,14 +19,14 @@ int		new_process(int in, int out, char **cmd, int *status)
     int pid;
     char *path;
 
+    if (!find_file_in_path(&path, cmd[0]))
+    {
+        ft_printf("minishell: command not found: %s\n", cmd[0]);
+        return (127);
+    }
     pid = fork(); // missing error handling
     if (pid == 0)
     {
-        if (!find_file_in_path(&path, cmd[0]))
-        {
-            ft_printf("minishell: command not found: %s\n", cmd[0]);
-            return (127);
-        }
         redirect_in_out(in, out);
         if ((execve(path, cmd, get_env_tab()) == -1))
         {
@@ -35,7 +35,10 @@ int		new_process(int in, int out, char **cmd, int *status)
         }
     }
     else
-        pid = wait(status);
+    {
+        g_child = pid;
+        pid = waitpid(-1, status, WUNTRACED| WCONTINUED);
+    }
     return (*status);
 }
 

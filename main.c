@@ -2,33 +2,18 @@
 
 int         ft_prompt(char *msg, char **line)
 {
-    ft_putstr_fd(msg, STDOUT);
-    ft_putchar_fd(' ', STDOUT);
-    return (get_next_line(STDIN, line));
-}
-
-// to do list xD 3yiit
-
-int         ft_get_info(char *cmd)
-{
-    return (1);
-}
-
-int         ft_parser(char *line)
-{
-    char    *cmd;
-
-    // quotes
-    // pipes
-    // redirection
-    if (!(cmd = check_syntax(line))) // still need to free 
+    if (signal_c == 1)
     {
-        ft_putstr_fd("THIS SHELL ISN'T FOR YOU STUPID LINE\n", STDOUT);
-        // keep the loop for the moment 
-        return (2);
+        ft_putchar_fd('\r', STDOUT);
+        signal_c = 0;
     }
-    // getting all info needed before exec 
-    return (ft_get_info(cmd));
+    if (signal_d == 1)
+    {
+        ft_putstr_fd(msg, STDOUT);
+        ft_putstr_fd(" $ ", STDOUT);
+    }
+    ft_printf("\033[0m");
+    return (get_next_line(STDIN, line));
 }
 
 void        ft_minishell(char **env)
@@ -37,44 +22,59 @@ void        ft_minishell(char **env)
     char    cwd[1024];
     int     rt;
     int     i;
+    char    *checked_line;
 
     rt = 0;
-    line = NULL;
     init_environment(env);
     init_builtins();
     // ctrl + c
-    // signal(SIGINT, signal_handler);
-    // ctrl + d 
-    // signal(SIGQUIT, signal_handler);
+    signal(SIGINT, signal_handler);
+    // ctrl + '\'
+    signal(SIGQUIT, signal_handler);
     // main loop
 
 
     g_status = 0;
-
+    signal_c = 0;
+    signal_d = 1;
     t_pipeline **parsed_line;
-
-
+    // Cntrl D problem when cmd is not found 
     while (g_status != -1) // status is global var defined in header
     {
-        rt = ft_prompt("$> ", &line);
-        if (rt == 0 || rt == -1) // gnl return 0 when there is no \n (EOF)
-            if (line == NULL)
+        g_child = MAX_INT;
+        line = NULL;
+        getcwd(cwd, 1000);
+        ft_printf("\033[0;32m");
+        rt = ft_prompt(cwd, &line);
+        if (rt == 0) // gnl return 0 when there is no \n (EOF)
+        {
+            if (ft_strlen(line))
+            {
+                free(line);
+                line = NULL;
+                signal_d = 0;
+                continue ;
+            }
+            else
                 exit(1);
-
-        //g_status = ft_parser(line);
-        parsed_line = mini_parser(line);
+        }
+        signal_d = 1;
+        if (!(checked_line = check_line(line)))
+        {
+            free(line);
+            continue ;
+        }
+        parsed_line = parser(checked_line);
         print_parsed_line(parsed_line);
 
-        //execute_command(0, 1, parsed_line[0]->cmds[0]->tokens);
-        //redirect_inputs(parsed_line[0]->cmds[0]->tokens, 1,0,parsed_line[0]->cmds[0]->input_files);
-        //redirect_outputs(parsed_line[0]->cmds[0],0,1);
-        //execute_pipeline(parsed_line[0]);
         i = 0;
         while (parsed_line[i])
         {
             g_status = execute_pipeline(parsed_line[i]);
             i++;
         }
+        free(line);
+        line = NULL;
     }
 }
 

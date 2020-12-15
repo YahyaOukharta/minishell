@@ -1,5 +1,54 @@
 #include "minishell.h"
 
+char	*get_out(char *str)
+{
+	int		i;
+	char	*s;
+	char	*tmp;
+
+	i = 0;
+	s = NULL;
+	tmp = NULL;
+	while (str[i] != '\0')
+	{
+		if (QUOTE(str[i]))
+		{
+			i++;
+			tmp = ft_strdup(s);
+			if (s)
+				free(s);
+			s = ft_strjoin(tmp, inside_quotes(str + i, &i, str[i - 1]));
+			if (tmp)
+				free(tmp);
+			i++;
+		}
+		else
+		{
+			tmp = ft_strdup(s);
+			if (s)
+				free(s);
+			s = ft_strjoin(tmp, outside_quotes(str + i , &i));
+			if (tmp)
+				free(tmp);
+			i++;
+		}
+	}
+	return (s);
+}
+
+char *jump_redirection_sign(char *out)
+{
+	char	*s;
+	int		i;
+
+	i = 0;
+	s = NULL;
+    while (*out == '>' || *out == '<' || is_blank(*out))
+        out++;
+	s = get_out(out);
+    return (s);
+}
+
 int redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 {
     int i;
@@ -12,7 +61,7 @@ int redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 	i = 0;
 	while (i < tab_len(input_files))
 	{
-		fd = open(input_files[i], O_RDONLY);
+		fd = open(jump_redirection_sign(input_files[i]), O_RDONLY);
 		if (fd < 0)
         {
             ft_printf("minishell: no such file or directory: %s\n", input_files[i]);
@@ -25,19 +74,13 @@ int redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
     return (g_status);
 }
 
-char *jump_redirection_sign(char *out)
-{
-    while (*out == '>' || is_blank(*out))
-        out++;
-    return (out);
-}
-
 int truncate_file(char *out)
 {
     int i = 0;
     while (out[i] == '>')
         i++;
-    return (i == 2 ? 0 : O_TRUNC); 
+	ft_printf("%d\n",i);
+    return (i == 2 ? O_APPEND : O_TRUNC); 
 }
 
 int  redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
@@ -50,7 +93,7 @@ int  redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	while (i < tab_len(cmd->output_files))
 	{
         tmp = cmd->output_files[i];
-		fd = open(jump_redirection_sign(tmp), truncate_file(tmp) | O_CREAT | O_WRONLY | O_APPEND, 0644); // O_TRUNC only if >
+		fd = open(jump_redirection_sign(tmp), truncate_file(tmp) | O_CREAT | O_WRONLY , 0644); // O_TRUNC only if >
 		g_status = redirect_inputs(cmd->tokens, fd, pipe_in, cmd->input_files);
 		close(fd);
 		i++;

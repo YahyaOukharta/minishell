@@ -51,12 +51,6 @@ char        *ft_value(char *s)
 	value = NULL;
 	if (s)
 	{
-		/*
-			3gzt nzid Function it would be better if we had a 
-			struct for key, value inside our linked list 
-
-			Linked list nodes are already a struct
-		*/
 		if (!(value = ft_strdup(ft_strchr(s, '=') + 1)))
 			return (NULL);
 	}

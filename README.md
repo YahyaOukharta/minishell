@@ -20,7 +20,7 @@
 ### Executer : 
 
 - [x] Environment
-- [ ] Signals
+- [x] Signals
 - [x] Builtins
 - [x] `$PATH` utilities
 - [x] `dup2()` Redirecting I/O

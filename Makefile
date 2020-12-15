@@ -10,6 +10,11 @@ SRCS = main.c\
 	   path.c\
 	   redirections.c\
 	   pipelines.c\
+	   signals.c\
+	   check_line.c\
+	   parser_env.c\
+	   demo_parser.c\
+	   parser_redir.c
 
 GNL_SRCS = gnl/get_next_line.c gnl/get_next_line_utils.c
 
@@ -23,7 +28,7 @@ all: $(NAME)
 
 $(NAME):
 	make -C $(FT_PRINTF_PATH)
-	gcc $(FLAGS) $(SRCS) $(GNL_SRCS) $(GNL_BUFFER_SIZE) -L$(FT_PRINTF_PATH) -lftprintf  -o $(NAME)
+	gcc $(FLAGS) $(SRCS) $(GNL_SRCS) $(GNL_BUFFER_SIZE) -L $(FT_PRINTF_PATH) -lftprintf  -o $(NAME)
 	# remove \^
 	#stty -ctlecho
 clean:
@@ -33,6 +38,7 @@ clean:
 fclean: clean
 	make -C $(FT_PRINTF_PATH) fclean
 	rm -rf $(NAME)
+	rm -rf minishell.dSYM
 
 re: fclean all
 
