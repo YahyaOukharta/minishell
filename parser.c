@@ -1,33 +1,5 @@
 #include "minishell.h"
 
-char	**remove_extras(char **s)
-{
-	int i;
-	char **str;
-	int len;
-	int	j;
-	char p[2];
-	i = 0;
-	len = tab_len(s);
-	j = 0;
-	if (!(str = (char **)malloc(sizeof(char *) * (tab_len(s) + 1))))
-		return (NULL);
-	while (i < len)
-	{
-		if (ft_strlen(s[i]) == 0)
-			i++;
-		str[j] = ft_strdup(s[i]);
-		if (s[i])
-			free(s[i]);
-		i++;
-		j++;
-	}
-	if (s)
-		free(s);
-	str[j] = NULL;
-	return	(str);
-}
-
 t_command *new_cmd(char *line)
 {
     t_command *cmd = (t_command *)malloc(sizeof(t_command));

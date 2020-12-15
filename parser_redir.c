@@ -33,6 +33,7 @@ char            *get_rarg(char *line, int *pos)
     int     in;
     char    *s;
     char    *tmp;
+
     s = ft_strdup("");
     i = 0;
     in = 0;
@@ -59,7 +60,7 @@ char            *get_rarg(char *line, int *pos)
 			break ;
 		}
         tmp = ft_strdup(s);
-        if (s) 
+        if (s)
             free(s);
 		s = append(tmp, line[i]);
         //if (tmp)

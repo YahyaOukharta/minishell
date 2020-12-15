@@ -10,7 +10,7 @@ int			have_end(char *s, char quote, int *start)
 			*start += 1;
 			return (1);
 		}
-		*start += 1;
+		*start += 1; 
 	}
 	return (0);
 }
@@ -34,6 +34,7 @@ int			check_quotes(char	*s, int *pos)
 			quote = s[start++];
 			if (have_end(s, quote, &start) == 0)
 				return (0);
+			start--;
 		}
 		start++;
 	}
