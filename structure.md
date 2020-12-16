@@ -201,7 +201,7 @@
   - The function returns the return value from ```int builtin(int,int,char **)```
 
     ```
-        int new_builtin_process(int in, int out,char **argv, int(*builtin)(int,int, char **));
+        int new_builtin(int in, int out,char **argv, int(*builtin)(int,int, char **));
     ```
 
   - **IMPORTANT** : Only echo, pwd and env should be executed in a child process, to be able to redirect their output, exit should be executed in main process 
@@ -229,7 +229,7 @@
             // Is the command a builtin ? 
                 // Find out by comparing with the values `g_builtins_str`
                     // If the name matches, 
-                    // Get the index and execute `new_builtin_process()`
+                    // Get the index and execute `new_builtin()`
                     // Give it as third argument `g_builtins[index]`
                 // Else execute `new_process()`
             // Sets g_status as the return of the executed processe

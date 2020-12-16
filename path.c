@@ -2,7 +2,7 @@
 
 extern t_env	*g_env;
 
-char	**get_parsed_path()
+char			**get_parsed_path(void)
 {
 	t_env *env;
 
@@ -14,11 +14,11 @@ char	**get_parsed_path()
 	return (0);
 }
 
-int		find_file_in_path(char **str, char *cmd)
+int				find_file_in_path(char **str, char *cmd)
 {
-	char **path;
-	int i;
-	struct stat buf;
+	char		**path;
+	int			i;
+	struct stat	buf;
 
 	i = 0;
 	*str = NULL;
@@ -40,6 +40,5 @@ int		find_file_in_path(char **str, char *cmd)
 		i++;
 	}
 	*str = NULL;
-	free_s_tab(path);
-	return (0);
+	return (free_s_tab(path));
 }

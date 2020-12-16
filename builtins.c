@@ -1,22 +1,21 @@
 #include "minishell.h"
 
-void    init_builtins()
+void	init_builtins(void)
 {
-    int     i;
-    char    **tmp;
+	int		i;
+	char	**tmp;
 
-    i = 0;
-    if (!(tmp = ft_split("echo,cd,pwd,export,unset,env,exit", ',')))
-        return ;
-    while (i < 7)
-    {
-        g_builtins_str[i] = ft_strdup(tmp[i]);
-        free(tmp[i++]);
-    }
-    free(tmp);
-    g_builtins_str[i] = NULL;
-
-    g_builtins[0] = &builtin_echo;
+	i = 0;
+	if (!(tmp = ft_split("echo,cd,pwd,export,unset,env,exit", ',')))
+		return ;
+	while (i < 7)
+	{
+		g_builtins_str[i] = ft_strdup(tmp[i]);
+		free(tmp[i++]);
+	}
+	free(tmp);
+	g_builtins_str[i] = NULL;
+	g_builtins[0] = &builtin_echo;
 	g_builtins[1] = &builtin_cd;
 	g_builtins[2] = &builtin_pwd;
 	g_builtins[3] = &builtin_export;
@@ -25,10 +24,10 @@ void    init_builtins()
 	g_builtins[6] = &builtin_exit;
 }
 
-int     builtin_echo(int in, int out, char **argv)
+int		builtin_echo(int in, int out, char **argv)
 {
 	int endl;
-	
+
 	endl = 1;
 	redirect_in_out(in, out);
 	if (tab_len(argv) == 1)
@@ -36,9 +35,9 @@ int     builtin_echo(int in, int out, char **argv)
 	else
 	{
 		argv++;
-		if (!ft_strncmp(*argv, "-n",max(ft_strlen(*argv), 2)))
+		if (!ft_strncmp(*argv, "-n", MAX(ft_strlen(*argv), 2)))
 		{
-			argv++; 
+			argv++;
 			endl = 0;
 		}
 		while (*argv)
@@ -50,18 +49,18 @@ int     builtin_echo(int in, int out, char **argv)
 		}
 		if (endl)
 			write(1, "\n", 1);
-	} 
+	}
 	return (0);
 }
 
-int     builtin_pwd(int in, int out, char **argv)
+int		builtin_pwd(int in, int out, char **argv)
 {
 	char buf[1024];
 
 	if (tab_len(argv) != 1)
 	{
-		printf("pwd: too many arguments\n");
-		return(1);
+		ft_printf("pwd: too many arguments\n");
+		return (1);
 	}
 	redirect_in_out(in, out);
 	ft_bzero(buf, 1024);
@@ -71,10 +70,10 @@ int     builtin_pwd(int in, int out, char **argv)
 	return (0);
 }
 
-int     builtin_cd(int in, int out, char **argv)
+int		builtin_cd(int in, int out, char **argv)
 {
-	int ret;
-	char *dir;
+	int		ret;
+	char	*dir;
 
 	if (tab_len(argv) > 2)
 	{
@@ -91,29 +90,29 @@ int     builtin_cd(int in, int out, char **argv)
 	return (0);
 }
 
-int     builtin_env(int in, int out, char **argv)
+int		builtin_env(int in, int out, char **argv)
 {
-	t_env   *env;
+	t_env	*env;
 
 	if (tab_len(argv) != 1)
 	{
-		printf("env: too many arguments\n");
+		ft_printf("env: too many arguments\n");
 		return (1);
 	}
 	redirect_in_out(in, out);
 	env = g_env;
 	while (env)
 	{
-		printf("%s=%s\n",env->key, env->value);
+		ft_printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
 	return (0);
 }
 
-int     builtin_export(int in, int out, char **argv)
+int		builtin_export(int in, int out, char **argv)
 {
-	char    **tab;
-	int     i;
+	char	**tab;
+	int		i;
 
 	(void)in;
 	(void)out;
@@ -127,7 +126,6 @@ int     builtin_export(int in, int out, char **argv)
 				set_env(tab[0], tab[1]);
 			if (tab_len(tab) == 1 && argv[i][ft_strlen(argv[i]) - 1] == '=')
 				set_env(tab[0], ft_strdup(""));
-			//free_s_tab(tab);
 			i++;
 		}
 	}
@@ -137,17 +135,17 @@ int     builtin_export(int in, int out, char **argv)
 		t_env *t = g_env;
 		while (t != NULL)
 		{
-			ft_printf("declare -x %s=%s\n", t->key, t->value);
+			ft_printf("export %s=%s\n", t->key, t->value);
 			t = t->next;
 		}
 	}
 	return (0);
 }
 
-int     builtin_unset(int in, int out, char **argv)
+int		builtin_unset(int in, int out, char **argv)
 {
-	char    **tab;
-	int     i;
+	char	**tab;
+	int		i;
 
 	if (tab_len(argv) > 1)
 	{
@@ -165,7 +163,7 @@ int     builtin_unset(int in, int out, char **argv)
 	return (0);
 }
 
-int     builtin_exit(int in, int out, char **argv)
+int		builtin_exit(int in, int out, char **argv)
 {
 	(void)argv;
 	exit(0);

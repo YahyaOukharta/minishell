@@ -1,48 +1,40 @@
 #include "minishell.h"
 
-t_env   *new_env(char *key, char *value)
+t_env	*new_env(char *key, char *value)
 {
 	t_env *new;
 
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
-		return(0);
+		return (0);
 	new->key = key;
 	new->value = value;
 	new->next = NULL;
 	return (new);
 }
 
-char        *ft_key(char *s)
+char	*ft_key(char *s)
 {
-	int     i;
-	char    *key;
-	int     j;
+	int		i;
+	char	*key;
+	int		j;
 
 	i = 0;
 	j = -1;
 	key = NULL;
 	if (s)
 	{
-		/*
-			We need To check Fot The First '='  in s 
-			export ha=ha=ha
-			e1r5p12% env | grep ha 
-			ha=ha=ha
-			e1r5p12% echo $ha
-			ha=ha
-		*/
 		while (s[i] != '\0' && s[i] != '=')
 			i++;
 		if (!(key = (char *)malloc(sizeof(char ) * (i + 1))))
 			return (NULL);
 		while (++j < i)
 			key[j] = s[j];
-		key[j] = '\0';    
+		key[j] = '\0';
 	}
 	return (key);
 }
 
-char        *ft_value(char *s)
+char	*ft_value(char *s)
 {
 	int     i;
 	char    *value;
@@ -57,10 +49,10 @@ char        *ft_value(char *s)
 	return (value);
 }
 
-void        init_environment(char **envp)
+void	init_environment(char **envp)
 {
-	int     i;
-	t_env   *new;
+	int		i;
+	t_env	*new;
 
 	i = 0;
 	while (envp[i] != NULL)
@@ -79,7 +71,7 @@ void	set_env(char *key, char *value)
 	if (!key || !value)
 		return ;
 	if (!g_env)
-		return;
+		return ;
 	else
 	{
 		tmp = g_env;
@@ -102,7 +94,7 @@ void	unset_env(char *key)
 
 	tmp = g_env;
 	if (!g_env)
-		return;
+		return ;
 	if (string_equal(tmp->key, key))
 		g_env = tmp->next;
 	else
@@ -121,7 +113,6 @@ void	unset_env(char *key)
 	}
 }
 
-
 t_env	*env_with_key(char *key)
 {
 	t_env *tmp;
@@ -138,11 +129,11 @@ t_env	*env_with_key(char *key)
 	return (0);
 }
 
-int		get_env_len()
+int		get_env_len(void)
 {
-	int i;
-	t_env *tmp;
-	
+	int		i;
+	t_env	*tmp;
+
 	i = 0;
 	tmp = g_env;
 	while (tmp)
@@ -153,9 +144,9 @@ int		get_env_len()
 	return (i);
 }
 
-char	**get_env_tab()
+char	**get_env_tab(void)
 {
-	char **tab;
+	char	**tab;
 	t_env	*tmp;
 	int		i;
 
