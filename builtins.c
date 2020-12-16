@@ -113,6 +113,7 @@ int		builtin_export(int in, int out, char **argv)
 {
 	char	**tab;
 	int		i;
+	t_env	*t;
 
 	(void)in;
 	(void)out;
@@ -132,7 +133,7 @@ int		builtin_export(int in, int out, char **argv)
 	else if (tab_len(argv) == 1)
 	{
 		i = 0;
-		t_env *t = g_env;
+		t = g_env;
 		while (t != NULL)
 		{
 			ft_printf("export %s=%s\n", t->key, t->value);
