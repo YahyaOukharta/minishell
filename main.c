@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+
 int         ft_prompt(char *msg, char **line)
 {
     if (signal_c == 1)
@@ -23,6 +24,8 @@ void        ft_minishell(char **env)
     int     rt;
     int     i;
     char    *checked_line;
+    char    *term_type;
+    int     ret;
 
     rt = 0;
     init_environment(env);
@@ -33,12 +36,15 @@ void        ft_minishell(char **env)
     signal(SIGQUIT, signal_handler);
     // main loop
 
+    // ec"h"o sdfghsd
 
     g_status = 0;
     signal_c = 0;
     signal_d = 1;
     t_pipeline **parsed_line;
     // Cntrl D problem when cmd is not found 
+    // t_env *term = env_with_key("TERM");
+    // ret = tgetent(NULL, term->value);
     while (g_status != -1) // status is global var defined in header
     {
         //g_child = MAX_INT;

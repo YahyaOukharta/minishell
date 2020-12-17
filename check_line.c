@@ -62,7 +62,8 @@ char        *outside_quotes(char *s, int *start)
         }
         else
             rt = append(rt, s[i]);
-        i++;
+        if (s[i] != ' ')
+            i++;
     }
     if (s[i] == '\0')
         *start += i - 1;
