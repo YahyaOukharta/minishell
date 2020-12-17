@@ -8,6 +8,9 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <signal.h>
+// # include <term.h>
+// # include <curses.h>
+# include <stdio.h>
 
 # define STDOUT 1
 # define STDIN  0
