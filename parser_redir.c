@@ -74,6 +74,17 @@ char            *get_rarg(char *line, int *pos)
     return (s);
 }
 
+
+int             quote_ends(char *s, char c)
+{
+    int     i;
+
+    i = 0;
+    while (s[i] != c && s[i] != '\0')
+        i++;
+    return (i);
+}
+
 t_redir          get_tokens(char *s)
 {
     int         i;
@@ -89,37 +100,32 @@ t_redir          get_tokens(char *s)
     redir.tokens = NULL;
     while (s[i] != '\0')
     {
-        if (QUOTE(s[i]) && in == 0)
+        if (QUOTE(s[i]))
         {
-			end = i + 1;
-			if (inside_quotes(s + i + 1, &end, s[i]))
-				in = 1;
-        }
-        if (i == end + 1)
-            in = 0;
-        while (s[i] == ' ' && in == 0)
-            i++;
-        if (in == 0 && ((s[i] == '>' && s[i + 1] == '>') ||
-        s[i] == '>' || s[i] == '<'))
-        {
-            if (s[i] == '>' && s[i + 1] == '>')
-                redir.outs = realloc__(redir.outs, get_rarg(s + i, &i));
-            else if (s[i] == '>')
-                redir.outs = realloc__(redir.outs, get_rarg(s + i, &i));
-            else
-                redir.ins = realloc__(redir.ins, get_rarg(s + i, &i));
-        }
-        else
-        {
-            if (QUOTE(s[i]))
+            if ((end = quote_ends(s + i + 1, s[i])))
             {
                 i++;
                 redir.tokens = realloc__(redir.tokens, inside_quotes(s + i, &i, s[i - 1]));
+                //i = i + end;
             }
-            else
-                    redir.tokens = realloc__(redir.tokens, outside_quotes(s + i, &i));
         }
+        else if ((s[i] == '>' && s[i + 1] == '>') ||
+            s[i] == '>' || s[i] == '<')
+        {
+            if (in == 0 && ((s[i] == '>' && s[i + 1] == '>') ||
+            s[i] == '>' || s[i] == '<'))
+            {
+                if (s[i] == '>' && s[i + 1] == '>')
+                    redir.outs = realloc__(redir.outs, get_rarg(s + i, &i));
+                else if (s[i] == '>')
+                    redir.outs = realloc__(redir.outs, get_rarg(s + i, &i));
+                else
+                    redir.ins = realloc__(redir.ins, get_rarg(s + i, &i));
+            }
+        }
+        else if (s[i] != ' ')
+            redir.tokens = realloc__(redir.tokens, outside_quotes(s + i, &i));
         i++;
-    }
+    } 
     return (redir);
 }

@@ -1,41 +1,5 @@
 #include "minishell.h"
 
-char	*get_out(char *str)
-{
-	int		i;
-	char	*s;
-	char	*tmp;
-
-	i = 0;
-	s = NULL;
-	tmp = NULL;
-	while (str[i] != '\0')
-	{
-		if (QUOTE(str[i]))
-		{
-			i++;
-			tmp = ft_strdup(s);
-			if (s)
-				free(s);
-			s = ft_strjoin(tmp, inside_quotes(str + i, &i, str[i - 1]));
-			if (tmp)
-				free(tmp);
-			i++;
-		}
-		else
-		{
-			tmp = ft_strdup(s);
-			if (s)
-				free(s);
-			s = ft_strjoin(tmp, outside_quotes(str + i , &i));
-			if (tmp)
-				free(tmp);
-			i++;
-		}
-	}
-	return (s);
-}
-
 char *jump_redirection_sign(char *out)
 {
 	char	*s;
@@ -45,8 +9,7 @@ char *jump_redirection_sign(char *out)
 	s = NULL;
     while (*out == '>' || *out == '<' || is_blank(*out))
         out++;
-	s = get_out(out);
-    return (s);
+    return (out);
 }
 
 int redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)

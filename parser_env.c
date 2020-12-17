@@ -73,6 +73,8 @@ t_env         *get_env(char *line, int *pos)
         *pos += 1;
         i += 1;
     }
+    if (line[i] == '\0')
+        *pos -= 1;
     key = ft_substr(line, 0, i);
     s = env_with_key(key);
     free(key);
@@ -82,70 +84,50 @@ t_env         *get_env(char *line, int *pos)
 char         *env_to_str(char *line)
 {
     int     i;
-    int     len;
     char    *s;
     t_env   *env;
-    int holder = 0;
+    int     in;
+    int     end;
+    char    *tmp;
+    char    quote;
 
     i = 0;
-    len = 0;
     s = NULL;
+    in = 0;
+    end = 0;
+    tmp = NULL;
     while (line[i] != '\0')
     {
-        if (line[i] == '$')
+        if (QUOTE(line[i]) && in == 0)
         {
-            i++;
-            holder = i;
-            // inside " or ' to check later 
-            env = get_env(line + i, &(i));
-            if (env != NULL && ft_isalpha(line[holder]) != 0)
-                len += ft_strlen(env->value);
-            else if (env == NULL && ft_isalpha(line[holder]) != 0)
-                while (ft_isalpha(line[i]) != 0)
-                    i++;
-            else
-                len += 1;
+            quote = line[i];
+            end = i + 1;
+            if (inside_quotes(line + i + 1, &end, line[i]))
+                in = 1;
         }
-        else
+        if (i == end + 1)
+            in = 0;
+        if ((in == 0 || quote != '\'') && line[i] == '$')
         {
             i++;
-            len += 1;
-        }
-    }
-    if (!(s = (char *)malloc(sizeof(char ) * (len + 1))))
-        return (NULL);
-    i = 0;
-    int j = 0;
-    holder = 0;
-    while (line[i] != '\0' && j < len)
-    {
-        if (line[i] == '$')
-        {
-            i++;
-            holder = i;
             env = get_env(line + i, &(i));
-            if (env == NULL && ft_isalpha(line[holder]) != 0)
-                while (ft_isalpha(line[i]) != 0)
-                    i++;
-            else if (env != NULL && ft_isalpha(line[holder]) != 0)
+            i++;
+            if (env != NULL)
             {
                 //inside single or Double Quotes ?? hmm
-                ft_strlcpy(s + j, env->value, ft_strlen(env->value) + 1);
-                j += ft_strlen(env->value);
-            }
-            else
-            {
-                ft_strlcpy(s + j, "$", 2);
-                j += 1;
+                tmp = ft_strdup(s);
+                if (s)
+                    free(s);
+                s = ft_strjoin(tmp, ft_strdup(env->value));
+                if (tmp)
+                    free(tmp);
+                // if (line[i + 1] == '\0' && !ft_isalpha(line[i]))
+                //     i--;
             }
         }
-        else
-        {
-            s[j] = line[i];
-            j++;
-            i++;
-        }
+        tmp = ft_strdup(s);
+        s = append(tmp, line[i]);
+        i++;
     }
-    s[j] = '\0';
     return (s);
 }

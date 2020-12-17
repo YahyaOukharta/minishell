@@ -17,17 +17,16 @@ char        *inside_quotes(char *s, int *start, char quote)
             *start += i;
             break ;
         }
-        else if (s[i] == quote && s[i] != '\0' && (ft_isalpha(s[i + 1]) || ft_isdigit(s[i + 1])))
+        else if (s[i] == quote && (ft_isalpha(s[i + 1]) || ft_isdigit(s[i + 1])))
         {
             i++;
             // echo " f f f f  f " > sdf" v fedfsdf d d f"fdf
             m = ft_strjoin(m, outside_quotes(s + i, &i));
-            i++;
             *start += i;
             break ;
         }
         m = append(m, s[i]);
-        i++;
+        i++; 
     }
     return (m);
 }
@@ -53,26 +52,16 @@ char        *outside_quotes(char *s, int *start)
         }
         if (QUOTE(s[i]))
         {
+            i++;
             tmp = ft_strdup(rt);
             if (rt != NULL)
                 free(rt);
-            rt = ft_strjoin(tmp, inside_quotes(s + i + 1, &i, s[i]));
+            rt = ft_strjoin(tmp, inside_quotes(s + i, &i, s[i - 1]));
             if (tmp)
                 free(tmp);
         }
-        else 
-        {
-            p[0] = s[i];
-            p[1] = '\0';
-            if (rt == NULL)
-                rt = ft_strdup("");
-            tmp = ft_strjoin(rt, p);
-            if (rt != NULL)
-                free(rt);
-            rt = ft_strdup(tmp);
-            if (tmp)
-                free(tmp);
-        }
+        else
+            rt = append(rt, s[i]);
         i++;
     }
     if (s[i] == '\0')
@@ -80,78 +69,166 @@ char        *outside_quotes(char *s, int *start)
     return (rt);
 }
 
-char        *quotes_to_hell(char *line)
+char        *ft_get_value(char *line, int *pos)
 {
     int     i;
-    char    quote;
-    char    *append;
-    char    *tmp;
-    char    *data;
+    char    *s;
+    char    *key;
+    t_env   *env;
+
 
     i = 0;
-    quote = 0;
-    append = NULL;
+    s = NULL;
+    key = NULL;
+    while (line[i] != '\0' && ft_isalnum(line[i]))
+        i++;
+    key = ft_substr(line, 0, i);
+    env = env_with_key(key);
+    if (env != NULL)
+        s = ft_strdup(env->value);
+    else
+        s = ft_strdup("");
+    if (key)
+        free(key);
+    *pos += i;
+    return (s);
+}
+
+char        *handle_env(char *line, int *pos)
+{
+    char    *s;
+    int     i;
+    char    *tmp;
+
+    s = NULL;
     tmp = NULL;
+    i = 0;
+    while (line[i] == '$' && line[i + 1] != '\0' && line[i + 1] == '$')
+    {
+        tmp  = ft_strdup(s);
+        if (s)
+            free(s);
+        s = ft_strjoin(tmp, ft_itoa(g_child));
+        if (tmp)
+            free(tmp);
+        i += 2;
+    }
+    if (line[i + 1] == '?')
+    {
+        tmp  = ft_strdup(s);
+        if (s)
+            free(s);
+        s = ft_strjoin(tmp, ft_itoa(g_status));
+        if (tmp)
+            free(tmp);
+        i += 2;
+    }
+    else
+    {
+        i++;
+        tmp  = ft_strdup(s);
+        if (s)
+            free(s);
+        s = ft_strjoin(tmp, ft_get_value(line + i, &i));
+        if (tmp)
+            free(tmp);
+    }
+    *pos += i;
+    return (s);
+}
+
+
+typedef     struct expand
+{
+    int     sgl;
+    int     dbl;
+}                   t_exp;
+
+t_exp       inp(char *s)
+{
+    int     i;
+    t_exp   in;
+    int     end;
+    t_exp   num;
+
+    i = 0;
+    end = 0;
+    in.sgl = 0;
+    in.dbl = 0;
+    while (s[i] != '\0')
+    {
+        if (QUOTE(s[i]))
+        {
+            if (have_end(s + i + 1, s[i], &end) && s[i] == '\'')
+                in.sgl += 1;
+            if (have_end(s + i + 1, s[i], &end) && s[i] == '\"')
+                in.dbl += 1;
+        }
+        if (s[i] == '$')
+            return (in);
+        i++;
+    }
+    return (in);
+}
+
+char         *ft_env(char *line)
+{
+    int     i;
+    char    *s;
+    char    *tmp;
+    t_exp   in;
+
+    i = 0;
+    s = NULL;
+    tmp = NULL;
+    in.sgl = 0;
+    in.dbl = 0;
     while (line[i] != '\0')
     {
-        data = NULL;
-        tmp = NULL;
         if (QUOTE(line[i]))
         {
-            i++;
-            //ft_printf("inside : %s\n", inside_quotes(line + i, &i, line[i - 1]));
-            tmp = ft_strdup(append);
-            if (append)
-                free(append);
-            data = inside_quotes(line + i, &i, line[i - 1]);
-            append = ft_strjoin(tmp, data);
-            if (tmp)
-                free(tmp);
-            if (data)
-                free(data);
+            in = inp(line + i);
+            while (QUOTE(line[i]))
+            {
+                s = append(s, line[i]);
+                i++;
+            }
         }
-        else
+        if (line[i] == '$' && (in.sgl > 1 || in.dbl > 0 || (in.sgl == in.dbl)))
         {
-            //ft_printf("outside : %s\n", outside_quotes(line + i, &i));
-            tmp = ft_strdup(append);
-            if (append)
-                free(append);
-            data = outside_quotes(line + i, &i);
-            append = ft_strjoin(tmp, data);
+            tmp = ft_strdup(s);
+            if (s)
+                free(s);
+            s = ft_strjoin(tmp, handle_env(line + i, &i));
             if (tmp)
                 free(tmp);
-            if (data)
-                free(data);
+        }   
+        else if (line[i] != '\0')
+        {
+            s = append(s, line[i]);
             i++;
         }
-        // if (line[i] == ' ')
-        //     i++;
     }
-    return (append);
+    return (s);
 }
 
 char         *check_line(char *line)
 {
-    char    *rt;
     char    *tmp;
+    char    *rt;
 
-    tmp = NULL;
     rt = ft_strdup(line);
+    tmp = NULL;
     // check Syntax
     if (check_syntax(line) == NULL)
         return (NULL);
-    // Get env Value
     if (ft_strchr(line, '$'))
     {
         tmp = ft_strdup(rt);
         if (rt)
             free(rt);
-        rt = env_to_str(tmp);
-        if (tmp)
-            free(tmp);
+        rt = ft_env(tmp);
+        free(tmp);
     }
-    // get $ var 
     return (rt);
 }
-
-
