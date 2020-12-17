@@ -61,7 +61,7 @@ void	*free_and_return(void *ptr, void *ret)
 	return (ret);
 }
 
-int 	string_equal(char *s1, char *s2)
+int		string_equal(char *s1, char *s2)
 {
 	int res;
 
@@ -69,7 +69,7 @@ int 	string_equal(char *s1, char *s2)
 	return (res == 0);
 }
 
-int     is_blank(char c)
+int		is_blank(char c)
 {
-    return ((c > 8 && c < 14) || c == 32);
+	return ((c > 8 && c < 14) || c == 32);
 }

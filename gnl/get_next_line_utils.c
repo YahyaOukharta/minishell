@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-extern	int	signal_d;
+extern	int	g_signal_d;
 
 char	*realloc_concat(char *s1, char *buf, size_t bufsize)
 {
@@ -84,7 +84,7 @@ int		read_file(int fd, char **line, char *buf, char **rem)
 	int		read_b;
 	int		rem_bytes;
 
-	while ((read_b = read(fd, buf, BUFFER_SIZE)) >= signal_d)
+	while ((read_b = read(fd, buf, BUFFER_SIZE)) >= g_signal_d)
 	{
 		if (read_b < 0)
 			return (-1);

@@ -19,9 +19,15 @@
 # define min(a , b) (a < b ? a : b)
 
 int     g_status;                             // main loop status
-int     signal_c;                            // ctrl -c
-int     signal_d;                           // ctrl-D
+int     g_signal_c;                            // ctrl -c
+int     g_signal_d;                           // ctrl-D
 pid_t   g_child;                           // get pid to kill procces on Sigquit
+
+typedef struct	s_exp
+{
+	int			sgl;
+	int			dbl;
+}				t_exp;
 
 typedef struct  s_command
 {
