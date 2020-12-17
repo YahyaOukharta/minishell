@@ -41,10 +41,10 @@ void        ft_minishell(char **env)
     // Cntrl D problem when cmd is not found 
     while (g_status != -1) // status is global var defined in header
     {
-        g_child = MAX_INT;
+        //g_child = MAX_INT;
         line = NULL;
         getcwd(cwd, 1000);
-        ft_printf("\033[0;32m");
+        ft_printf("\n\033[0;32m");
         rt = ft_prompt(cwd, &line);
         if (rt == 0) // gnl return 0 when there is no \n (EOF)
         {

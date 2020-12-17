@@ -43,10 +43,18 @@ int     builtin_echo(int in, int out, char **argv)
 		}
 		while (*argv)
 		{
-			write(1, *argv, ft_strlen(*argv));
-			if (*(argv + 1))
-				write(1, " ", 1);
-			argv++;
+			while (*argv && !ft_strncmp(*argv, "-n",	max(ft_strlen(*argv), 2)))
+			{
+				argv++;
+				endl = 0;
+			}
+			if (*argv)
+			{
+				write(1, *argv, ft_strlen(*argv));
+				if (*(argv + 1))
+					write(1, " ", 1);
+				argv++;
+			}
 		}
 		if (endl)
 			write(1, "\n", 1);

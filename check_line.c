@@ -113,7 +113,7 @@ char        *handle_env(char *line, int *pos)
             free(tmp);
         i += 2;
     }
-    if (line[i + 1] == '?')
+    if (line[i] != '\0' && line[i + 1] == '?')
     {
         tmp  = ft_strdup(s);
         if (s)
@@ -123,7 +123,7 @@ char        *handle_env(char *line, int *pos)
             free(tmp);
         i += 2;
     }
-    else
+    else if (line[i] != '\0')
     {
         i++;
         tmp  = ft_strdup(s);
