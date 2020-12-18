@@ -49,8 +49,9 @@ void        ft_minishell(char **env)
     {
         //g_child = MAX_INT;
         line = NULL;
+        ft_bzero(cwd, 1024);
         getcwd(cwd, 1000);
-        ft_printf("\n\033[0;32m");
+        ft_printf("\033[0;32m");
         rt = ft_prompt(cwd, &line);
         if (rt == 0) // gnl return 0 when there is no \n (EOF)
         {

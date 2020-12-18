@@ -24,20 +24,23 @@ int		new_process(int in, int out, char **cmd, int *status)
         ft_printf("minishell: command not found: %s\n", cmd[0]);
         return (127);
     }
-    pid = fork(); // missing error handling
-    if (pid == 0)
+    pid = fork();
+    if (pid == -1)
+    {
+        ft_printf("fork failed");
+        exit(EXIT_FAILURE);
+    }
+    else if (pid == 0)
     {
         redirect_in_out(in, out);
         if ((execve(path, cmd, get_env_tab()) == -1))
-        {
             ft_printf("minishell: permission denied: %s\n", cmd[0]);
-            return (126);
-        }
+        exit(EXIT_FAILURE);
     }
     else
     {
         g_child = pid;
-        pid = waitpid(-1, status, WUNTRACED| WCONTINUED);
+        pid = waitpid(-1, status,  WUNTRACED | WCONTINUED);
     }
     return (*status);
 }

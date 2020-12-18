@@ -57,6 +57,11 @@ int  redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	{
         tmp = cmd->output_files[i];
 		fd = open(jump_redirection_sign(tmp), truncate_file(tmp) | O_CREAT | O_WRONLY , 0644); // O_TRUNC only if >
+		if (fd < 0)
+        {
+            ft_printf("minishell: no such file or directory: %s\n", jump_redirection_sign(tmp));
+            return (1);
+        }
 		g_status = redirect_inputs(cmd->tokens, fd, pipe_in, cmd->input_files);
 		close(fd);
 		i++;
