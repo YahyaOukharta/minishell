@@ -44,7 +44,6 @@ int		truncate_file(char *out)
 	i = 0;
 	while (out[i] == '>')
 		i++;
-	ft_printf("%d\n", i);
 	return (i == 2 ? O_APPEND : O_TRUNC);
 }
 

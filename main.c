@@ -28,16 +28,16 @@ void		ft_minishell(char **env)
 	rt = 0;
 	init_environment(env);
 	init_builtins();
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
 	g_status = 0;
 	g_signal_c = 0;
 	g_signal_d = 1;
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 	while (g_status != -1)
 	{
 		line = NULL;
 		getcwd(cwd, 1000);
-		ft_printf("\n\033[0;32m");
+		ft_printf("\033[0;32m");
 		rt = ft_prompt(cwd, &line);
 		if (rt == 0)
 		{
@@ -49,7 +49,10 @@ void		ft_minishell(char **env)
 				continue ;
 			}
 			else
+			{
+				ft_putchar_fd('\n', STDOUT);
 				exit(1);
+			}
 		}
 		g_signal_d = 1;
 		if (!(checked_line = check_line(line)))

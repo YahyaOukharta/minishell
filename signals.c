@@ -13,10 +13,12 @@ void	signal_handler(int signal)
 		write(STDOUT, " $ ", ft_strlen(" $ "));
 		write(STDOUT, "\033[0m", ft_strlen("\033[0m"));
 		g_signal_c = 1;
+		if (kill(g_child, 0) == 0)
+			kill(g_child, SIGINT);
 	}
 	if (signal == SIGQUIT)
 	{
-		/*if (kill(g_child, 0) == 0)
-			kill(g_child, SIGQUIT);*/
+		if (kill(g_child, 0) == 0)
+			kill(g_child, SIGQUIT);
 	}
 }
