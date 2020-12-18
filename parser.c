@@ -6,10 +6,8 @@ t_command *new_cmd(char *line)
 	t_redir		redir;
 
 	ft_printf("|%s|\n", line);
-    // char *s = get_command(line);
 	redir = get_tokens(line);
     cmd->tokens = redir.tokens;
-	//cmd->tokens = redir.tokens;
     cmd->input_files = redir.ins;
     cmd->output_files = redir.outs;
     return (cmd);

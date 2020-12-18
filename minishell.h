@@ -47,13 +47,16 @@ typedef struct  s_pipeline
 
 // Here any utility function we need 
 
-int                 ft_prompt(char *msg, char **line);   // prompt user to input 
+int                 ft_prompt(char **line);              // prompt user to input 
 char                *check_syntax(char *s);             // check input syntax
 char                *check_line(char *line);           // Fix imput ;=
 int			        have_end(char *s, char quote, int *start);
 char	            **parser_split(char *line, char c);
 char                *env_to_str(char *line);        // Get $var value
-
+void		        init_shell(char **env);
+bool		        handle_return(int rt, char *line);
+t_pipeline		    **parse_data(char *line);
+void		        exec_parsed(t_pipeline **parsed_line);
 // Parser
 
 typedef struct  s_redir
