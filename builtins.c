@@ -176,5 +176,7 @@ int		builtin_unset(int in, int out, char **argv)
 int		builtin_exit(int in, int out, char **argv)
 {
 	(void)argv;
-	exit(0);
+	(void)in;
+	(void)out;
+	exit(-1);
 }

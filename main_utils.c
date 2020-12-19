@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int			    ft_prompt(char **line)
+int				ft_prompt(char **line)
 {
 	char	cwd[1024];
 
@@ -21,7 +21,7 @@ int			    ft_prompt(char **line)
 	return (get_next_line(STDIN, line));
 }
 
-void		    init_shell(char **env)
+void			init_shell(char **env)
 {
 	init_environment(env);
 	init_builtins();
@@ -32,7 +32,7 @@ void		    init_shell(char **env)
 	signal(SIGQUIT, signal_handler);
 }
 
-bool		    handle_return(int rt, char *line)
+bool			handle_return(int rt, char *line)
 {
 	if (rt == 0)
 	{
@@ -50,7 +50,7 @@ bool		    handle_return(int rt, char *line)
 		}
 	}
 	g_signal_d = 1;
-    return (false);
+	return (false);
 }
 
 t_pipeline		**parse_data(char *line)
@@ -69,7 +69,7 @@ t_pipeline		**parse_data(char *line)
 	return (parsed_line);
 }
 
-void		    exec_parsed(t_pipeline **parsed_line)
+void			exec_parsed(t_pipeline **parsed_line)
 {
 	int i;
 
