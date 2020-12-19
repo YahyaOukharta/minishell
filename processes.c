@@ -20,18 +20,17 @@ int		new_process(int in, int out, char **cmd, int *status)
 	}
 	pid = fork();
 	if (pid == -1)
-    {
-        ft_printf("fork failed\n");
-        exit(EXIT_FAILURE);
-    }
+	{
+		ft_printf("fork failed\n");
+		exit(EXIT_FAILURE);
+	}
 	else if (pid == 0)
 	{
 		redirect_in_out(in, out);
 		if ((execve(path, cmd, get_env_tab()) == -1))
 		{
 			ft_printf("minishell: permission denied: %s\n", cmd[0]);
-			//return (126);
-			exit(EXIT_FAILURE);
+			return (126);
 		}
 	}
 	else

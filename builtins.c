@@ -35,14 +35,14 @@ int		builtin_echo(int in, int out, char **argv)
 	else
 	{
 		argv++;
-		if (!ft_strncmp(*argv, "-n", max(ft_strlen(*argv), 2)))
+		if (!ft_strncmp(*argv, "-n", MAX(ft_strlen(*argv), 2)))
 		{
 			argv++;
 			endl = 0;
 		}
 		while (*argv)
 		{
-			while (*argv && !ft_strncmp(*argv, "-n", max(ft_strlen(*argv), 2)))
+			while (*argv && !ft_strncmp(*argv, "-n", MAX(ft_strlen(*argv), 2)))
 			{
 				argv++;
 				endl = 0;

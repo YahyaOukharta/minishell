@@ -1,24 +1,27 @@
 #include "minishell.h"
 
-t_command *new_cmd(char *line)
+t_command		*new_cmd(char *line)
 {
-    t_command *cmd = (t_command *)malloc(sizeof(t_command));
+	t_command	*cmd;
 	t_redir		redir;
 
-	ft_printf("|%s|\n", line);
+	cmd = (t_command *)malloc(sizeof(t_command));
 	redir = get_tokens(line);
-    cmd->tokens = redir.tokens;
-    cmd->input_files = redir.ins;
-    cmd->output_files = redir.outs;
-    return (cmd);
+	cmd->tokens = redir.tokens;
+	cmd->input_files = redir.ins;
+	cmd->output_files = redir.outs;
+	return (cmd);
 }
 
-t_pipeline *new_pipeline(char **lines)
+t_pipeline		*new_pipeline(char **lines)
 {
-	t_pipeline *pipeline = (t_pipeline *)malloc(sizeof(t_pipeline));
+	t_pipeline	*pipeline;
+	int			i;
 
-	pipeline->cmds = (t_command **)malloc(sizeof(t_command *) * (tab_len(lines) + 1));
-	int i = 0;
+	pipeline = (t_pipeline *)malloc(sizeof(t_pipeline));
+	pipeline->cmds = (t_command **)malloc(
+		sizeof(t_command *) * (tab_len(lines) + 1));
+	i = 0;
 	while (lines[i])
 	{
 		pipeline->cmds[i] = new_cmd(lines[i]);
@@ -29,27 +32,28 @@ t_pipeline *new_pipeline(char **lines)
 	return (pipeline);
 }
 
-t_pipeline **parser(char *line)
+t_pipeline		**parser(char *line)
 {
-    char **pipelines;
-    char **cmds;
+	char		**pipelines;
+	char		**cmds;
+	t_pipeline	**parsed_line;
+	int			i;
 
-	line = ft_strtrim(line," \t");
-    pipelines = parser_split(line,';');
-
-	t_pipeline **parsed_line = (t_pipeline **)malloc(sizeof(t_pipeline*) * (tab_len(pipelines) + 1));
-
-	int i = 0;
-	while(pipelines[i] != NULL)
+	line = ft_strtrim(line, " \t");
+	pipelines = parser_split(line, ';');
+	parsed_line = (t_pipeline **)malloc(
+		sizeof(t_pipeline*) * (tab_len(pipelines) + 1));
+	i = 0;
+	while (pipelines[i] != NULL)
 	{
 		parsed_line[i] = new_pipeline(parser_split(pipelines[i], '|'));
 		i++;
-	}	
+	}
 	parsed_line[i] = 0;
 	return (parsed_line);
 }
 
-void print_parsed_line(t_pipeline **parsed_line)
+void			print_parsed_line(t_pipeline **parsed_line)
 {
 	int i;
 	int j;

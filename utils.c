@@ -17,7 +17,7 @@ int		exists_in_tab(char *s, char **tab)
 {
 	while (*tab)
 	{
-		if (!ft_strncmp(s, *tab, max(ft_strlen(s), ft_strlen(*tab))))
+		if (!ft_strncmp(s, *tab, MAX(ft_strlen(s), ft_strlen(*tab))))
 			return (1);
 		tab++;
 	}
@@ -31,7 +31,7 @@ int		index_of_in_tab(char *s, char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		if (!ft_strncmp(s, tab[i], max(ft_strlen(s), ft_strlen(tab[i]))))
+		if (!ft_strncmp(s, tab[i], MAX(ft_strlen(s), ft_strlen(tab[i]))))
 			return (i);
 		i++;
 	}
@@ -65,7 +65,7 @@ int		string_equal(char *s1, char *s2)
 {
 	int res;
 
-	res = ft_strncmp(s1, s2, max(ft_strlen(s1), ft_strlen(s2)));
+	res = ft_strncmp(s1, s2, MAX(ft_strlen(s1), ft_strlen(s2)));
 	return (res == 0);
 }
 

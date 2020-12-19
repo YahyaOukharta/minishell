@@ -58,12 +58,14 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	{
 		tmp = cmd->output_files[i];
 		fd = open(jump_redirection_sign(tmp),
-			truncate_file(tmp) | O_CREAT | O_WRONLY , 0644);
+			truncate_file(tmp) | O_CREAT | O_WRONLY, 0644);
 		g_status = redirect_inputs(cmd->tokens, fd, pipe_in, cmd->input_files);
 		close(fd);
 		i++;
 	}
-	if (!(pipe_out == 1  && tab_len(cmd->output_files)))
-		g_status = redirect_inputs(cmd->tokens, pipe_out, pipe_in, cmd->input_files);
+	if (!(pipe_out == 1  && tab_len(cmd->output_files))
+		|| string_equal(cmd->tokens[0], "exit"))
+		g_status = redirect_inputs(cmd->tokens,
+			pipe_out, pipe_in, cmd->input_files);
 	return (g_status);
 }
