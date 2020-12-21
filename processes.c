@@ -36,7 +36,7 @@ int		new_process(int in, int out, char **cmd, int *status)
 	else
 	{
 		g_child = pid;
-		pid = waitpid(-1, status, WUNTRACED| WCONTINUED);
+		pid = waitpid(-1, status, WUNTRACED | WCONTINUED);
 	}
 	return (*status);
 }

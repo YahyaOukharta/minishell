@@ -25,8 +25,10 @@ t_pipeline		*new_pipeline(char **lines)
 	while (lines[i])
 	{
 		pipeline->cmds[i] = new_cmd(lines[i]);
+		free(lines[i]);
 		i++;
 	}
+	free(lines);
 	pipeline->cmds[i] = 0;
 	pipeline->n_commands = i;
 	return (pipeline);

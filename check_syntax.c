@@ -45,9 +45,11 @@ int			check_pipe(char *s)
 	char	**pipes;
 	int		i;
 	int		nb_pipes;
+	int		rt;
 
 	i = 0;
 	nb_pipes = 0;
+	rt = 0;
 	while (s[i] != '\0')
 	{
 		if (s[i] == '|' && s[i + 1] != '|')
@@ -56,11 +58,15 @@ int			check_pipe(char *s)
 			return (0);
 		i++;
 	}
-	pipes = ft_split(s, '|');
-	i = tab_len(pipes);
-	if (nb_pipes == i - 1)
-		return (1);
-	return (0);
+	pipes = parser_split(s, '|');
+	i = tab_len(pipes) - 1;
+	if (nb_pipes == i) 
+		rt = 1;
+	i = 0;
+	while (pipes[i] != NULL)
+		free(pipes[i++]);
+	free(pipes);
+	return (rt);
 }
 
 int			check_arg(char *s)
@@ -68,10 +74,12 @@ int			check_arg(char *s)
 	int		i;
 	int		end;
 	int		in;
+	char	*tmp;
 
 	i = 0;
 	in = 0;
 	end = 0;
+	tmp = NULL;
 	if (s)
 	{
 		while (!(s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
@@ -92,8 +100,10 @@ int			check_arg(char *s)
 			if (QUOTE(s[i]) && in == 0)
 			{
 				end = i + 1;
-				if (inside_quotes(s + i + 1, &end, s[i]))
+				if (!(tmp = inside_quotes(s + i + 1, &end, s[i])))
 					in = 1;
+				if (tmp)
+					free(tmp);
 			}
 			if (i == end)
 				in = 0;
@@ -116,10 +126,12 @@ int			ft_strsearch(char *s, char n)
 	int		i;
 	int		in;
 	int		end;
+	char	*tmp;
 
 	i = 0;
 	in = 0;
 	end = 0;
+	tmp = NULL;
 	if (s)
 	{
 		while (s[i] != '\0')
@@ -127,8 +139,10 @@ int			ft_strsearch(char *s, char n)
 			if (QUOTE(s[i]) && in == 0)
 			{
 				end = i + 1;
-				if (inside_quotes(s + i + 1, &end, s[i]))
+				if (!(tmp = inside_quotes(s + i + 1, &end, s[i])))
 					in = 1;
+				if (tmp)
+					free(tmp);
 			}
 			if (i == end)
 				in = 0;
@@ -145,7 +159,9 @@ int			has_redir(char *s, int *pos)
 	int		i;
 	int		in;
 	int		end;
+	char	*tmp;
 
+	tmp = NULL;
 	if (s)
 	{
 		i = 0;
@@ -156,8 +172,10 @@ int			has_redir(char *s, int *pos)
 			if (QUOTE(s[i]) && in == 0)
 			{
 				end = i + 1;
-				if (inside_quotes(s + i + 1, &end, s[i]))
+				if (!(tmp = inside_quotes(s + i + 1, &end, s[i])))
 					in = 1;
+				if (tmp)
+					free(tmp);
 			}
 			if (i == end)
 				in = 0;
