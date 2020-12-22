@@ -33,19 +33,23 @@ char            *get_rarg(char *line, int *pos)
     int     in;
     char    *s;
     char    *tmp;
+    char    *h;
 
-    s = ft_strdup("");
+    s = NULL;
     i = 0;
     in = 0;
     end = 0;
-    tmp = ft_strdup("");
+    tmp = NULL;
+    h = NULL;
     while (line[i] != '\0')
     {
         if (QUOTE(line[i]) && in == 0)
 	    {
 			end = i + 1;
-			if (inside_quotes(line + i + 1, &end, line[i]))
+			if (!(tmp = inside_quotes(line + i + 1, &end, line[i])))
 				in = 1;
+            if (tmp)
+                free(tmp);
 		}
 		if (i == end)
 			in = 0;
@@ -54,7 +58,10 @@ char            *get_rarg(char *line, int *pos)
             tmp = ft_strdup(s);
             if (s)
                 free(s);
-            s = ft_strjoin(tmp, outside_quotes(line + i, &i));
+            h = outside_quotes(line + i, &i);
+            s = ft_strjoin(tmp, h);
+            if (h)
+                free(h);
             if (tmp)
                 free(tmp);
 			break ;
@@ -63,8 +70,6 @@ char            *get_rarg(char *line, int *pos)
         if (s)
             free(s);
 		s = append(tmp, line[i]);
-        //if (tmp)
-        //   free(tmp);
 		i++;
     }
     if (line[i] == '\0')
@@ -106,7 +111,6 @@ t_redir          get_tokens(char *s)
             {
                 i++;
                 redir.tokens = realloc__(redir.tokens, inside_quotes(s + i, &i, s[i - 1]));
-                //i = i + end;
             }
         }
         else if ((s[i] == '>' && s[i + 1] == '>') ||
@@ -122,10 +126,12 @@ t_redir          get_tokens(char *s)
                 else
                     redir.ins = realloc__(redir.ins, get_rarg(s + i, &i));
             }
+            i++;
         }
         else if (s[i] != ' ')
             redir.tokens = realloc__(redir.tokens, outside_quotes(s + i, &i));
-        i++;
+        if (s[i] == ' ' || s[i + 1] == '\0')
+            i++;
     } 
     return (redir);
 }

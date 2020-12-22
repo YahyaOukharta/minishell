@@ -223,12 +223,10 @@ int			check_redir(char *s)
 
 char        *check_syntax(char *s)
 {
-	char	*line;
 	int 	pos;
 	char	*e;
 
 	pos = 0;
-	line = NULL;
 	if (ft_strchr(s, '\"') || ft_strchr(s, '\''))
 	{
 		if (check_quotes(s, &pos) == 0)

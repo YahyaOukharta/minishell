@@ -70,26 +70,11 @@ t_pipeline		**parse_data(char *line)
 	return (parsed_line);
 }
 
-void			free_line(t_pipeline *parsed)
-{
-	int i;
-
-	i = 0;
-	while (parsed->cmds[i] != NULL)
-		free(parsed->cmds[i++]);
-	free(parsed->cmds);
-	free(parsed);
-}
-
 void			exec_parsed(t_pipeline **parsed_line)
 {
 	int i;
 
 	i = 0;
 	while (parsed_line[i] != NULL)
-	{
-		g_status = execute_pipeline(parsed_line[i]);
-		free_line(parsed_line[i]);
-		i++;
-	}
+		g_status = execute_pipeline(parsed_line[i++]);
 }

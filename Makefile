@@ -23,7 +23,7 @@ GNL_BUFFER_SIZE = -D BUFFER_SIZE=100
 
 FT_PRINTF_PATH = ft_printf/
 
-FLAGS = -fsanitize=address -g #-Wall -Wextra -Werror
+FLAGS = -g #-fsanitize=address #-Wall -Wextra -Werror
 
 all: $(NAME)
 

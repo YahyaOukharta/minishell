@@ -44,7 +44,7 @@ char        *outside_quotes(char *s, int *start)
     rt = NULL;
     while (s[i] != '\0')
     {
-        if (s[i] == ' ' && i != 0)
+        if ((s[i] == ' ' || !ft_isalnum(s[i]) )&& i != 0)
         {
             *start += i;
             break ;
@@ -212,8 +212,12 @@ char         *check_line(char *line)
 
     rt = ft_strdup(line);
     tmp = NULL;
-    if (check_syntax(line) == NULL)
+    if (!(tmp = check_syntax(line)))
+    {
+        free(rt);
+        free(tmp);
         return (NULL);
+    }
     if (ft_strchr(line, '$'))
     {
         tmp = ft_strdup(rt);
@@ -222,5 +226,7 @@ char         *check_line(char *line)
         rt = ft_env(tmp);
         free(tmp);
     }
+    if (tmp)
+        free(tmp);
     return (rt);
 }

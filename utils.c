@@ -47,7 +47,8 @@ int		free_s_tab(char **tab)
 	{
 		while (tab[i])
 		{
-			free(tab[i]);
+			if (tab[i])
+				free(tab[i]);
 			i++;
 		}
 		free(tab);

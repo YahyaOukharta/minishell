@@ -48,6 +48,7 @@ typedef struct		s_redir
 	char			**outs;
 	char			**tokens;
 }					t_redir;
+
 typedef struct		s_env
 {
 	char			*key;

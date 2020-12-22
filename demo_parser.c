@@ -58,15 +58,18 @@ char	*get_arg(char *line, char c, int *pos)
 	i = 0;
 	end = 0;
 	in = 0;
-	s = ft_strdup("");
+	s = NULL;
 	tmp = NULL;
 	while (line[i] != '\0')
 	{
 		if (in == 0 && QUOTE(line[i]))
 		{
 			end = i + 1;
-			if (inside_quotes(line + i + 1, &end, line[i]))
+			if (!(tmp = inside_quotes(line + i + 1, &end, line[i])))
+			{
 				in = 1;
+				free(tmp);
+			}
 		}
 		if (i == end)
 			in = 0;

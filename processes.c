@@ -13,15 +13,18 @@ int		new_process(int in, int out, char **cmd, int *status)
 	int		pid;
 	char	*path;
 
+	path = NULL;
 	if (!find_file_in_path(&path, cmd[0]))
 	{
 		ft_printf("minishell: command not found: %s\n", cmd[0]);
+		free(path);
 		return (127);
 	}
 	pid = fork();
 	if (pid == -1)
 	{
 		ft_printf("fork failed\n");
+		free(path);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
@@ -30,6 +33,7 @@ int		new_process(int in, int out, char **cmd, int *status)
 		if ((execve(path, cmd, get_env_tab()) == -1))
 		{
 			ft_printf("minishell: permission denied: %s\n", cmd[0]);
+			free(path);
 			return (126);
 		}
 	}
@@ -38,6 +42,7 @@ int		new_process(int in, int out, char **cmd, int *status)
 		g_child = pid;
 		pid = waitpid(-1, status, WUNTRACED | WCONTINUED);
 	}
+	free(path);
 	return (*status);
 }
 
@@ -45,7 +50,6 @@ int		new_builtin_process(int in, int out,
 	char **av, int (*b)(int, int, char **))
 {
 	int		pid;
-	char	*path;
 	int		ret;
 
 	if (string_equal(av[0], "env") ||
@@ -54,7 +58,12 @@ int		new_builtin_process(int in, int out,
 		(string_equal(av[0], "exit") && out != 1))
 	{
 		pid = fork();
-		if (pid == 0)
+		if (pid == -1)
+		{
+			ft_printf("fork failed\n");
+			exit(EXIT_FAILURE);
+		}
+		else if (pid == 0)
 		{
 			ret = b(in, out, av);
 			exit(ret);
@@ -69,10 +78,7 @@ int		new_builtin_process(int in, int out,
 
 int		execute_command(int in, int out, char **argv)
 {
-	char	**cmd;
-	pid_t	child_pid;
 	int		index;
-	char	*path;
 
 	if (tab_len(argv))
 	{

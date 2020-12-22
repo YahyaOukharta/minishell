@@ -21,14 +21,13 @@ t_pipeline		*new_pipeline(char **lines)
 	pipeline = (t_pipeline *)malloc(sizeof(t_pipeline));
 	pipeline->cmds = (t_command **)malloc(
 		sizeof(t_command *) * (tab_len(lines) + 1));
-	i = 0;
-	while (lines[i])
+	i = -1;
+	while (lines[++i])
 	{
 		pipeline->cmds[i] = new_cmd(lines[i]);
 		free(lines[i]);
-		i++;
 	}
-	free(lines);
+	free(lines[i]);
 	pipeline->cmds[i] = 0;
 	pipeline->n_commands = i;
 	return (pipeline);
@@ -40,7 +39,9 @@ t_pipeline		**parser(char *line)
 	char		**cmds;
 	t_pipeline	**parsed_line;
 	int			i;
+	char		**split;
 
+	split = NULL;
 	line = ft_strtrim(line, " \t");
 	pipelines = parser_split(line, ';');
 	parsed_line = (t_pipeline **)malloc(
@@ -48,9 +49,12 @@ t_pipeline		**parser(char *line)
 	i = 0;
 	while (pipelines[i] != NULL)
 	{
-		parsed_line[i] = new_pipeline(parser_split(pipelines[i], '|'));
+		split = parser_split(pipelines[i], '|');
+		parsed_line[i] = new_pipeline(split);
+		free(pipelines[i]);
 		i++;
 	}
+	free(pipelines);
 	parsed_line[i] = 0;
 	return (parsed_line);
 }

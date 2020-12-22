@@ -31,7 +31,6 @@ int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 			return (1);
 		}
 		g_status = execute_command(fd, out, tokens);
-		free(tmp);
 		close(fd);
 		i++;
 	}
@@ -61,7 +60,6 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 		fd = open(jump_redirection_sign(tmp),
 			truncate_file(tmp) | O_CREAT | O_WRONLY, 0644);
 		g_status = redirect_inputs(cmd->tokens, fd, pipe_in, cmd->input_files);
-		free(tmp);
 		close(fd);
 		i++;
 	}
