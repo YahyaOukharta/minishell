@@ -8,10 +8,10 @@ char        *inside_quotes(char *s, int *start, char quote)
 
     i = 0;
     end = 0;
-    m = ft_strdup("");
+    m = NULL;
     while (s[i] != '\0')
     {
-        if (s[i] == quote && !(ft_isalpha(s[i + 1]) || ft_isdigit(s[i + 1])) && i != 0)
+        if (s[i] == quote && !(ft_isalnum(s[i + 1])))
         {
             *start += i;
             break ;

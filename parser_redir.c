@@ -53,7 +53,7 @@ char            *get_rarg(char *line, int *pos)
 		}
 		if (i == end)
 			in = 0;
-		if (ft_isalpha(line[i]) && in == 0)
+		if (ft_isalnum(line[i]) && in == 0)
 		{
             tmp = ft_strdup(s);
             if (s)
@@ -85,6 +85,9 @@ int             quote_ends(char *s, char c)
     int     i;
 
     i = 0;
+    // echo hello ; ""
+    if (QUOTE(s[i]) && i == 0)
+        return (1);
     while (s[i] != c && s[i] != '\0')
         i++;
     return (i);
@@ -111,6 +114,8 @@ t_redir          get_tokens(char *s)
             {
                 i++;
                 redir.tokens = realloc__(redir.tokens, inside_quotes(s + i, &i, s[i - 1]));
+                if (QUOTE(s[i]))
+                    i++;
             }
         }
         else if ((s[i] == '>' && s[i + 1] == '>') ||

@@ -45,6 +45,8 @@ void		free_shell()
 	}
 }
 
+// echo papapapapapa > $ppp
+
 void		ft_minishell(char **env)
 {
 	char		*line;
