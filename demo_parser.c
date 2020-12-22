@@ -101,7 +101,7 @@ char	**parser_split(char *line, char c)
 	i = 0;
 	while (i < nb_c)
 	{
-		split[i] = get_arg(line + j, c, &j);
+		split[i] = ft_strtrim(get_arg(line + j, c, &j), " \t");
 		j++;
 		i++;
 	}

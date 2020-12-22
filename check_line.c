@@ -44,7 +44,7 @@ char        *outside_quotes(char *s, int *start)
     rt = NULL;
     while (s[i] != '\0')
     {
-        if ((s[i] == ' ' || !ft_isalnum(s[i]) )&& i != 0)
+        if (s[i] == ' ' || s[i] == '>' || s[i] == '<')
         {
             *start += i;
             break ;
@@ -224,7 +224,6 @@ char         *check_line(char *line)
         if (rt)
             free(rt);
         rt = ft_env(tmp);
-        free(tmp);
     }
     if (tmp)
         free(tmp);

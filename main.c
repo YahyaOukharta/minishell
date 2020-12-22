@@ -63,7 +63,6 @@ void		ft_minishell(char **env)
 			continue ;
 		exec_parsed(parsed_line);
 		free_pipeline(parsed_line);
-		free(line);
 	}
 	free_shell();
 }
@@ -73,6 +72,6 @@ int			main(int ac, char **argv, char **env)
 	if (ac == 1)
 		ft_minishell(env);
 	else
-		ft_printf("Usage : ./minishell\n");
+		ft_putstr_fd("Usage : ./minishell\n", STDERR);
 	return (0);
 }

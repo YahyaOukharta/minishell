@@ -42,30 +42,24 @@ int			check_quotes(char *s, int *pos)
 
 int			check_pipe(char *s)
 {
-	char	**pipes;
-	int		i;
-	int		nb_pipes;
+	char	**split;
+	int		v;
 	int		rt;
-
-	i = 0;
-	nb_pipes = 0;
+	int		i;
+	
+	i = -1;
 	rt = 0;
-	while (s[i] != '\0')
+	split = parser_split(s, '|');
+	v = 0;
+	while (split[++i] != NULL)
 	{
-		if (s[i] == '|' && s[i + 1] != '|')
-			nb_pipes++;
-		else if (s[i] == '|' && s[i + 1] == '|')
-			return (0);
-		i++;
+		if (ft_strlen(split[i]) > 0)
+			v++;
+		free(split[i]);
 	}
-	pipes = parser_split(s, '|');
-	i = tab_len(pipes) - 1;
-	if (nb_pipes == i) 
+	free(split);
+	if ((v - 1) == cparser(s, '|'))
 		rt = 1;
-	i = 0;
-	while (pipes[i] != NULL)
-		free(pipes[i++]);
-	free(pipes);
 	return (rt);
 }
 

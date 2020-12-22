@@ -64,7 +64,7 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 		i++;
 	}
 	if (!(pipe_out == 1  && tab_len(cmd->output_files))
-		|| string_equal(cmd->tokens[0], "exit"))
+		|| (cmd->tokens != NULL && string_equal(cmd->tokens[0], "exit")))
 		g_status = redirect_inputs(cmd->tokens,
 			pipe_out, pipe_in, cmd->input_files);
 	return (g_status);

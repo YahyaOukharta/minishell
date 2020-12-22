@@ -60,6 +60,7 @@ t_env				*g_env;
 int					(*g_builtins[7])(int, int, char **);
 char				*g_builtins_str[8];
 
+int					cparser(char *s, char q);
 int					ft_prompt(char **line);
 char				*check_syntax(char *s);
 char				*check_line(char *line);
