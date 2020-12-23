@@ -16,7 +16,8 @@ void	signal_handler(int signal)
 	}
 	if (signal == SIGQUIT)
 	{
-		if (kill(g_child, 0) == 0)
-			kill(g_child, SIGQUIT);
+		if (g_child > 0)
+			if (kill(g_child, 0) == 0)
+				kill(g_child, SIGQUIT);
 	}
 }

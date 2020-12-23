@@ -4,12 +4,22 @@ char	*jump_redirection_sign(char *out)
 {
 	char	*s;
 	int		i;
+	char	quote;
 
 	i = 0;
 	s = NULL;
 	while (*out == '>' || *out == '<' || is_blank(*out))
 		out++;
-	return (out);
+	if (QUOTE(*out))
+	{
+		quote = *out;
+		out++;
+		s = inside_quotes(out, &i, quote);
+	}
+	else
+		s = ft_strdup(out);
+	
+	return (s);
 }
 
 int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
@@ -59,6 +69,12 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 		tmp = cmd->output_files[i];
 		fd = open(jump_redirection_sign(tmp),
 			truncate_file(tmp) | O_CREAT | O_WRONLY, 0644);
+		if (fd < 0)
+		{
+			ft_printf("ambiguous redirect\n");
+			i++;
+			continue;
+		}
 		g_status = redirect_inputs(cmd->tokens, fd, pipe_in, cmd->input_files);
 		close(fd);
 		i++;

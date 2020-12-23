@@ -91,19 +91,7 @@ int			check_arg(char *s)
 		}
 		while (s[i] != '\0')
 		{
-			if (QUOTE(s[i]) && in == 0)
-			{
-				end = i + 1;
-				if (!(tmp = inside_quotes(s + i + 1, &end, s[i])))
-					in = 1;
-				if (tmp)
-					free(tmp);
-			}
-			if (i == end)
-				in = 0;
-			while (s[i] == ' ' && in == 0)
-				i++;
-			if ((ft_isalpha(s[i]) || ft_isdigit(s[i])))
+			if (ft_isalnum(s[i]) || QUOTE(s[i]))
 				return (0);
 			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
 				ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
@@ -133,7 +121,7 @@ int			ft_strsearch(char *s, char n)
 			if (QUOTE(s[i]) && in == 0)
 			{
 				end = i + 1;
-				if (!(tmp = inside_quotes(s + i + 1, &end, s[i])))
+				if ((tmp = inside_quotes(s + i + 1, &end, s[i])))
 					in = 1;
 				if (tmp)
 					free(tmp);
@@ -166,7 +154,7 @@ int			has_redir(char *s, int *pos)
 			if (QUOTE(s[i]) && in == 0)
 			{
 				end = i + 1;
-				if (!(tmp = inside_quotes(s + i + 1, &end, s[i])))
+				if ((tmp = inside_quotes(s + i + 1, &end, s[i])))
 					in = 1;
 				if (tmp)
 					free(tmp);

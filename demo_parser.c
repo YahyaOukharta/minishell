@@ -2,22 +2,25 @@
 
 int		cparser(char *s, char q)
 {
-	int i;
-	int in;
-	int c;
+	int		i;
+	int		in;
+	int		c;
+	int		end;
 
 	i = 0;
 	in = 0;
 	c = 0;
+	end = 0;
 	while (s[i] != '\0')
 	{
-		if (QUOTE(s[i]))
+		if (QUOTE(s[i]) && in == 0)
 		{
-			if (have_end(s + i + 1, s[i], &i))
+			end = i + 1;
+			if (have_end(s + i + 1, s[i], &end))
 				in = 1;
-			else
-				in = 0;
 		}
+		if (i == end)
+			in = 0;
 		if (in == 0 && s[i] == q)
 			c++;
 		i++;
@@ -40,7 +43,8 @@ char	*append(char *s, char c)
 		str[i] = s[i];
 		i++;
 	}
-	free(s);
+	if (s)
+		free(s);
 	str[i] = c;
 	str[i + 1] = '\0';
 	return (str);
@@ -64,7 +68,7 @@ char	*get_arg(char *line, char c, int *pos)
 		if (in == 0 && QUOTE(line[i]))
 		{
 			end = i + 1;
-			if (!(tmp = inside_quotes(line + i + 1, &end, line[i])))
+			if ((tmp = inside_quotes(line + i + 1, &end, line[i])))
 			{
 				in = 1;
 				free(tmp);
