@@ -71,7 +71,7 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 			truncate_file(tmp) | O_CREAT | O_WRONLY, 0644);
 		if (fd < 0)
 		{
-			ft_printf("ambiguous redirect\n");
+			ft_printf("No such file or Directory\n");
 			i++;
 			continue;
 		}
