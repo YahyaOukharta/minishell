@@ -35,6 +35,7 @@ t_pipeline		**parser(char *line)
 	t_pipeline	**parsed_line;
 	int			i;
 	char		**split;
+	char		*tmp;
 
 	split = NULL;
 	line = ft_strtrim(line, " \t");
@@ -42,18 +43,15 @@ t_pipeline		**parser(char *line)
 	parsed_line = (t_pipeline **)malloc(
 		sizeof(t_pipeline*) * (tab_len(pipelines) + 1));
 	i = 0;
-	int j = 0;
 	while (pipelines[i] != NULL)
 	{
 		split = parser_split(pipelines[i], '|');
 		parsed_line[i] = new_pipeline(split);
 		free(pipelines[i]);
-		j = 0;
-		while (split[j] != NULL)
-			free(split[j++]);
-		free(split);
+		free_s_tab(split);
 		i++;
 	}
+	free(line);
 	free(pipelines);
 	parsed_line[i] = 0;
 	return (parsed_line);

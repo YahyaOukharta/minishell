@@ -40,8 +40,7 @@ char	*append(char *s, char c)
 		str[i] = s[i];
 		i++;
 	}
-	if (s)
-		free(s);
+	free(s);
 	str[i] = c;
 	str[i + 1] = '\0';
 	return (str);
@@ -49,11 +48,11 @@ char	*append(char *s, char c)
 
 char	*get_arg(char *line, char c, int *pos)
 {
-	int 	i;
-	int 	end;
-	int 	in;
+	int		i;
+	int		end;
+	int		in;
 	char	*s;
-	char 	*tmp;
+	char	*tmp;
 
 	i = 0;
 	end = 0;
@@ -82,7 +81,7 @@ char	*get_arg(char *line, char c, int *pos)
 		i++;
 	}
 	if (line[i] == '\0')
-        *pos += i - 1;
+		*pos += i - 1;
 	return (s);
 }
 
@@ -92,6 +91,7 @@ char	**parser_split(char *line, char c)
 	int		nb_c;
 	char 	**split;
 	int		j;
+	char	*tmp;
 
 	i = 0;
 	j = 0;
@@ -101,11 +101,12 @@ char	**parser_split(char *line, char c)
 	i = 0;
 	while (i < nb_c)
 	{
-		split[i] = ft_strtrim(get_arg(line + j, c, &j), " \t");
+		tmp = get_arg(line + j, c, &j);
+		split[i] = ft_strtrim(tmp, " \t");
+		free(tmp);
 		j++;
 		i++;
 	}
 	split[i] = NULL;
 	return (split);
 }
- 

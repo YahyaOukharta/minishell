@@ -13,8 +13,10 @@ void		free_cmds(t_command **cmd)
 			free_s_tab(cmd[i]->input_files);
 		if (cmd[i]->output_files)
 			free_s_tab(cmd[i]->output_files);
+		free(cmd[i]);
 		i++;
 	}
+	free(cmd[i]);
 	free(cmd);
 }
 
@@ -27,8 +29,10 @@ void		free_pipeline(t_pipeline **p)
 	{
 		if (p[i]->cmds)
 			free_cmds(p[i]->cmds);
+		free(p[i]);
 		i++;
 	}
+	free(p[i]);
 	free(p);
 }
 
