@@ -63,7 +63,7 @@ char				*g_builtins_str[8];
 
 int					cparser(char *s, char q);
 int					ft_prompt(char **line);
-char				*check_syntax(char *s);
+int					check_syntax(char *s);
 char				*check_line(char *line);
 int					have_end(char *s, char quote, int *start);
 char		        **parser_split(char *line, char c);

@@ -124,9 +124,12 @@ char        *handle_env(char *line, int *pos)
         tmp  = ft_strdup(s);
         if (s)
             free(s);
-        s = ft_strjoin(tmp, ft_itoa(g_child));
+        p = ft_itoa(g_child);
+        s = ft_strjoin(tmp, p);
         if (tmp)
             free(tmp);
+        if (p)
+            free(p);
         i += 2;
     }
     if (line[i] == '$' && line[i + 1] == '?')
@@ -134,9 +137,12 @@ char        *handle_env(char *line, int *pos)
         tmp  = ft_strdup(s);
         if (s)
             free(s);
-        s = ft_strjoin(tmp, ft_itoa(g_status));
+        p = ft_itoa(g_status);
+        s = ft_strjoin(tmp, p);
         if (tmp)
             free(tmp);
+        if (p)
+            free(p);
         i += 2;
     }
     else if (line[i] == '$')
@@ -149,6 +155,8 @@ char        *handle_env(char *line, int *pos)
         s = ft_strjoin(tmp, ((ft_strlen(p) == 0) ? "$" : p));
         if (tmp)
             free(tmp);
+        if (p)
+            free(p);
     }
     *pos += i;
     return (s);
@@ -187,12 +195,14 @@ char         *ft_env(char *line)
     char    *s;
     char    *tmp;
     t_exp   in;
+    char    *t;
 
     i = 0;
     s = NULL;
     tmp = NULL;
     in.sgl = 0;
     in.dbl = 0;
+    t = NULL;
     while (line[i] != '\0')
     {
         if (QUOTE(line[i]))
@@ -209,9 +219,12 @@ char         *ft_env(char *line)
             tmp = ft_strdup(s);
             if (s)
                 free(s);
-            s = ft_strjoin(tmp, handle_env(line + i, &i));
+            t = handle_env(line + i, &i);
+            s = ft_strjoin(tmp, t);
             if (tmp)
                 free(tmp);
+            if (t)
+                free(t);
         }   
         else if (line[i] != '\0')
         {
@@ -224,25 +237,19 @@ char         *ft_env(char *line)
 
 char         *check_line(char *line)
 {
-    char    *tmp;
     char    *rt;
 
-    rt = ft_strdup(line);
-    tmp = NULL;
-    if (!(tmp = check_syntax(line)))
-    {
-        free(rt);
-        free(tmp);
+    rt = NULL;
+    if (!(check_syntax(line)))
         return (NULL);
-    }
     if (ft_strchr(line, '$'))
     {
-        tmp = ft_strdup(rt);
+        rt = ft_env(line);
+        if (line)
+            free(line);
+        line = ft_strdup(rt);
         if (rt)
             free(rt);
-        rt = ft_env(tmp);
     }
-    if (tmp)
-        free(tmp);
-    return (rt);
+    return (line);
 }

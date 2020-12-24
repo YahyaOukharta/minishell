@@ -203,18 +203,39 @@ int			check_redir(char *s)
 	return (1);
 }
 
-char        *check_syntax(char *s)
+int			check_pipeline(char *s)
+{
+	int i;
+
+	i = 0;
+	if (s)
+	{
+		if (s[0] == ';')
+			return (0);
+	}
+	return (1);
+}
+
+int			check_syntax(char *s)
 {
 	int 	pos;
 	char	*e;
 
 	pos = 0;
+	if (ft_strsearch(s, ';'))
+	{
+		if (check_pipeline(s) == 0)
+		{
+			ft_printf("Syntax Error Near %s\n", s + pos);
+			return (0);
+		}
+	}
 	if (ft_strchr(s, '\"') || ft_strchr(s, '\''))
 	{
 		if (check_quotes(s, &pos) == 0)
 		{
 			ft_printf("Syntax Error Near %s\n", s + pos);
-			return (NULL);
+			return (0);
 		}
 	}
 	if (ft_strsearch(s, '|'))
@@ -222,7 +243,7 @@ char        *check_syntax(char *s)
 		if (check_pipe(s) == 0)
 		{
 			ft_printf("Syntax Error Near %s\n", ft_strchr(s, '|'));
-			return (NULL);
+			return (0);
 		}
 	}
 	if (ft_strchr(s, '>') || ft_strchr(s, '<') || ft_strnstr(s, ">>",
@@ -234,8 +255,8 @@ char        *check_syntax(char *s)
 				ft_strnstr(s, ">>", (ft_strlen(s) < 3 ? 3:
 				ft_strlen(s))) : ft_strchr(s, '<')) : ft_strchr(s, '>'));
 			ft_printf("Syntax Error Near %s\n", e);
-			return (NULL);
+			return (0);
 		}
 	}
-	return (s);
+	return (1);
 }
