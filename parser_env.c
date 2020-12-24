@@ -45,7 +45,7 @@ char		*get_key(char *s, int *pos)
 	return (key);
 }
 
-int				ft_count_char(char *s, char c)
+int			ft_count_char(char *s, char c)
 {
 	int		i;
 	int		n;
@@ -58,7 +58,7 @@ int				ft_count_char(char *s, char c)
 	return (n);
 }
 
-t_env         *get_env(char *line, int *pos)
+t_env		*get_env(char *line, int *pos)
 {
 	int     i;
 	char    *key;
@@ -113,16 +113,13 @@ char		*env_to_str(char *line)
 			i++;
 			if (env != NULL)
 			{
-				tmp = ft_strdup(s);
-				if (s)
-					free(s);
-				s = ft_strjoin(tmp, ft_strdup(env->value));
-				if (tmp)
-					free(tmp);
+				tmp = s;
+				s = ft_strjoin(s, env->value);
+				free(tmp);
+				free(env);
 			}
 		}
-		tmp = ft_strdup(s);
-		s = append(tmp, line[i]);
+		s = append(s, line[i]);
 		i++;
 	}
 	return (s);

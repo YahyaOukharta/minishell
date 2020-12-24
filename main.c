@@ -47,9 +47,8 @@ void		free_shell()
 		free(g_env->value);
 		g_env = g_env->next;
 	}
+	//system("leaks minishell");
 }
-
-// echo papapapapapa > $ppp
 
 void		ft_minishell(char **env)
 {
@@ -79,5 +78,5 @@ int			main(int ac, char **argv, char **env)
 		ft_minishell(env);
 	else
 		ft_putstr_fd("Usage : ./minishell\n", STDERR);
-	return (0);
+	return (g_return);
 }

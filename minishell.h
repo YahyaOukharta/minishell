@@ -22,6 +22,7 @@ int					g_status;
 int					g_signal_c;
 int					g_signal_d;
 pid_t				g_child;
+int					g_return;
 
 typedef struct		s_exp
 {

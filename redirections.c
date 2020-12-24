@@ -18,7 +18,6 @@ char	*jump_redirection_sign(char *out)
 	}
 	else
 		s = ft_strdup(out);
-	
 	return (s);
 }
 
@@ -63,7 +62,6 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	int		fd;
 	char	*tmp;
 
-	i = 0;
 	while (i < tab_len(cmd->output_files))
 	{
 		tmp = cmd->output_files[i];
@@ -75,7 +73,9 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 			i++;
 			continue;
 		}
-		g_status = redirect_inputs(cmd->tokens, fd, pipe_in, cmd->input_files);
+		if (i == tab_len(cmd->output_files) - 1)
+			g_status = redirect_inputs(cmd->tokens, fd,
+				pipe_in, cmd->input_files);
 		close(fd);
 		i++;
 	}

@@ -175,8 +175,8 @@ int		builtin_unset(int in, int out, char **argv)
 
 int		builtin_exit(int in, int out, char **argv)
 {
-	(void)argv;
 	(void)in;
 	(void)out;
-	exit(-1);
+	g_return = (tab_len(argv) > 1 ? ft_atoi(argv[1]) : 0);
+	return (-1);
 }
