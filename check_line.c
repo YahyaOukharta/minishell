@@ -5,10 +5,14 @@ char        *inside_quotes(char *s, int *start, char quote)
     int     i;
     int     end;
     char    *m;
+    char    *tmp;
+    char    *rt;
 
     i = 0;
     end = 0;
     m = NULL;
+    tmp = NULL;
+    rt = NULL;
     while (s[i] != '\0')
     {
         if (s[i] == quote && !(ft_isalnum(s[i + 1])))
@@ -16,11 +20,17 @@ char        *inside_quotes(char *s, int *start, char quote)
             *start += i;
             break ;
         }
-        else if (s[i] == quote && (ft_isalpha(s[i + 1]) || ft_isdigit(s[i + 1])))
+        else if (s[i] == quote && ft_isalnum(s[i + 1]))
         {
             i++;
             // echo " f f f f  f " > sdf" v fedfsdf d d f"fdf
-            m = ft_strjoin(m, outside_quotes(s + i, &i));
+            tmp = outside_quotes(s + i, &i);
+            rt = ft_strdup(m);
+            if (m)
+                free(m);
+            m = ft_strjoin(rt, tmp);
+            free(tmp);
+            free(rt);
             *start += i;
             break ;
         }
@@ -36,12 +46,13 @@ char        *outside_quotes(char *s, int *start)
     char    *m;
     char    *rt;
     char    *tmp;
-    char    p[2];
+    char    *t;
 
     tmp = NULL;
     i = 0;
     m = NULL;
     rt = NULL;
+    t = NULL;
     while (s[i] != '\0')
     {
         if (s[i] == ' ' || s[i] == '>' || s[i] == '<')
@@ -55,7 +66,10 @@ char        *outside_quotes(char *s, int *start)
             tmp = ft_strdup(rt);
             if (rt != NULL)
                 free(rt);
-            rt = ft_strjoin(tmp, inside_quotes(s + i, &i, s[i - 1]));
+            t = inside_quotes(s + i, &i, s[i - 1]);
+            rt = ft_strjoin(tmp, t);
+            if (t)
+                free(t);
             if (tmp)
                 free(tmp);
         }

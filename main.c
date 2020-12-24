@@ -67,7 +67,7 @@ void		ft_minishell(char **env)
 		if (!(parsed_line = parse_data(line)))
 			continue ;
 		exec_parsed(parsed_line);
-		print_parsed_line(parsed_line);
+		//print_parsed_line(parsed_line);
 		free_pipeline(parsed_line);
 	}
 	free_shell();

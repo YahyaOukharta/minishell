@@ -17,7 +17,7 @@ char	*jump_redirection_sign(char *out)
 		s = inside_quotes(out, &i, quote);
 	}
 	else
-		s = out;
+		s = ft_strdup(out);
 	return (s);
 }
 
@@ -26,13 +26,17 @@ int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 	int		i;
 	char	*tmp;
 	int		fd;
+	char	*parsed;
 
+	parsed = NULL;
 	if (!(pipe_in == 0 && tab_len(input_files)))
 		g_status = execute_command(pipe_in, out, tokens);
 	i = 0;
 	while (i < tab_len(input_files))
 	{
-		fd = open(jump_redirection_sign(input_files[i]), O_RDONLY);
+		parsed = jump_redirection_sign(input_files[i]);
+		fd = open(parsed, O_RDONLY);
+		free(parsed);
 		if (fd < 0)
 		{
 			tmp = "minishell: no such file or directory: %s\n";
@@ -61,12 +65,15 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	int		i;
 	int		fd;
 	char	*tmp;
+	char	*parsed;
 
+	parsed = NULL;
 	while (i < tab_len(cmd->output_files))
 	{
-		tmp = cmd->output_files[i];
-		fd = open(jump_redirection_sign(tmp),
+		parsed = jump_redirection_sign(cmd->output_files[i]);
+		fd = open(parsed,
 			truncate_file(tmp) | O_CREAT | O_WRONLY, 0644);
+		free(parsed);
 		if (fd < 0)
 		{
 			ft_printf("No such file or Directory\n");

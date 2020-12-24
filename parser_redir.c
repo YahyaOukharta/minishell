@@ -51,9 +51,13 @@ char            *get_rarg(char *line, int *pos)
             if (tmp)
                 free(tmp);
 		}
-		if (i == end + 1)
-			in = 0;
-		if (ft_isalnum(line[i]) && in == 0)
+		if (i == end + 1 && in == 1)
+        {
+            in = 0;
+            if (!ft_isalnum(s[i + 1]))
+                break ;
+        }
+        if (ft_isalnum(line[i]) && in == 0)
 		{
             tmp = ft_strdup(s);
             if (s)
@@ -66,7 +70,7 @@ char            *get_rarg(char *line, int *pos)
                 free(tmp);
 			break ;
 		}
-        if ((line[i] == '>' || line[i] == '<') && in == 0 && i > 0)
+        if (((line[i] == '>' && (line[i + 1] != '>' && line[i - 1] !=  '>')) || line[i] == '<') && in == 0 && i > 0)
             break ;
         tmp = ft_strdup(s);
         if (s)
@@ -98,13 +102,15 @@ t_redir          get_tokens(char *s)
     int         end;
     int         in;
     t_redir     redir;
- 
+    char        *tmp;
+
     i = 0; 
     end = 0;
     in = 0;
     redir.ins = NULL;
     redir.outs = NULL;
     redir.tokens = NULL;
+    tmp = NULL;
     while (s[i] != '\0')
     {
         if (QUOTE(s[i]))

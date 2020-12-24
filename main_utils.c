@@ -65,7 +65,6 @@ t_pipeline		**parse_data(char *line)
 		return (NULL);
 	}
 	parsed_line = parser(checked_line);
-	//print_parsed_line(parsed_line);
 	free(checked_line);
 	return (parsed_line);
 }
