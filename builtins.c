@@ -83,6 +83,8 @@ int		builtin_cd(int in, int out, char **argv)
 	int		ret;
 	char	*dir;
 
+	in = 0;
+	out = 0;
 	if (tab_len(argv) > 2)
 	{
 		ft_printf("cd: wrong number of arguments\n");

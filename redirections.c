@@ -28,10 +28,10 @@ int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 	int		fd;
 	char	*parsed;
 
+	i = 0;
 	parsed = NULL;
 	if (!(pipe_in == 0 && tab_len(input_files)))
 		g_status = execute_command(pipe_in, out, tokens);
-	i = 0;
 	while (i < tab_len(input_files))
 	{
 		parsed = jump_redirection_sign(input_files[i]);
@@ -64,15 +64,20 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 {
 	int		i;
 	int		fd;
-	char	*tmp;
 	char	*parsed;
 
+	i = 0;
 	parsed = NULL;
 	while (i < tab_len(cmd->output_files))
 	{
-		parsed = jump_redirection_sign(cmd->output_files[i]);
+		if (!(parsed = jump_redirection_sign(cmd->output_files[i])))
+		{
+			g_status = -1;
+			return (0);
+		}
 		fd = open(parsed,
-			truncate_file(tmp) | O_CREAT | O_WRONLY, 0644);
+			truncate_file(cmd->output_files[i])
+		 | O_CREAT | O_WRONLY, 0644);
 		free(parsed);
 		if (fd < 0)
 		{

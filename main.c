@@ -66,8 +66,8 @@ void		ft_minishell(char **env)
 			continue ;
 		if (!(parsed_line = parse_data(line)))
 			continue ;
+		print_parsed_line(parsed_line);
 		exec_parsed(parsed_line);
-		//print_parsed_line(parsed_line);
 		free_pipeline(parsed_line);
 	}
 	free_shell();
@@ -75,6 +75,7 @@ void		ft_minishell(char **env)
 
 int			main(int ac, char **argv, char **env)
 {
+	(void)argv;
 	if (ac == 1)
 		ft_minishell(env);
 	else

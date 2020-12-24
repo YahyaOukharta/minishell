@@ -23,7 +23,7 @@ GNL_BUFFER_SIZE = -D BUFFER_SIZE=100
 
 FT_PRINTF_PATH = ft_printf/
 
-FLAGS = -g -o3 #-fsanitize=address #-Wall -Wextra -Werror
+FLAGS = -g -o3 -fsanitize=address -Wall -Wextra -Werror
 
 GCC = gcc
 all: $(NAME)

@@ -38,6 +38,7 @@ t_pipeline		**parser(char *line)
 	char		*tmp;
 
 	split = NULL;
+	tmp = NULL;
 	line = ft_strtrim(line, " \t");
 	pipelines = parser_split(line, ';');
 	parsed_line = (t_pipeline **)malloc(

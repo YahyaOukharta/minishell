@@ -167,7 +167,6 @@ t_exp       inp(char *s)
     int     i;
     t_exp   in;
     int     end;
-    t_exp   num;
 
     i = 0;
     end = 0;

@@ -141,7 +141,7 @@ t_redir          get_tokens(char *s)
         }
         else if (s[i] != ' ')
             redir.tokens = realloc__(redir.tokens, outside_quotes(s + i, &i));
-        if ((s[i] == ' ' || s[i + 1] == '\0') && s[i] != '>' && s[i] != '<')
+        if (s[i] != '\0' &&(s[i] == ' ' || s[i + 1] == '\0') && s[i] != '>' && s[i] != '<')
             i++;
     } 
     return (redir);
