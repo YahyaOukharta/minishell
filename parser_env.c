@@ -60,9 +60,10 @@ int			ft_count_char(char *s, char c)
 
 t_env		*get_env(char *line, int *pos)
 {
-	int     i;
-	char    *key;
-	t_env   *s;
+	int		i;
+	char	*key;
+	t_env	*s;
+
 	i = 0;
 	key = NULL;
 	while (line[i] != '\0')

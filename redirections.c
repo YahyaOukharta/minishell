@@ -17,7 +17,7 @@ char	*jump_redirection_sign(char *out)
 		s = inside_quotes(out, &i, quote);
 	}
 	else
-		s = ft_strdup(out);
+		s = out;
 	return (s);
 }
 

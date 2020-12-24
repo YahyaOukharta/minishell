@@ -23,13 +23,14 @@ GNL_BUFFER_SIZE = -D BUFFER_SIZE=100
 
 FT_PRINTF_PATH = ft_printf/
 
-FLAGS = -g #-fsanitize=address #-Wall -Wextra -Werror
+FLAGS = -g -o3 #-fsanitize=address #-Wall -Wextra -Werror
 
+GCC = gcc
 all: $(NAME)
 
 $(NAME):
 	make -C $(FT_PRINTF_PATH)
-	gcc $(FLAGS) $(SRCS) $(GNL_SRCS) $(GNL_BUFFER_SIZE) -L $(FT_PRINTF_PATH) -lftprintf  -o $(NAME)
+	$(GCC) $(FLAGS) $(SRCS) $(GNL_SRCS) $(GNL_BUFFER_SIZE) -L $(FT_PRINTF_PATH) -lftprintf  -o $(NAME)
 	# remove \^
 	#stty -ctlecho
 clean:

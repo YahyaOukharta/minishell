@@ -2,7 +2,7 @@
 
 void		free_cmds(t_command **cmd)
 {
-	int 	i;
+	int		i;
 
 	i = 0;
 	while (cmd[i] != NULL)
@@ -67,6 +67,7 @@ void		ft_minishell(char **env)
 		if (!(parsed_line = parse_data(line)))
 			continue ;
 		exec_parsed(parsed_line);
+		print_parsed_line(parsed_line);
 		free_pipeline(parsed_line);
 	}
 	free_shell();
