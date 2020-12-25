@@ -76,8 +76,7 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 			return (0);
 		}
 		fd = open(parsed,
-			truncate_file(cmd->output_files[i])
-		 | O_CREAT | O_WRONLY, 0644);
+			truncate_file(cmd->output_files[i]) | O_CREAT | O_WRONLY, 0644);
 		free(parsed);
 		if (fd < 0)
 		{
@@ -91,7 +90,7 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 		close(fd);
 		i++;
 	}
-	if (!(pipe_out == 1  && tab_len(cmd->output_files))
+	if (!(tab_len(cmd->output_files))
 		|| (cmd->tokens != NULL && string_equal(cmd->tokens[0], "exit")))
 		g_status = redirect_inputs(cmd->tokens,
 			pipe_out, pipe_in, cmd->input_files);
