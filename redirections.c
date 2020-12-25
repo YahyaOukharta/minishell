@@ -30,7 +30,7 @@ int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 
 	i = 0;
 	parsed = NULL;
-	if (!(pipe_in == 0 && tab_len(input_files)))
+	if (!(tab_len(input_files)))
 		g_status = execute_command(pipe_in, out, tokens);
 	while (i < tab_len(input_files))
 	{
@@ -57,7 +57,7 @@ int		truncate_file(char *out)
 	i = 0;
 	while (out[i] == '>')
 		i++;
-	return (i == 2 ? O_APPEND : O_TRUNC);
+	return (i == 2 ? O_APPEND : 0);
 }
 
 int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
@@ -66,6 +66,7 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	int		fd;
 	char	*parsed;
 
+	
 	i = 0;
 	parsed = NULL;
 	while (i < tab_len(cmd->output_files))
@@ -75,8 +76,7 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 			g_status = -1;
 			return (0);
 		}
-		fd = open(parsed,
-			truncate_file(cmd->output_files[i]) | O_CREAT | O_WRONLY, 0644);
+		fd = open(parsed, O_CREAT | O_WRONLY, 0644);
 		free(parsed);
 		if (fd < 0)
 		{
