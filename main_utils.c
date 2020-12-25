@@ -34,10 +34,18 @@ void			init_shell(char **env)
 
 bool			handle_return(int rt, char *line)
 {
+	char		*tmp;
+
+	tmp = NULL;
 	if (rt == 0)
 	{
 		if (ft_strlen(line))
 		{
+			tmp = ft_strdup(g_saved);
+			g_exec = 1;
+			if (g_saved)
+				free(g_saved);
+			g_saved = ft_strjoin(tmp, line);
 			free(line);
 			line = NULL;
 			g_signal_d = 0;

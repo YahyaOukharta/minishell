@@ -50,9 +50,23 @@ void		free_shell()
 	//system("leaks minishell");
 }
 
+void		set_line(char	**line)
+{
+	char	*tmp;
+
+	//if (*line)
+	tmp = ft_strdup(*line);
+	//if (*line)
+	//	free(*line);
+	*line = ft_strjoin(g_saved, tmp);
+	if (g_saved)
+		free(g_saved);
+	g_saved = NULL;
+	g_exec = 0;
+}
+
 void		ft_minishell(char **env)
 {
-	char		*line;
 	int			rt;
 	t_pipeline	**parsed_line;
 
@@ -60,11 +74,13 @@ void		ft_minishell(char **env)
 	init_shell(env);
 	while (g_status != -1)
 	{
-		line = NULL;
-		rt = ft_prompt(&line);
-		if (handle_return(rt, line) == true)
+		g_line = NULL;
+		rt = ft_prompt(&g_line);
+		if (handle_return(rt, g_line) == true)
 			continue ;
-		if (!(parsed_line = parse_data(line)))
+		if (g_exec && rt)
+			set_line(&g_line);
+		if (!(parsed_line = parse_data(g_line)))
 			continue ;
 		print_parsed_line(parsed_line);
 		exec_parsed(parsed_line);

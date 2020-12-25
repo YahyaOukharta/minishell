@@ -239,6 +239,8 @@ char         *check_line(char *line)
     char    *rt;
 
     rt = NULL;
+    if (line == NULL)
+        return (NULL);
     if (!(check_syntax(line)))
         return (NULL);
     if (ft_strchr(line, '$'))

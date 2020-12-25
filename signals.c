@@ -13,6 +13,8 @@ void	signal_handler(int signal)
 		write(STDOUT, " $ ", ft_strlen(" $ "));
 		write(STDOUT, "\033[0m", ft_strlen("\033[0m"));
 		g_signal_c = 1;
+		g_line = NULL;
+		g_saved = NULL;
 	}
 	if (signal == SIGQUIT)
 	{

@@ -82,15 +82,19 @@ int		builtin_cd(int in, int out, char **argv)
 {
 	int		ret;
 	char	*dir;
+	char	cwd[1024];
 
 	in = 0;
 	out = 0;
+	ft_bzero(cwd, 1000);
+	getcwd(cwd, 1000);
 	if (tab_len(argv) > 2)
 	{
 		ft_printf("cd: wrong number of arguments\n");
 		return (1);
 	}
 	dir = (tab_len(argv) == 1 ? env_with_key("HOME")->value : argv[1]);
+	set_env("OLDPWD", cwd);
 	ret = chdir(dir);
 	if (ret < 0)
 	{

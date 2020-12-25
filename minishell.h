@@ -23,6 +23,9 @@ int					g_signal_c;
 int					g_signal_d;
 pid_t				g_child;
 int					g_return;
+char				*g_line;
+char				*g_saved;
+int					g_exec;
 
 typedef struct		s_exp
 {
