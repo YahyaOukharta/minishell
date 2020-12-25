@@ -44,7 +44,7 @@ int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 			return (1);
 		}
 		g_status = execute_command(fd, out, tokens);
-		close(fd);
+		//close(fd);
 		i++;
 	}
 	return (g_status);
@@ -66,7 +66,6 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	int		fd;
 	char	*parsed;
 
-	
 	i = 0;
 	parsed = NULL;
 	while (i < tab_len(cmd->output_files))

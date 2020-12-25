@@ -3,7 +3,10 @@
 void	redirect_in_out(int in, int out)
 {
 	if (in != 0)
+	{
 		dup2(in, 0);
+		close(in);
+	}
 	if (out != 1)
 		dup2(out, 1);
 }
@@ -36,11 +39,12 @@ int		new_process(int in, int out, char **cmd, int *status)
 			free(path);
 			return (126);
 		}
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
 		g_child = pid;
-		pid = waitpid(-1, status, WUNTRACED | WCONTINUED);
+		//pid = waitpid(-1, status, WUNTRACED | WCONTINUED);
 	}
 	free(path);
 	return (*status);
