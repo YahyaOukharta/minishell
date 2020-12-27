@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include "ft_printf/ft_printf.h"
-# include "gnl/get_next_line.h"
+# include "ft_printf.h"
+# include "get_next_line.h"
 # include <stdbool.h>
 # include <fcntl.h>
 # include <sys/stat.h>
@@ -113,6 +113,7 @@ int					builtin_unset(int in, int out, char **argv);
 char				**get_parsed_path(void);
 int					find_file_in_path(char **absolute_path, char *cmd);
 void				redirect_in_out(int in, int out);
+void				queue_pid(int pid);
 int					new_builtin_process(int in, int out,
 						char **argv, int(*builtin)(int, int, char **));
 int					new_process(int in, int out, char **cmd, int *status);

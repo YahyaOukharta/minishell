@@ -1,4 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   processes.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: youkhart <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/27 15:49:48 by youkhart          #+#    #+#             */
+/*   Updated: 2020/12/27 15:49:54 by youkhart         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+extern int *g_children;
+
+void queue_pid(int pid)
+{
+	int i;
+
+	i = 0;
+	g_child = pid;
+	while (g_children[i] != 0)
+		i++;
+	g_children[i] = pid;
+}
 
 void	redirect_in_out(int in, int out)
 {
@@ -42,10 +67,7 @@ int		new_process(int in, int out, char **cmd, int *status)
 		exit(EXIT_SUCCESS);
 	}
 	else
-	{
-		g_child = pid;
-		//pid = waitpid(-1, status, WUNTRACED | WCONTINUED);
-	}
+		queue_pid(pid);
 	free(path);
 	return (*status);
 }
@@ -73,11 +95,11 @@ int		new_builtin_process(int in, int out,
 			exit(ret);
 		}
 		else
-			pid = wait(&ret);
+			queue_pid(pid);
 	}
 	else
 		ret = b(in, out, av);
-	return (ret);
+	return (g_status);
 }
 
 int		execute_command(int in, int out, char **argv)
