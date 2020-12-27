@@ -56,7 +56,6 @@ int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 			return (1);
 		}
 		g_status = execute_command(fd, out, tokens);
-		//close(fd);
 		i++;
 	}
 	return (g_status);
@@ -69,7 +68,7 @@ int		truncate_file(char *out)
 	i = 0;
 	while (out[i] == '>')
 		i++;
-	return (i == 2 ? O_APPEND : 0);
+	return (i == 2 ? O_APPEND : O_TRUNC);
 }
 
 int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
@@ -79,22 +78,18 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	char	*parsed;
 
 	i = 0;
-	parsed = NULL;
 	while (i < tab_len(cmd->output_files))
 	{
-		if (!(parsed = jump_redirection_sign(cmd->output_files[i])))
+		parsed = jump_redirection_sign(cmd->output_files[i]);
+		if ((fd = open(parsed, truncate_file(cmd->output_files[i])
+			| O_CREAT | O_WRONLY, 0644)) < 0)
 		{
-			g_status = -1;
-			return (0);
-		}
-		fd = open(parsed, O_CREAT | O_WRONLY, 0644);
-		free(parsed);
-		if (fd < 0)
-		{
-			ft_printf("No such file or Directory\n");
+			ft_printf("No such file or directory : %s\n", parsed);
 			i++;
+			free(parsed);
 			continue;
 		}
+		free(parsed);
 		if (i == tab_len(cmd->output_files) - 1)
 			g_status = redirect_inputs(cmd->tokens, fd,
 				pipe_in, cmd->input_files);

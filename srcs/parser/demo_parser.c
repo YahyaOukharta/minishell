@@ -103,9 +103,9 @@ char	*get_arg(char *line, char c, int *pos)
 
 char	**parser_split(char *line, char c)
 {
-	int	 	i;
+	int		i;
 	int		nb_c;
-	char 	**split;
+	char	**split;
 	int		j;
 	char	*tmp;
 

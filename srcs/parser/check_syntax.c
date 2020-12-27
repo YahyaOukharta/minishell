@@ -58,7 +58,7 @@ int			check_pipe(char *s)
 	int		v;
 	int		rt;
 	int		i;
-	
+
 	i = -1;
 	rt = 0;
 	split = parser_split(s, '|');
@@ -230,7 +230,7 @@ int			check_pipeline(char *s)
 
 int			check_syntax(char *s)
 {
-	int 	pos;
+	int		pos;
 	char	*e;
 
 	pos = 0;
@@ -263,8 +263,8 @@ int			check_syntax(char *s)
 	{
 		if (check_redir(s) == 0)
 		{
-			e = (ft_strchr(s, '>') == NULL ?  (ft_strchr(s, '<') == NULL ?
-				ft_strnstr(s, ">>", (ft_strlen(s) < 3 ? 3:
+			e = (ft_strchr(s, '>') == NULL ? (ft_strchr(s, '<') == NULL ?
+				ft_strnstr(s, ">>", (ft_strlen(s) < 3 ? 3 :
 				ft_strlen(s))) : ft_strchr(s, '<')) : ft_strchr(s, '>'));
 			ft_printf("Syntax Error Near %s\n", e);
 			return (0);

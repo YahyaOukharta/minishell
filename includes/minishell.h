@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: youkhart <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/27 18:45:36 by youkhart          #+#    #+#             */
+/*   Updated: 2020/12/27 18:45:42 by youkhart         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "ft_printf.h"
@@ -8,8 +20,6 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <signal.h>
-// # include <term.h>
-// # include <curses.h>
 # include <stdio.h>
 
 # define STDOUT 1
@@ -69,7 +79,7 @@ int					ft_prompt(char **line);
 int					check_syntax(char *s);
 char				*check_line(char *line);
 int					have_end(char *s, char quote, int *start);
-char		        **parser_split(char *line, char c);
+char				**parser_split(char *line, char c);
 char				*env_to_str(char *line);
 void				init_shell(char **env);
 bool				handle_return(int rt, char *line);
@@ -87,6 +97,8 @@ int					quotes_attached(char *s);
 void				print_parsed_line(t_pipeline **parsed_line);
 char				*get_command(char *line);
 t_command			*new_cmd(char *line);
+void				free_cmds(t_command **cmd);
+void				free_pipeline(t_pipeline **p);
 int					tab_len(char **tab);
 int					exists_in_tab(char *s, char **tab);
 int					index_of_in_tab(char *s, char **tab);
@@ -102,6 +114,7 @@ void				unset_env(char *key);
 t_env				*env_at_index(int index);
 t_env				*env_with_key(char *key);
 char				**get_env_tab();
+void				free_env(void);
 void				init_builtins();
 int					builtin_echo(int in, int out, char **argv);
 int					builtin_pwd(int in, int out, char **argv);

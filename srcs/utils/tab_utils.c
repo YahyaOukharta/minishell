@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   tab_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youkhart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,21 +12,58 @@
 
 #include "minishell.h"
 
-void	*free_and_return(void *ptr, void *ret)
+int		tab_len(char **tab)
 {
-	free(ptr);
-	return (ret);
+	int i;
+
+	i = 0;
+	if (tab)
+	{
+		while (tab[i] != NULL)
+			i++;
+	}
+	return (i);
 }
 
-int		string_equal(char *s1, char *s2)
+int		exists_in_tab(char *s, char **tab)
 {
-	int res;
-
-	res = ft_strncmp(s1, s2, MAX(ft_strlen(s1), ft_strlen(s2)));
-	return (res == 0);
+	while (*tab)
+	{
+		if (!ft_strncmp(s, *tab, MAX(ft_strlen(s), ft_strlen(*tab))))
+			return (1);
+		tab++;
+	}
+	return (0);
 }
 
-int		is_blank(char c)
+int		index_of_in_tab(char *s, char **tab)
 {
-	return ((c > 8 && c < 14) || c == 32);
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (!ft_strncmp(s, tab[i], MAX(ft_strlen(s), ft_strlen(tab[i]))))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int		free_s_tab(char **tab)
+{
+	int		i;
+
+	i = 0;
+	if (tab)
+	{
+		while (tab[i])
+		{
+			if (tab[i])
+				free(tab[i]);
+			i++;
+		}
+		free(tab);
+	}
+	return (0);
 }

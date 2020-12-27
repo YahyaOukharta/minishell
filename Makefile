@@ -12,9 +12,11 @@ INCLUDES = includes/
 
 SRCS = srcs/main.c\
 		\
-	   srcs/env/environnement.c\
+	   srcs/environment/env1.c\
+	   srcs/environment/env2.c\
 		\
-	   srcs/builtins/builtins.c\
+	   srcs/builtins/builtins1.c\
+	   srcs/builtins/builtins2.c\
 	    \
 	   srcs/parser/check_syntax.c\
 	   srcs/parser/check_line.c\
@@ -22,6 +24,7 @@ SRCS = srcs/main.c\
 	   srcs/parser/demo_parser.c\
 	   srcs/parser/parser_redir.c\
 	   srcs/parser/parser.c\
+	   srcs/parser/free_parsed.c\
 	    \
 	   srcs/execution/processes.c\
 	   srcs/execution/path.c\
@@ -31,6 +34,7 @@ SRCS = srcs/main.c\
 	   srcs/signals/signals.c\
 		\
 	   srcs/utils/main_utils.c\
+	   srcs/utils/tab_utils.c\
 	   srcs/utils/utils.c\
 
 FLAGS = -g -o3 -fsanitize=address -Wall -Wextra -Werror

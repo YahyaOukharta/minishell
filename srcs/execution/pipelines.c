@@ -14,6 +14,21 @@
 
 int		*g_children;
 
+void	wait_for_children(t_pipeline *p)
+{
+	int	i;
+
+	i = 0;
+	while (i < p->n_commands)
+	{
+		if (g_children[i])
+			while (g_children[i] != waitpid(
+				g_children[i], &g_status, WUNTRACED))
+				;
+		i++;
+	}
+}
+
 int		execute_pipeline(t_pipeline *pipeline)
 {
 	int		i;
@@ -24,7 +39,7 @@ int		execute_pipeline(t_pipeline *pipeline)
 	i = 0;
 	in = 0;
 	g_children = (int *)malloc(sizeof(int) * pipeline->n_commands);
-	ft_bzero(g_children,sizeof(int) * pipeline->n_commands);
+	ft_bzero(g_children, sizeof(int) * pipeline->n_commands);
 	while (i < (pipeline->n_commands) - 1)
 	{
 		pipe(fd);
@@ -36,14 +51,7 @@ int		execute_pipeline(t_pipeline *pipeline)
 	}
 	out = 1;
 	g_status = redirect_outputs(pipeline->cmds[i], in, out);
-	i = 0;
-	while (i < pipeline->n_commands)
-	{
-		if (g_children[i])
-			while (g_children[i] != waitpid(g_children[i], &g_status, WUNTRACED))
-			;
-		i++;
-	}
+	wait_for_children(pipeline);
 	free(g_children);
 	return (g_status % 255);
 }

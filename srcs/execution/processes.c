@@ -14,7 +14,7 @@
 
 extern int *g_children;
 
-void queue_pid(int pid)
+void	queue_pid(int pid)
 {
 	int i;
 
@@ -41,15 +41,13 @@ int		new_process(int in, int out, char **cmd, int *status)
 	int		pid;
 	char	*path;
 
-	path = NULL;
 	if (!find_file_in_path(&path, cmd[0]))
 	{
 		ft_printf("minishell: command not found: %s\n", cmd[0]);
 		free(path);
 		return (127);
 	}
-	pid = fork();
-	if (pid == -1)
+	if ((pid = fork()) == -1)
 	{
 		ft_printf("fork failed\n");
 		free(path);

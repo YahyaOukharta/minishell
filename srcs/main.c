@@ -12,57 +12,7 @@
 
 #include "minishell.h"
 
-void		free_cmds(t_command **cmd)
-{
-	int		i;
-
-	i = 0;
-	while (cmd[i] != NULL)
-	{
-		if (cmd[i]->tokens)
-			free_s_tab(cmd[i]->tokens);
-		if (cmd[i]->input_files)
-			free_s_tab(cmd[i]->input_files);
-		if (cmd[i]->output_files)
-			free_s_tab(cmd[i]->output_files);
-		free(cmd[i]);
-		i++;
-	}
-	free(cmd[i]);
-	free(cmd);
-}
-
-void		free_pipeline(t_pipeline **p)
-{
-	int 	i;
-
-	i = 0;
-	while (p[i] != NULL)
-	{
-		if (p[i]->cmds)
-			free_cmds(p[i]->cmds);
-		free(p[i]);
-		i++;
-	}
-	free(p[i]);
-	free(p);
-}
-
-void		free_shell()
-{
-	int		i;
-
-	i = 0;
-	while (g_env != NULL)
-	{
-		free(g_env->key);
-		free(g_env->value);
-		g_env = g_env->next;
-	}
-	//system("leaks minishell");
-}
-
-void		set_line(char	**line)
+void		set_line(char **line)
 {
 	char	*tmp;
 
@@ -98,7 +48,7 @@ void		ft_minishell(char **env)
 		exec_parsed(parsed_line);
 		free_pipeline(parsed_line);
 	}
-	free_shell();
+	free_env();
 }
 
 int			main(int ac, char **argv, char **env)
