@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_parsed.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaoui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:34 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/27 15:52:35 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:09:22 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@ void		free_cmds(t_command **cmd)
 	}
 	free(cmd[i]);
 	free(cmd);
+}
+
+int			no_alpha(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (ft_isalnum(s[i]))
+			return (0);
+		if (s[i] == ';')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 void		free_pipeline(t_pipeline **p)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaoui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:48 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/27 15:52:55 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:02:16 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ void		ft_minishell(char **env)
 	init_shell(env);
 	while (g_status != -1)
 	{
+		g_signal_bs = 0;
 		g_line = NULL;
 		rt = ft_prompt(&g_line);
 		if (handle_return(rt, g_line) == true)
 			continue ;
-		if (g_exec && rt)
+		if ((g_exec && rt) || g_signal_bs)
 			set_line(&g_line);
 		if (!(parsed_line = parse_data(g_line)))
 			continue ;

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 18:45:36 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/28 15:17:35 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/28 17:09:30 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int					g_return;
 char				*g_line;
 char				*g_saved;
 int					g_exec;
+int					g_signal_bs;
 
 typedef struct		s_exp
 {
@@ -153,4 +154,5 @@ int					check_quotes(char *s, int *pos);
 int					check_pipe(char *s);
 int					check_redir(char *s);
 int					has_redir(char *s, int *pos);
+int					no_alpha(char *s);
 #endif
