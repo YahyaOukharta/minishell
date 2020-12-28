@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:55:48 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/28 15:12:36 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/28 15:22:10 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int			check_redir_norm(char *s)
 int			check_syntax(char *s)
 {
 	int		pos;
-	char	*e;
 
 	pos = 0;
 	if (ft_strsearch(s, ';'))
