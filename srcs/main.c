@@ -16,13 +16,14 @@ void		set_line(char **line)
 {
 	char	*tmp;
 
-	//if (*line)
 	tmp = ft_strdup(*line);
-	//if (*line)
-	//	free(*line);
+	if (*line)
+		free(*line);
 	*line = ft_strjoin(g_saved, tmp);
 	if (g_saved)
 		free(g_saved);
+	if (tmp)
+		free(tmp);
 	g_saved = NULL;
 	g_exec = 0;
 }

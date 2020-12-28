@@ -58,6 +58,8 @@ bool			handle_return(int rt, char *line)
 			if (g_saved)
 				free(g_saved);
 			g_saved = ft_strjoin(tmp, line);
+			if (tmp)
+				free(tmp);
 			free(line);
 			line = NULL;
 			g_signal_d = 0;
