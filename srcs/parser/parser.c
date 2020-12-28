@@ -91,7 +91,7 @@ void			print_parsed_line(t_pipeline **parsed_line)
 					if (parsed_line[i]->cmds[j]->tokens)
 					{
 						while (parsed_line[i]->cmds[j]->tokens[k])
-						{	
+						{
 							ft_printf("|%s| ",parsed_line[i]->cmds[j]->tokens[k]);
 							k++;
 						}
@@ -102,7 +102,7 @@ void			print_parsed_line(t_pipeline **parsed_line)
 					if (parsed_line[i]->cmds[j]->input_files)
 					{
 						while (parsed_line[i]->cmds[j]->input_files[k])
-						{	
+						{
 							if ((parsed_line[i]->cmds[j]->input_files[k]) != NULL)
 								ft_printf("%s ",parsed_line[i]->cmds[j]->input_files[k]);
 							k++;

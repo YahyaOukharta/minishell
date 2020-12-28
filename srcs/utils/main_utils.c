@@ -94,5 +94,9 @@ void			exec_parsed(t_pipeline **parsed_line)
 
 	i = 0;
 	while (parsed_line[i] != NULL)
-		g_status = execute_pipeline(parsed_line[i++]);
+	{
+		if (parsed_line[i]->cmds)
+			g_status = execute_pipeline(parsed_line[i]);
+		i++;
+	}
 }

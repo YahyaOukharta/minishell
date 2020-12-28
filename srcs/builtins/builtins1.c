@@ -97,12 +97,12 @@ int		builtin_cd(int in, int out, char **argv)
 		return (1);
 	}
 	dir = (tab_len(argv) == 1 ? env_with_key("HOME")->value : argv[1]);
-	set_env("OLDPWD", cwd);
 	ret = chdir(dir);
 	if (ret < 0)
 	{
 		ft_printf("cd: no such file or directory: %s\n", dir);
 		return (1);
 	}
+	set_env("OLDPWD", cwd);
 	return (0);
 }

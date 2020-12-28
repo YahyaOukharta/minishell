@@ -78,7 +78,7 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	char	*parsed;
 
 	i = 0;
-	while (i < tab_len(cmd->output_files))
+	while (cmd && i < tab_len(cmd->output_files))
 	{
 		parsed = jump_redirection_sign(cmd->output_files[i]);
 		if ((fd = open(parsed, truncate_file(cmd->output_files[i])
@@ -96,8 +96,8 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 		close(fd);
 		i++;
 	}
-	if (!(tab_len(cmd->output_files))
-		|| (cmd->tokens != NULL && string_equal(cmd->tokens[0], "exit")))
+	if (cmd && (!(tab_len(cmd->output_files))
+		|| (cmd->tokens != NULL && string_equal(cmd->tokens[0], "exit"))))
 		g_status = redirect_inputs(cmd->tokens,
 			pipe_out, pipe_in, cmd->input_files);
 	return (g_status);
