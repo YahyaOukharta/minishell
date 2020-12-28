@@ -62,43 +62,42 @@ char	*append(char *s, char c)
 	return (str);
 }
 
+void	get_arg_helper(char *line, int *end, int *in, char **tmp)
+{
+	if ((*tmp = inside_quotes(line + 1, end, *line)))
+	{
+		*in = 1;
+		free(*tmp);
+	}
+}
+
 char	*get_arg(char *line, char c, int *pos)
 {
 	int		i;
 	int		end;
 	int		in;
-	char	*s;
-	char	*tmp;
+	char	*tmp[2];
 
 	i = 0;
 	end = 0;
 	in = 0;
-	s = NULL;
-	tmp = NULL;
-	while (line[i] != '\0')
+	ft_bzero(tmp, 2 * sizeof(char *));
+	while (line[i])
 	{
 		if (in == 0 && QUOTE(line[i]))
 		{
 			end = i + 1;
-			if ((tmp = inside_quotes(line + i + 1, &end, line[i])))
-			{
-				in = 1;
-				free(tmp);
-			}
+			get_arg_helper(&line[i], &end, &in, &tmp[1]);
 		}
-		if (i == end)
-			in = 0;
-		if (line[i] == c && in == 0)
+		if (line[i] == c && (in = (i == end ? 0 : in)) == 0)
 		{
 			*pos += i;
 			break ;
 		}
-		s = append(s, line[i]);
-		i++;
+		tmp[0] = append(tmp[0], line[i++]);
 	}
-	if (line[i] == '\0')
-		*pos += i - 1;
-	return (s);
+	*pos += (line[i] == '\0' ? i - 1 : 0);
+	return (tmp[0]);
 }
 
 char	**parser_split(char *line, char c)
