@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:20 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/28 12:19:54 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/28 14:56:03 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,98 +75,20 @@ int			check_pipe(char *s)
 	return (rt);
 }
 
-int			check_arg(char *s)
-{
-	int		i;
-	int		in;
-
-	i = 0;
-	in = 0;
-	if (s)
-	{
-		while (!(s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
-			ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
-			i++;
-		if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
-			ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
-		{
-			if (s[i] == '>' && s[i + 1] == '>')
-				i += 2;
-			else if (s[i] == '<')
-				i += 1;
-			else
-				i++;
-		}
-		while (s[i] != '\0')
-		{
-			if (ft_isalnum(s[i]) || QUOTE(s[i]))
-				return (0);
-			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
-				ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
-				return (1);
-			if (s[i] != '\0')
-				i++;
-		}
-	}
-	return (1);
-}
-
-int			ft_strsearch(char *s, char n)
-{
-	int		i;
-	int		in;
-	int		end;
-	char	*tmp;
-
-	i = 0;
-	in = 0;
-	end = 0;
-	tmp = NULL;
-	if (s)
-	{
-		while (s[i] != '\0')
-		{
-			if (QUOTE(s[i]) && in == 0)
-			{
-				end = i + 1;
-				if ((tmp = inside_quotes(s + i + 1, &end, s[i])))
-					in = 1;
-				if (tmp)
-					free(tmp);
-			}
-			if (i == end)
-				in = 0;
-			if (s[i] == n && in == 0)
-				return (1);
-			i++;
-		}
-	}
-	return (0);
-}
-
 int			has_redir(char *s, int *pos)
 {
 	int		i;
 	int		in;
 	int		end;
-	char	*tmp;
 
-	tmp = NULL;
+	i = 0;
+	in = 0;
+	end = 0;
 	if (s)
 	{
-		i = 0;
-		in = 0;
-		end = 0;
 		while (s[i] != '\0')
 		{
-			if (QUOTE(s[i]) && in == 0)
-			{
-				end = i + 1;
-				if ((tmp = inside_quotes(s + i + 1, &end, s[i])))
-					in = 1;
-				if (tmp)
-					free(tmp);
-			}
+			norm_quote(s, &i, &in, &end);
 			if (i == end)
 				in = 0;
 			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
@@ -177,30 +99,7 @@ int			has_redir(char *s, int *pos)
 			}
 			i++;
 		}
-	}
-	else
-		return (1);
-	return (0);
-}
-
-int			check_redir(char *s)
-{
-	int i;
-
-	i = 0;
-	while (has_redir(s + i, &i) == 1 && s[i] != '\0')
-	{
-		if (ft_strsearch(s + i, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
-			if (check_arg(s + i))
-				return (0);
-		if (ft_strsearch(s + i, '<') && !ft_strnstr(s + i, "<<", ft_strlen(s)))
-			if (check_arg(s + i))
-				return (0);
-		if (ft_strnstr(s + i, ">>", ft_strlen(s + i)) != NULL)
-			if (check_arg(s + i))
-				return (0);
-		if (s[i] != '\0')
-			i++;
+		return (0);
 	}
 	return (1);
 }
@@ -213,50 +112,5 @@ int			check_pipeline(char *s)
 	if (s)
 		if (s[0] == ';')
 			return (0);
-	return (1);
-}
-
-int			check_syntax(char *s)
-{
-	int		pos;
-	char	*e;
-
-	pos = 0;
-	if (ft_strsearch(s, ';'))
-	{
-		if (check_pipeline(s) == 0)
-		{
-			ft_printf("Syntax Error Near %s\n", s + pos);
-			return (0);
-		}
-	}
-	if (ft_strchr(s, '\"') || ft_strchr(s, '\''))
-	{
-		if (check_quotes(s, &pos) == 0)
-		{
-			ft_printf("Syntax Error Near %s\n", s + pos);
-			return (0);
-		}
-	}
-	if (ft_strsearch(s, '|'))
-	{
-		if (check_pipe(s) == 0)
-		{
-			ft_printf("Syntax Error Near %s\n", ft_strchr(s, '|'));
-			return (0);
-		}
-	}
-	if (ft_strchr(s, '>') || ft_strchr(s, '<') || ft_strnstr(s, ">>",
-		(ft_strlen(s) < 3 ? 3: ft_strlen(s))))
-	{
-		if (check_redir(s) == 0)
-		{
-			e = (ft_strchr(s, '>') == NULL ? (ft_strchr(s, '<') == NULL ?
-				ft_strnstr(s, ">>", (ft_strlen(s) < 3 ? 3 :
-				ft_strlen(s))) : ft_strchr(s, '<')) : ft_strchr(s, '>'));
-			ft_printf("Syntax Error Near %s\n", e);
-			return (0);
-		}
-	}
 	return (1);
 }
