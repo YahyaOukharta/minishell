@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youkhart <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 18:45:36 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/27 18:45:42 by youkhart         ###   ########.fr       */
+/*   Updated: 2020/12/28 12:24:12 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,10 @@ int					redirect_inputs(char **tokens,
 int					redirect_outputs(t_command *cmd, int pipe_in, int pipe_out);
 int					execute_pipeline(t_pipeline *pipeline);
 void				signal_handler(int signal);
-
+char				*dollar_norm_dollar(char *s, int *i, char *line);
+char				*dollar_norm(char *s, int *i, int value);
+char				*get_norm_outside(int *i, char *m, char *s, int *start);
+char				*get_norm_inside(int *i, char *s, char *rt);
+char				*env_normed(char *s, char *line, int *i);
+char				*handle_env(char *line, int *pos);
 #endif

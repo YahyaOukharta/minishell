@@ -47,10 +47,8 @@ t_pipeline		**parser(char *line)
 	t_pipeline	**parsed_line;
 	int			i;
 	char		**split;
-	char		*tmp;
 
 	split = NULL;
-	tmp = NULL;
 	line = ft_strtrim(line, " \t");
 	pipelines = parser_split(line, ';');
 	parsed_line = (t_pipeline **)malloc(
@@ -87,8 +85,7 @@ void			print_parsed_line(t_pipeline **parsed_line)
 			{
 				while (parsed_line[i]->cmds[j])
 				{
-					ft_printf("\t**** Command %d ****\n", j+1);
-
+					ft_printf("\t**** Command %d ****\n", j + 1);
 					k=0;
 					ft_printf("\t  Tokens : ");
 					if (parsed_line[i]->cmds[j]->tokens)

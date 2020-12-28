@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaoui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:20 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/27 15:52:24 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/28 12:19:54 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,10 @@ int			check_pipe(char *s)
 int			check_arg(char *s)
 {
 	int		i;
-	int		end;
 	int		in;
-	char	*tmp;
 
 	i = 0;
 	in = 0;
-	end = 0;
-	tmp = NULL;
 	if (s)
 	{
 		while (!(s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
@@ -195,20 +191,14 @@ int			check_redir(char *s)
 	while (has_redir(s + i, &i) == 1 && s[i] != '\0')
 	{
 		if (ft_strsearch(s + i, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
-		{
 			if (check_arg(s + i))
 				return (0);
-		}
 		if (ft_strsearch(s + i, '<') && !ft_strnstr(s + i, "<<", ft_strlen(s)))
-		{
 			if (check_arg(s + i))
 				return (0);
-		}
 		if (ft_strnstr(s + i, ">>", ft_strlen(s + i)) != NULL)
-		{
 			if (check_arg(s + i))
 				return (0);
-		}
 		if (s[i] != '\0')
 			i++;
 	}
@@ -221,10 +211,8 @@ int			check_pipeline(char *s)
 
 	i = 0;
 	if (s)
-	{
 		if (s[0] == ';')
 			return (0);
-	}
 	return (1);
 }
 

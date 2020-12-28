@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaoui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:01 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/27 15:53:02 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/28 12:26:15 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,8 @@ bool			handle_return(int rt, char *line)
 			g_signal_d = 0;
 			return (true);
 		}
-		else
-		{
-			ft_putchar_fd('\n', STDOUT);
-			exit(1);
-		}
+		ft_putchar_fd('\n', STDOUT);
+		exit(1);
 	}
 	g_signal_d = 1;
 	return (false);

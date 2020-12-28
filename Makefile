@@ -25,6 +25,8 @@ SRCS = srcs/main.c\
 	   srcs/parser/parser_redir.c\
 	   srcs/parser/parser.c\
 	   srcs/parser/free_parsed.c\
+	   srcs/parser/check_line_utils.c\
+	   srcs/parser/norm_utils.c\
 	    \
 	   srcs/execution/processes.c\
 	   srcs/execution/path.c\
