@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 18:45:36 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/28 12:24:12 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/28 15:17:35 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,4 +142,15 @@ char				*get_norm_outside(int *i, char *m, char *s, int *start);
 char				*get_norm_inside(int *i, char *s, char *rt);
 char				*env_normed(char *s, char *line, int *i);
 char				*handle_env(char *line, int *pos);
+int					check_arg(char *s);
+void				norm_quote(char *s, int *i, int *in, int *end);
+void				check_inc_arg(char *s, int *i, int *in);
+void				norm_quote(char *s, int *i, int *in, int *end);
+int					ft_strsearch(char *s, char n);
+int					has_redir(char *s, int *pos);
+int					check_pipeline(char *s);
+int					check_quotes(char *s, int *pos);
+int					check_pipe(char *s);
+int					check_redir(char *s);
+int					has_redir(char *s, int *pos);
 #endif
