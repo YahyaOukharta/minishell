@@ -91,16 +91,19 @@ t_exp		inp(char *s)
 	in.dbl = 0;
 	while (s[i] != '\0')
 	{
-		if (QUOTE(s[i]))
+		while ((size_t)(i + 1) < ft_strlen(s) && QUOTE(s[i]))
 		{
-			if (have_end(s + i + 1, s[i], &end) && s[i] == '\'')
+			end = i;
+			if (have_end(s + i, s[i], &end) && s[i] == '\'')
 				in.sgl += 1;
-			if (have_end(s + i + 1, s[i], &end) && s[i] == '\"')
+			if (have_end(s + i, s[i], &end) && s[i] == '\"')
 				in.dbl += 1;
+			i++;
 		}
 		if (s[i] == '$')
 			return (in);
-		i++;
+		if (s[i] != '\0')
+			i++;
 	}
 	return (in);
 }
@@ -140,7 +143,8 @@ char		*ft_env(char *line)
 			while (QUOTE(line[i]))
 				s = append(s, line[i++]);
 		}
-		if (line[i] == '$' && (in.sgl > 1 || in.dbl > 0 || (in.sgl == in.dbl)))
+		ft_printf("%d | %d\n", in.sgl, in.dbl);
+		if (line[i] == '$' && (in.sgl % 2 == 0 || in.dbl > 0))
 			s = env_normed(s, line, &i);
 		else if (line[i] != '\0')
 			s = append(s, line[i++]);
