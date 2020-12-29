@@ -65,6 +65,8 @@ bool			handle_return(int rt, char *line)
 			g_signal_d = 0;
 			return (true);
 		}
+		free(g_line);
+		free(g_saved);
 		ft_putchar_fd('\n', STDOUT);
 		exit(1);
 	}

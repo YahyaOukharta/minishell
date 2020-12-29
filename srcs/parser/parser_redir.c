@@ -145,14 +145,14 @@ void		quote_token(char *s, int *i, t_redir *redir)
 		inside_quotes(s + *i, i, s[*i - 1]));
 	if ((size_t)*i < ft_strlen(s))
 		*i -= 1;
-	if ((size_t)*i < ft_strlen(s) && QUOTE(s[*i]))
+	if (QUOTE(s[*i]))
 		*i += 1;
 }
 
 void		inc_(int *i, char *s)
 {
-	if ((size_t)*i < ft_strlen(s) && (s[*i] != '\0' && (s[*i] == ' ' || s[*i + 1] == '\0')
-	&& s[*i] != '>' && s[*i] != '<'))
+	if (s[*i] != '\0' && (s[*i] == ' ' || s[*i + 1] == '\0')
+	&& s[*i] != '>' && s[*i] != '<')
 		*i += 1;
 }
 
