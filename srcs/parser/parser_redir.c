@@ -143,14 +143,16 @@ void		quote_token(char *s, int *i, t_redir *redir)
 	*i += 1;
 	redir->tokens = realloc__(redir->tokens,
 		inside_quotes(s + *i, i, s[*i - 1]));
-	if (QUOTE(s[*i]))
+	if ((size_t)*i < ft_strlen(s))
+		*i -= 1;
+	if ((size_t)*i < ft_strlen(s) && QUOTE(s[*i]))
 		*i += 1;
 }
 
 void		inc_(int *i, char *s)
 {
-	if (s[*i] != '\0' && (s[*i] == ' ' || s[*i + 1] == '\0')
-	&& s[*i] != '>' && s[*i] != '<')
+	if ((size_t)*i < ft_strlen(s) && (s[*i] != '\0' && (s[*i] == ' ' || s[*i + 1] == '\0')
+	&& s[*i] != '>' && s[*i] != '<'))
 		*i += 1;
 }
 
@@ -172,7 +174,7 @@ t_redir		get_tokens(char *s)
 	end = 0;
 	in = 0;
 	init_redir(&redir);
-	while (s[i] != '\0')
+	while ((size_t)i < ft_strlen(s) && s[i] != '\0')
 	{
 		if (QUOTE(s[i]) && (end = quote_ends(s + i + 1, s[i])))
 			quote_token(s, &i, &redir);

@@ -21,20 +21,24 @@ char		*inside_quotes(char *s, int *start, char quote)
 	m = NULL;
 	while (s[i] != '\0')
 	{
-		if (s[i] == quote && !(ft_isalnum(s[i + 1])))
-		{
-			*start += i;
-			break ;
-		}
+		// if (s[i] == quote && !(ft_isalnum(s[i + 1])))
+		// {
+		// 	*start += i;
+		// 	break ;
+		// }
 		//else
 		if (s[i] == quote && ft_isalnum(s[i + 1]))
 		{
 			m = get_norm_outside(&i, m, s, start);
 			break ;
 		}
-		m = append(m, s[i]);
+		if (s[i] != quote)
+			m = append(m, s[i]);
 		i++;
 	}
+	if (i < (int)ft_strlen(s) && s[i] == '\0')
+		i--;
+	*start += i;
 	if (m == NULL)
 		m = ft_strdup("");
 	return (m);

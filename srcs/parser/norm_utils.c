@@ -69,7 +69,7 @@ char		*outside_quotes(char *s, int *start)
 			rt = get_norm_inside(&i, s, rt);
 		else
 			rt = append(rt, s[i]);
-		if (s[i] != ' ')
+		if (i < (int)ft_strlen(s) && s[i] != ' ')
 			i++;
 	}
 	if (i >= (int)ft_strlen(s) || s[i] == '\0')
