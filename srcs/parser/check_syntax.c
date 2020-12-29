@@ -50,6 +50,18 @@ int			check_quotes(char *s, int *pos)
 	return (1);
 }
 
+int			has_alnum(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i] != '\0')
+		if (ft_isalnum(s[i++]) || QUOTE(s[i]))
+			return (1);
+	return (0);
+}
+
+
 int			check_pipe(char *s)
 {
 	char	**split;
@@ -63,7 +75,7 @@ int			check_pipe(char *s)
 	v = 0;
 	while (split[++i] != NULL)
 	{
-		if (ft_strlen(split[i]) > 0)
+		if (ft_strlen(split[i]) > 0 && has_alnum(split[i]))
 			v++;
 		free(split[i]);
 	}

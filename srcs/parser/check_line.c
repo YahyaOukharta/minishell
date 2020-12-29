@@ -43,7 +43,7 @@ char		*inside_quotes(char *s, int *start, char quote)
 	str = NULL;
 	while (s[i] != '\0')
 	{
-		if (QUOTE(s[i]) && s[i] != quote)
+		if (s[i] != quote && (s[i] == '\'' || s[i] == '\"'))
 		{
 			t = get_inside(s + i, &i, s[i]);
 			str = ft_strdup(m);
@@ -55,15 +55,14 @@ char		*inside_quotes(char *s, int *start, char quote)
 			if (str)
 				free(str);
 		}
-		// if (s[i] == quote && !(ft_isalnum(s[i + 1])))
-		// {
-		// 	*start += i;
-		// 	break ;
-		// }
-		//else
 		if (s[i] == quote && ft_isalnum(s[i + 1]))
 		{
 			m = get_norm_outside(&i, m, s, start);
+			break ;
+		}
+		else if (s[i] == quote && !ft_isalnum(s[i + 1]))
+		{
+			i++;
 			break ;
 		}
 		if (s[i] != quote)
@@ -143,7 +142,6 @@ char		*ft_env(char *line)
 			while (QUOTE(line[i]))
 				s = append(s, line[i++]);
 		}
-		ft_printf("%d | %d\n", in.sgl, in.dbl);
 		if (line[i] == '$' && (in.sgl % 2 == 0 || in.dbl > 0))
 			s = env_normed(s, line, &i);
 		else if (line[i] != '\0')
