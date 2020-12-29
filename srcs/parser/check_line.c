@@ -26,7 +26,8 @@ char		*inside_quotes(char *s, int *start, char quote)
 			*start += i;
 			break ;
 		}
-		else if (s[i] == quote && ft_isalnum(s[i + 1]))
+		//else
+		if (s[i] == quote && ft_isalnum(s[i + 1]))
 		{
 			m = get_norm_outside(&i, m, s, start);
 			break ;
@@ -34,6 +35,8 @@ char		*inside_quotes(char *s, int *start, char quote)
 		m = append(m, s[i]);
 		i++;
 	}
+	if (m == NULL)
+		m = ft_strdup("");
 	return (m);
 }
 

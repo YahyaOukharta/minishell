@@ -60,15 +60,19 @@ char		*dollar_norm_dollar(char *s, int *i, char *line)
 {
 	char	*tmp;
 	char	*p;
+	int		env;
 
+	env = 0;
 	p = NULL;
 	tmp = NULL;
 	*i += 1;
 	tmp = ft_strdup(s);
 	if (s)
 		free(s);
+	if (ft_isalnum(line[*i]))
+		env = 1;
 	p = ft_get_value(line + *i, i);
-	s = ft_strjoin(tmp, ((ft_strlen(p) == 0) ? "$" : p));
+	s = ft_strjoin(tmp, ((ft_strlen(p) == 0 && env == 0) ? "$" : p));
 	if (tmp)
 		free(tmp);
 	if (p)
