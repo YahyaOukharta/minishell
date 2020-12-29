@@ -20,6 +20,8 @@ char		**realloc__(char **s, char *t)
 
 	i = 0;
 	len = tab_len(s);
+	if (ft_strlen(t) == 0)
+		return (s);
 	if (!(r = (char **)malloc(sizeof(char *) * (len + 2))))
 		return (NULL);
 	while (i < len)

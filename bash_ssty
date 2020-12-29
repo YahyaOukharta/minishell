@@ -1,0 +1,4 @@
+speed 38400 baud; line = 0;
+eol = M-^?; eol2 = M-^?;
+ixany iutf8
+

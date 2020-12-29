@@ -15,11 +15,9 @@
 char		*inside_quotes(char *s, int *start, char quote)
 {
 	int		i;
-	int		end;
 	char	*m;
 
 	i = 0;
-	end = 0;
 	m = NULL;
 	while (s[i] != '\0')
 	{

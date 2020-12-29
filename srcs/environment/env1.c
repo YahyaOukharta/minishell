@@ -48,10 +48,8 @@ char	*ft_key(char *s)
 
 char	*ft_value(char *s)
 {
-	int		i;
 	char	*value;
 
-	i = 0;
 	value = NULL;
 	if (s)
 	{

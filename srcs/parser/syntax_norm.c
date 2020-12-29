@@ -73,12 +73,10 @@ int			ft_strsearch(char *s, char n)
 	int		i;
 	int		in;
 	int		end;
-	char	*tmp;
 
 	i = 0;
 	in = 0;
 	end = 0;
-	tmp = NULL;
 	if (s)
 	{
 		while (s[i] != '\0')

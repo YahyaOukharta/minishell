@@ -89,6 +89,8 @@ int		builtin_cd(int in, int out, char **argv)
 
 	in = 0;
 	out = 0;
+	(void )in;
+	(void )out;
 	ft_bzero(cwd, 1000);
 	getcwd(cwd, 1000);
 	if (tab_len(argv) > 2)

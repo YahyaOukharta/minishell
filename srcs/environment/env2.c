@@ -98,9 +98,6 @@ char		**get_env_tab(void)
 
 void		free_env(void)
 {
-	int		i;
-
-	i = 0;
 	while (g_env != NULL)
 	{
 		free(g_env->key);

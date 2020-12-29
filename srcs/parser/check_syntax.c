@@ -28,12 +28,10 @@ int			have_end(char *s, char quote, int *start)
 
 int			check_quotes(char *s, int *pos)
 {
-	int		i;
 	int		start;
 	int		end;
 	char	quote;
 
-	i = 0;
 	start = 0;
 	end = ft_strlen(s);
 	quote = '0';
