@@ -14,6 +14,7 @@ SRCS = srcs/main.c\
 		\
 	   srcs/environment/env1.c\
 	   srcs/environment/env2.c\
+	   srcs/environment/env3.c\
 		\
 	   srcs/builtins/builtins1.c\
 	   srcs/builtins/builtins2.c\

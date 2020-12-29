@@ -20,8 +20,12 @@ void		unset_env(char *key)
 	tmp = g_env;
 	if (!g_env)
 		return ;
+	trash = NULL;
 	if (string_equal(tmp->key, key))
+	{
+		trash = tmp;
 		g_env = tmp->next;
+	}
 	else
 	{
 		while (tmp->next)
@@ -30,12 +34,13 @@ void		unset_env(char *key)
 			{
 				trash = tmp->next;
 				tmp->next = trash->next;
-				free(trash);
-				return ;
+				break ;
 			}
 			tmp = tmp->next;
 		}
 	}
+	if (trash)
+		free_one_env(trash);
 }
 
 t_env		*env_with_key(char *key)

@@ -96,7 +96,7 @@ int		new_builtin_process(int in, int out,
 			queue_pid(pid);
 	}
 	else
-		ret = b(in, out, av);
+		g_status = b(in, out, av);
 	return (g_status);
 }
 

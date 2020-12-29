@@ -58,7 +58,7 @@ char		*outside_quotes(char *s, int *start)
 
 	i = 0;
 	rt = NULL;
-	while (s[i] != '\0')
+	while (i < (int)ft_strlen(s) && s[i])
 	{
 		if (s[i] == ' ' || s[i] == '>' || s[i] == '<')
 		{
@@ -72,7 +72,7 @@ char		*outside_quotes(char *s, int *start)
 		if (s[i] != ' ')
 			i++;
 	}
-	if (s[i] == '\0')
+	if (i >= (int)ft_strlen(s) || s[i] == '\0')
 		*start += i - 1;
 	return (rt);
 }

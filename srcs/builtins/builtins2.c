@@ -45,7 +45,7 @@ void	export_env(void)
 
 int		builtin_export(int in, int out, char **argv)
 {
-	char	**tab;
+	char	*eq;
 	int		i;
 
 	(void)in;
@@ -55,12 +55,11 @@ int		builtin_export(int in, int out, char **argv)
 		i = 1;
 		while (argv[i])
 		{
-			tab = ft_split(argv[i], '=');
-			if (tab_len(tab) == 2)
-				set_env(tab[0], tab[1]);
-			if (tab_len(tab) == 1 && argv[i][ft_strlen(argv[i]) - 1] == '=')
-				set_env(tab[0], ft_strdup(""));
-			//free_s_tab(tab);
+			if ((eq = ft_strchr(argv[i], '=')))
+			{
+				*eq = '\0';
+				set_env(ft_strdup(argv[i]), ft_strdup(eq + 1));
+			}
 			i++;
 		}
 	}
