@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:39:29 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/28 15:09:56 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 10:00:39 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			ft_strsearch(char *s, char n)
 	{
 		while (s[i] != '\0')
 		{
-			norm_quote(s, &i, &in, &end);
+			in == 0 ? norm_quote(s, &i, &in, &end) : 0;
 			if (i == end)
 				in = 0;
 			if (s[i] == n && in == 0)
