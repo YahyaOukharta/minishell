@@ -49,6 +49,8 @@ void		ft_minishell(char **env)
 		print_parsed_line(parsed_line);
 		exec_parsed(parsed_line);
 		free_pipeline(parsed_line);
+		if (g_saved)
+			free(g_saved);
 	}
 	free_env();
 }
