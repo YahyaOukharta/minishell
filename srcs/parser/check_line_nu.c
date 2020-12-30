@@ -44,10 +44,12 @@ char		*inside_quotes(char *s, int *start, char quote)
 	while (s[i] != '\0')
 	{
 		m = ft_insidethequote(s, &i, m, quote);
-		if (s[i] == quote && s[i + 1] != ' ' && !QUOTE(s[i + 1]))
+		if (s[i] != quote && s[i + 1] != ' ' && !QUOTE(s[i + 1]))
 		{
 			m = get_norm_outside(&i, m, s, start);
-			break ;
+			if (m == NULL)
+			m = ft_strdup("");
+			return (m);
 		}
 		else if (s[i] == quote && !ft_isalnum(s[i + 1]) && !QUOTE(s[i + 1]))
 		{
@@ -57,6 +59,8 @@ char		*inside_quotes(char *s, int *start, char quote)
 		else
 			while (s[i] == quote)
 				i++;
+		if (s[i] == ' ' && !ft_strchr(s + i, quote))
+			break ;
 		if (s[i] != quote && s[i] != '\0')
 			m = append(m, s[i++]);
 	}

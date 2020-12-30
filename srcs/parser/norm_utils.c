@@ -73,6 +73,11 @@ char		*outside_quotes(char *s, int *start)
 			rt = append(rt, s[i]);
 		if (i < (int)ft_strlen(s) && s[i] != ' ')
 			i++;
+		else
+		{
+			*start += i;
+			break ;
+		}
 	}
 	if (i >= (int)ft_strlen(s) || s[i] == '\0')
 		*start += i - 1;

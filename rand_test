@@ -95,3 +95,4 @@ echo bonjour ; |
  cat < Makefile | grep gcc > output
  exit 0 | exit 1
  exit 1 | exit 0
+echo """" """"           | cat -e
