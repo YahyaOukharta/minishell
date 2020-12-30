@@ -6,25 +6,11 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:20 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/28 17:09:17 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 10:48:03 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int			have_end(char *s, char quote, int *start)
-{
-	while (*start < (int)ft_strlen(s))
-	{
-		if (s[*start] == quote)
-		{
-			*start += 1;
-			return (1);
-		}
-		*start += 1;
-	}
-	return (0);
-}
 
 int			check_quotes(char *s, int *pos)
 {
@@ -60,7 +46,6 @@ int			has_alnum(char *s)
 			return (1);
 	return (0);
 }
-
 
 int			check_pipe(char *s)
 {

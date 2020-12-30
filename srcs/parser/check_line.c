@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:57:12 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 10:20:41 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 10:22:45 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,52 +27,6 @@ char		*get_inside(char *s, int *start, char quote)
 		i++;
 	*start += i;
 	return (t);
-}
-
-char		*inside_quotes(char *s, int *start, char quote)
-{
-	int		i;
-	char	*m;
-	char	*t;
-	char	*str;
-
-	i = 0;
-	m = NULL;
-	t = NULL;
-	str = NULL;
-	while (s[i] != '\0')
-	{
-		if (s[i] != quote && (s[i] == '\'' || s[i] == '\"'))
-		{
-			t = get_inside(s + i, &i, s[i]);
-			str = ft_strdup(m);
-			if (m)
-				free(m);
-			m = ft_strjoin(str, t);
-			if (t)
-				free(t);
-			if (str)
-				free(str);
-		}
-		if (s[i] == quote && ft_isalnum(s[i + 1]))
-		{
-			m = get_norm_outside(&i, m, s, start);
-			break ;
-		}
-		else if (s[i] == quote && !ft_isalnum(s[i + 1]))
-		{
-			i++;
-			break ;
-		}
-		if (s[i] != quote)
-			m = append(m, s[i]);
-		if (s[i] != '\0')
-			i++;
-	}
-	*start += i;
-	if (m == NULL)
-		m = ft_strdup("");
-	return (m);
 }
 
 t_exp		inp(char *s)

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 18:45:36 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/28 17:09:30 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 10:45:50 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,14 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef	struct		s_arg
+{
+	int				i;
+	int				in;
+	int				end;
+}					t_arg;
+
+t_arg				g_arg;
 t_env				*g_env;
 int					(*g_builtins[7])(int, int, char **);
 char				*g_builtins_str[8];
@@ -156,4 +164,14 @@ int					check_pipe(char *s);
 int					check_redir(char *s);
 int					has_redir(char *s, int *pos);
 int					no_alpha(char *s);
+int					quote_ends(char *s, char c);
+void				quote_token(char *s, int *i, t_redir *redir);
+void				fill_redir(t_redir *redir, char *s, int *i, int in);
+char				**realloc__(char **s, char *t);
+char				*get_rarg(char *line, int *pos);
+char				*rarg_fill_norm(char *s, char *line, int *i);
+void				init_redir(t_redir *redir);
+void				inc_(int *i, char *s);
+void				rarg_norm(char *line, int *i, int *end, int *in);
+char				*get_inside(char *s, int *start, char quote);
 #endif

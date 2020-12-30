@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   demo_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaoui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:34 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/27 15:52:35 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 11:32:32 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ char	*get_arg(char *line, char c, int *pos)
 			end = i + 1;
 			get_arg_helper(&line[i], &end, &in, &tmp[1]);
 		}
-		if (line[i] == c && (in = (i == end ? 0 : in)) == 0)
+		if (i + 1 == end)
+			in = 0;
+		if (line[i] == c && in == 0)
 		{
 			*pos += i;
 			break ;

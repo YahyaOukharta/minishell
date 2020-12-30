@@ -30,6 +30,9 @@ SRCS = srcs/main.c\
 	   srcs/parser/norm_utils.c\
 	   srcs/parser/syntax_norm.c\
 	   srcs/parser/syntax_norm_utils.c\
+	   srcs/parser/check_line_nu.c\
+	   srcs/parser/get_arg.c\
+	   srcs/parser/get_tokens.c\
 	    \
 	   srcs/execution/processes.c\
 	   srcs/execution/path.c\
