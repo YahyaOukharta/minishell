@@ -58,7 +58,16 @@ int		builtin_export(int in, int out, char **argv)
 			if ((eq = ft_strchr(argv[i], '=')))
 			{
 				*eq = '\0';
-				set_env(ft_strdup(argv[i]), ft_strdup(eq + 1));
+				int j = 0;
+				while (ft_isalnum(argv[i][j]))
+					j++;
+				if (argv[i][j] == '\0')
+					set_env(ft_strdup(argv[i]), ft_strdup(eq + 1));
+				else
+				{
+					ft_putstr_fd("export: not a valid identifier\n", out);
+					return (1);
+				}
 			}
 			i++;
 		}
