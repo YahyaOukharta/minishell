@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youkhart <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:02:51 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/27 15:51:30 by youkhart         ###   ########.fr       */
+/*   Updated: 2020/12/30 15:22:04 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int		builtin_export(int in, int out, char **argv)
 {
 	char	*eq;
 	int		i;
+	int		j;
 
+	j = 0;
 	(void)in;
 	(void)out;
 	if (tab_len(argv) > 1)
@@ -58,7 +60,7 @@ int		builtin_export(int in, int out, char **argv)
 			if ((eq = ft_strchr(argv[i], '=')))
 			{
 				*eq = '\0';
-				int j = 0;
+				j = 0;
 				while (ft_isalnum(argv[i][j]))
 					j++;
 				if (argv[i][j] == '\0')

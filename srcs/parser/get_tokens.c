@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:28:43 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 10:48:38 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 15:24:33 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void		fill_redir(t_redir *redir, char *s, int *i, int in)
 			redir->outs = realloc__(redir->outs, get_rarg(s + *i, i));
 		else
 			redir->ins = realloc__(redir->ins, get_rarg(s + *i, i));
-		if (s[*i] != '\0' && ((s[*i] == ' ' || s[*i + 1] == '\0')
+		if ((size_t)i < ft_strlen(s) &&
+		s[*i] != '\0' && ((s[*i] == ' ' || s[*i + 1] == '\0')
 				&& s[*i] != '>' && s[*i] != '<'))
 			*i += 1;
 	}
@@ -48,13 +49,14 @@ void		quote_token(char *s, int *i, t_redir *redir)
 		inside_quotes(s + *i, i, s[*i - 1]));
 	if ((size_t)*i < ft_strlen(s))
 		*i -= 1;
-	if (QUOTE(s[*i]))
+	if ((size_t)*i < ft_strlen(s) && QUOTE(s[*i]) && s[*i + 1] != '\0')
 		*i += 1;
 }
 
 void		inc_(int *i, char *s)
 {
-	if (s[*i] != '\0' && (s[*i] == ' ' || s[*i + 1] == '\0')
+	if ((size_t)*i < ft_strlen(s) &&
+	s[*i] != '\0' && (s[*i] == ' ' || s[*i + 1] == '\0')
 	&& s[*i] != '>' && s[*i] != '<')
 		*i += 1;
 }

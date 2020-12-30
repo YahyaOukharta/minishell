@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:23:07 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 14:59:59 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 15:18:45 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,19 @@ char		*inside_quotes(char *s, int *start, char quote)
 	while (s[i] != '\0')
 	{
 		m = ft_insidethequote(s, &i, m, quote);
-		if (s[i] == quote && s[i + 1] != ' ')
+		if (s[i] == quote && s[i + 1] != ' ' && !QUOTE(s[i + 1]))
 		{
 			m = get_norm_outside(&i, m, s, start);
 			break ;
 		}
-		else if (s[i] == quote && !ft_isalnum(s[i + 1]))
+		else if (s[i] == quote && !ft_isalnum(s[i + 1]) && !QUOTE(s[i + 1]))
 		{
 			i++;
 			break ;
 		}
+		else
+			while (s[i] == quote)
+				i++;
 		if (s[i] != quote && s[i] != '\0')
 			m = append(m, s[i++]);
 	}

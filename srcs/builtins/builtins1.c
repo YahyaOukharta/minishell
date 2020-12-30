@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youkhart <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:02:51 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/27 15:51:30 by youkhart         ###   ########.fr       */
+/*   Updated: 2020/12/30 15:21:43 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int		builtin_cd(int in, int out, char **argv)
 
 	in = 0;
 	out = 0;
-	(void )in;
-	(void )out;
+	(void)in;
+	(void)out;
 	ft_bzero(cwd, 1000);
 	getcwd(cwd, 1000);
 	if (tab_len(argv) > 2)
