@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:16:09 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/28 12:29:17 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 15:31:11 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ char		*get_norm_outside(int *i, char *m, char *s, int *start)
 
 	*i += 1;
 	tmp = NULL;
-	rt = NULL;
+	rt = ft_strdup("");
 	tmp = outside_quotes(s + *i, i);
 	rt = ft_strdup(m);
 	if (m)
 		free(m);
+	if (tmp == NULL)
+		tmp = ft_strdup("");
 	m = ft_strjoin(rt, tmp);
 	free(tmp);
 	free(rt);
