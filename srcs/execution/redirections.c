@@ -26,7 +26,7 @@ char	*jump_redirection_sign(char *out)
 	{
 		quote = *out;
 		out++;
-		s = inside_quotes(out, &i, quote);
+		s = ft_new_inside(out, &i, quote);
 	}
 	else
 		s = ft_strdup(out);

@@ -44,7 +44,7 @@ char		*get_norm_inside(int *i, char *s, char *rt)
 	tmp = ft_strdup(rt);
 	if (rt != NULL)
 		free(rt);
-	t = inside_quotes(s + *i, i, s[*i - 1]);
+	t = ft_new_inside(s + *i, i, s[*i - 1]);
 	rt = ft_strjoin(tmp, t);
 	if (t)
 		free(t);

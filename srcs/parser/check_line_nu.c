@@ -34,38 +34,28 @@ char		*ft_insidethequote(char *s, int *i, char *m, char quote)
 	return (m);
 }
 
-char		*inside_quotes(char *s, int *start, char quote)
+char		*ft_new_inside(char *s, int *start, char quote)
 {
-	int		i;
-	char	*m;
+	int 	i;
+	char	*rt;
+	int 	in;
 
+	in = 1;
 	i = 0;
-	m = NULL;
-	while (s[i] != '\0')
+	rt = NULL;
+	while (i < (int)ft_strlen(s))
 	{
-		m = ft_insidethequote(s, &i, m, quote);
-		if (s[i] != quote && s[i + 1] != ' ' && !QUOTE(s[i + 1]))
-		{
-			m = get_norm_outside(&i, m, s, start);
-			if (m == NULL)
-			m = ft_strdup("");
-			return (m);
-		}
-		else if (s[i] == quote && !ft_isalnum(s[i + 1]) && !QUOTE(s[i + 1]))
+		while (s[i] == quote)
 		{
 			i++;
-			break ;
+			in++;
 		}
-		else
-			while (s[i] == quote)
-				i++;
-		if (s[i] == ' ' && !ft_strchr(s + i, quote))
+		if (s[i] == ' ' && in % 2 == 0)
 			break ;
-		if (s[i] != quote && s[i] != '\0')
-			m = append(m, s[i++]);
+		if (s[i] != quote)
+			rt = append(rt, s[i]);
+		i++;
 	}
 	*start += i;
-	if (m == NULL)
-		m = ft_strdup("");
-	return (m);
+	return (rt);
 }

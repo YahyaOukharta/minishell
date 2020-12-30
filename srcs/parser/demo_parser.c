@@ -64,7 +64,7 @@ char	*append(char *s, char c)
 
 void	get_arg_helper(char *line, int *end, int *in, char **tmp)
 {
-	if ((*tmp = inside_quotes(line + 1, end, *line)))
+	if ((*tmp = ft_new_inside(line + 1, end, *line)))
 	{
 		*in = 1;
 		free(*tmp);

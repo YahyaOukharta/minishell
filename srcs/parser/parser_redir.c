@@ -47,7 +47,7 @@ void		rarg_norm(char *line, int *i, int *end, int *in)
 
 	tmp = NULL;
 	*end = *i + 1;
-	if ((tmp = inside_quotes(line + *i + 1, end, line[*i])))
+	if ((tmp = ft_new_inside(line + *i + 1, end, line[*i])))
 		*in = 1;
 	if (tmp)
 		free(tmp);

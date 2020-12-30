@@ -94,7 +94,6 @@ void				init_shell(char **env);
 bool				handle_return(int rt, char *line);
 t_pipeline			**parse_data(char *line);
 void				exec_parsed(t_pipeline **parsed_line);
-char				*inside_quotes(char *s, int *start, char quote);
 char				*outside_quotes(char *s, int *start);
 t_pipeline			**parser(char *line);
 char				**fml_parser(char *line);
@@ -174,4 +173,5 @@ void				init_redir(t_redir *redir);
 void				inc_(int *i, char *s);
 void				rarg_norm(char *line, int *i, int *end, int *in);
 char				*get_inside(char *s, int *start, char quote);
+char				*ft_new_inside(char *s, int *start, char quote);
 #endif

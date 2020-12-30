@@ -61,7 +61,7 @@ void		norm_quote(char *s, int *i, int *in, int *end)
 	if (QUOTE(s[*i]) && *in == 0)
 	{
 		*end = *i + 1;
-		if ((tmp = inside_quotes(s + *i + 1, end, s[*i])))
+		if ((tmp = ft_new_inside(s + *i + 1, end, s[*i])))
 			*in = 1;
 		if (tmp)
 			free(tmp);

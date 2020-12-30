@@ -46,7 +46,7 @@ void		quote_token(char *s, int *i, t_redir *redir)
 {
 	*i += 1;
 	redir->tokens = realloc__(redir->tokens,
-		inside_quotes(s + *i, i, s[*i - 1]));
+		ft_new_inside(s + *i, i, s[*i - 1]));
 	if ((size_t)*i < ft_strlen(s))
 		*i -= 1;
 	if ((size_t)*i < ft_strlen(s) && QUOTE(s[*i]) && s[*i + 1] != '\0')
