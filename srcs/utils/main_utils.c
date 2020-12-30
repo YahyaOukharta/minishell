@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:01 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/28 12:26:15 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 10:19:26 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ bool			handle_return(int rt, char *line)
 {
 	char		*tmp;
 
-	tmp = NULL;
 	if (rt == 0)
 	{
 		if (ft_strlen(line))

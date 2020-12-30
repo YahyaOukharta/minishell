@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:55:48 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/28 15:22:10 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 10:05:52 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			check_redir_norm(char *s)
 	e = NULL;
 	if (check_redir(s) == 0)
 	{
-		e = ft_strnstr(s, ">>", (ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
+		e = ft_strnstr(s, ">", (ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
 		ft_printf("Syntax Error Near %s\n", e);
 		return (0);
 	}
