@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:36 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/30 10:53:58 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 12:04:44 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ void	signal_handler(int signal)
 		write(STDOUT, " $ ", ft_strlen(" $ "));
 		write(STDOUT, "\033[0m", ft_strlen("\033[0m"));
 		g_signal_c = 1;
-		if (g_line)
-		{
-			free(g_line);
-			g_line = ft_strdup("");
-		}
+		if (g_line != NULL)
+			g_line = NULL;
 		g_saved = NULL;
 	}
 	if (signal == SIGQUIT)

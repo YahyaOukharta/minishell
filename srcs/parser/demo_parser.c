@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:34 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 11:32:32 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/12/30 12:08:46 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char	*get_arg(char *line, char c, int *pos)
 	char	*tmp[2];
 
 	i = 0;
-	end = 0;
 	in = 0;
 	ft_bzero(tmp, 2 * sizeof(char *));
 	while (line[i])
@@ -89,8 +88,7 @@ char	*get_arg(char *line, char c, int *pos)
 			end = i + 1;
 			get_arg_helper(&line[i], &end, &in, &tmp[1]);
 		}
-		if (i + 1 == end)
-			in = 0;
+		(i + 1 == end) ? (in = 0) : 0;
 		if (line[i] == c && in == 0)
 		{
 			*pos += i;
