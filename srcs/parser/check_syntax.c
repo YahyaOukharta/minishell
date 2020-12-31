@@ -84,7 +84,7 @@ int			has_redir(char *s, int *pos)
 		while (s[i] != '\0')
 		{
 			norm_quote(s, &i, &in, &end);
-			if (i == end)
+			if (i + 1== end)
 				in = 0;
 			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
 				ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
@@ -96,7 +96,7 @@ int			has_redir(char *s, int *pos)
 		}
 		return (0);
 	}
-	return (1);
+	return (0);
 }
 
 int			check_pipeline(char *s)

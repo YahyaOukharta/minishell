@@ -99,7 +99,7 @@ int			check_redir(char *s)
 	i = 0;
 	while (has_redir(s + i, &i) == 1 && s[i] != '\0')
 	{
-		if (ft_strsearch(s + i, '>') && !ft_strnstr(s, ">>", ft_strlen(s)))
+		if (ft_strsearch(s + i , '>') && !ft_strnstr(s + i, ">>", ft_strlen(s)))
 			if (check_arg(s + i))
 				return (0);
 		if (ft_strsearch(s + i, '<') && !ft_strnstr(s + i, "<<", ft_strlen(s)))
