@@ -43,13 +43,33 @@ void	export_env(void)
 	}
 }
 
+int		export_helper(char *s)
+{
+	char	*eq;
+	int		j;
+
+	if ((eq = ft_strchr(s, '=')))
+	{
+		*eq = '\0';
+		j = 0;
+		while (ft_isalnum(s[j]))
+			j++;
+		if (s[j] == '\0')
+			set_env(ft_strdup(s), ft_strdup(eq + 1));
+		else
+		{
+			ft_printf("export: not a valid identifier\n");
+			return (0);
+		}
+	}
+	return (1);
+}
+
 int		builtin_export(int in, int out, char **argv)
 {
 	char	*eq;
 	int		i;
-	int		j;
 
-	j = 0;
 	(void)in;
 	(void)out;
 	if (tab_len(argv) > 1)
@@ -57,20 +77,8 @@ int		builtin_export(int in, int out, char **argv)
 		i = 1;
 		while (argv[i])
 		{
-			if ((eq = ft_strchr(argv[i], '=')))
-			{
-				*eq = '\0';
-				j = 0;
-				while (ft_isalnum(argv[i][j]))
-					j++;
-				if (argv[i][j] == '\0')
-					set_env(ft_strdup(argv[i]), ft_strdup(eq + 1));
-				else
-				{
-					ft_putstr_fd("export: not a valid identifier\n", out);
-					return (1);
-				}
-			}
+			if (!export_helper(argv[i]))
+				return (1);
 			i++;
 		}
 	}
@@ -98,12 +106,4 @@ int		builtin_unset(int in, int out, char **argv)
 		}
 	}
 	return (0);
-}
-
-int		builtin_exit(int in, int out, char **argv)
-{
-	(void)in;
-	(void)out;
-	g_return = (tab_len(argv) > 1 ? ft_atoi(argv[1]) : 0);
-	return (-1);
 }

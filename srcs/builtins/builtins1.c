@@ -108,3 +108,11 @@ int		builtin_cd(int in, int out, char **argv)
 	set_env("OLDPWD", cwd);
 	return (0);
 }
+
+int		builtin_exit(int in, int out, char **argv)
+{
+	(void)in;
+	(void)out;
+	g_return = (tab_len(argv) > 1 ? ft_atoi(argv[1]) : 0);
+	return (-1);
+}
