@@ -50,7 +50,7 @@ char		*ft_new_inside(char *s, int *start, char quote)
 			i++;
 			in++;
 		}
-		if (s[i] == ' ' && in % 2 == 0)
+		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' || s[i] == '|' || s[i] == ';') && in % 2 == 0)
 			break ;
 		if (s[i] != quote)
 			rt = append(rt, s[i]);

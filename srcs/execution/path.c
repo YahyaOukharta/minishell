@@ -34,6 +34,8 @@ int		find_file_in_path(char **str, char *cmd)
 
 	i = 0;
 	*str = NULL;
+	if (!ft_strlen(cmd))
+		return (0);
 	if (ft_strchr(cmd, '/') && !stat(cmd, &buf))
 	{
 		*str = ft_strdup(cmd);
