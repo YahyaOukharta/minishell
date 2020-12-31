@@ -36,9 +36,9 @@ char		*ft_insidethequote(char *s, int *i, char *m, char quote)
 
 char		*ft_new_inside(char *s, int *start, char quote)
 {
-	int 	i;
+	int		i;
 	char	*rt;
-	int 	in;
+	int		in;
 
 	in = 1;
 	i = 0;
@@ -50,7 +50,8 @@ char		*ft_new_inside(char *s, int *start, char quote)
 			i++;
 			in++;
 		}
-		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' || s[i] == '|' || s[i] == ';') && in % 2 == 0)
+		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' ||
+		s[i] == '|' || s[i] == ';') && in % 2 == 0)
 			break ;
 		if (s[i] != quote)
 			rt = append(rt, s[i]);

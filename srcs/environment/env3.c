@@ -21,3 +21,4 @@ void		free_one_env(t_env *e)
 		free(e);
 	}
 }
+

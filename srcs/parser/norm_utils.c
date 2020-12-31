@@ -63,10 +63,7 @@ char		*outside_quotes(char *s, int *start)
 	while (i < (int)ft_strlen(s) && s[i])
 	{
 		if (s[i] == ' ' || s[i] == '>' || s[i] == '<')
-		{
-			*start += i;
 			break ;
-		}
 		if (QUOTE(s[i]))
 			rt = get_norm_inside(&i, s, rt);
 		else
@@ -74,11 +71,9 @@ char		*outside_quotes(char *s, int *start)
 		if (i < (int)ft_strlen(s) && s[i] != ' ')
 			i++;
 		else
-		{
-			*start += i;
 			break ;
-		}
 	}
+	*start += i;
 	if (i >= (int)ft_strlen(s) || s[i] == '\0')
 		*start += i - 1;
 	return (rt);
