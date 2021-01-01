@@ -17,13 +17,8 @@ char		**realloc__(char **s, char *t)
 	int		i;
 	char	**r;
 
-	i = -1;/*
-	if (ft_strlen(t) == 0)
-	{
-		if (t != NULL)
-			free(t);
-		return (s);
-	}*/
+
+	i = -1;
 	if (!(r = (char **)malloc(sizeof(char *) * (tab_len(s) + 2))))
 		return (NULL);
 	while (++i < tab_len(s))

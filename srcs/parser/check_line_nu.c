@@ -36,13 +36,17 @@ char		*ft_insidethequote(char *s, int *i, char *m, char quote)
 
 char		*ft_new_inside(char *s, int *start, char quote)
 {
-	int 	i;
+	int		i;
 	char	*rt;
-	int 	in;
+	int		in;
+	char	*c;
+	char	*tmp;
 
 	in = 1;
 	i = 0;
 	rt = NULL;
+	c = NULL;
+	tmp = NULL;
 	while (i < (int)ft_strlen(s))
 	{
 		while (s[i] == quote)
@@ -50,8 +54,19 @@ char		*ft_new_inside(char *s, int *start, char quote)
 			i++;
 			in++;
 		}
-		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' || s[i] == '|' || s[i] == ';') && in % 2 == 0)
+		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' ||
+		s[i] == '|' || s[i] == ';') && in % 2 == 0)
 			break ;
+		if ((in % 2 == 0) && s[i] != quote && QUOTE(s[i]))
+		{
+			c = ft_new_inside(s + i+ 1, &i, s[i]);
+			tmp = ft_strdup(rt);
+			if (rt)
+				free(rt);
+			rt = ft_strjoin(tmp, c);
+			if (c)
+				free(c);
+		}
 		if (s[i] != quote)
 			rt = append(rt, s[i]);
 		i++;
