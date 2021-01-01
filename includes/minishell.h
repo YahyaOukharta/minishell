@@ -123,6 +123,7 @@ t_env				*env_at_index(int index);
 t_env				*env_with_key(char *key);
 char				**get_env_tab();
 void				free_env(void);
+t_env				*get_env_to_delete(char *key);
 void				free_one_env(t_env *e);
 void				init_builtins();
 int					builtin_echo(int in, int out, char **argv);
