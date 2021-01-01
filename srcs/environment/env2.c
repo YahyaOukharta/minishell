@@ -27,18 +27,7 @@ void		unset_env(char *key)
 		g_env = tmp->next;
 	}
 	else
-	{
-		while (tmp->next)
-		{
-			if (string_equal(tmp->next->key, key))
-			{
-				trash = tmp->next;
-				tmp->next = trash->next;
-				break ;
-			}
-			tmp = tmp->next;
-		}
-	}
+		trash = get_env_to_delete(key);
 	if (trash)
 		free_one_env(trash);
 }

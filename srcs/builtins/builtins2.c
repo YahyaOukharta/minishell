@@ -67,7 +67,6 @@ int		export_helper(char *s)
 
 int		builtin_export(int in, int out, char **argv)
 {
-	char	*eq;
 	int		i;
 
 	(void)in;

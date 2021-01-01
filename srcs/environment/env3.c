@@ -12,6 +12,25 @@
 
 #include "minishell.h"
 
+t_env		*get_env_to_delete(char *key)
+{
+	t_env	*tmp;
+	t_env	*trash;
+
+	tmp = g_env;
+	while (tmp->next)
+	{
+		if (string_equal(tmp->next->key, key))
+		{
+			trash = tmp->next;
+			tmp->next = trash->next;
+			return (trash);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
 void		free_one_env(t_env *e)
 {
 	if (e)
