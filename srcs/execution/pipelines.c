@@ -14,18 +14,39 @@
 
 int		*g_children;
 
+int	get_n_processes(t_pipeline *pipeline)
+{
+	int	i;
+	int n;
+	int tmp;
+
+	i = 0;
+	n = 0;
+	while (i < pipeline->n_commands)
+	{
+		if (!string_equal(pipeline->cmds[i]->tokens[0], "unset")
+		&& !string_equal(pipeline->cmds[i]->tokens[0], "export"))
+		{
+			tmp = tab_len(pipeline->cmds[i]->input_files);
+			n += (tmp ? tmp : 1);
+		}
+		i++;
+	}
+	return (n);
+}
+
 void	wait_for_children(t_pipeline *p)
 {
 	int	i;
 
 	i = 0;
-	while (i < p->n_commands)
+	while (i < get_n_processes(p))
 	{
 		if (g_children[i])
 			while (g_children[i] != waitpid(
 				g_children[i], &g_status, WUNTRACED))
 				;
-		i++;
+			i++;
 	}
 }
 
@@ -38,8 +59,8 @@ int		execute_pipeline(t_pipeline *pipeline)
 
 	i = 0;
 	in = 0;
-	g_children = (int *)malloc(sizeof(int) * pipeline->n_commands);
-	ft_bzero(g_children, sizeof(int) * pipeline->n_commands);
+	g_children = (int *)malloc(sizeof(int) * get_n_processes(pipeline));
+	ft_bzero(g_children, sizeof(int) * get_n_processes(pipeline));
 	while (i < (pipeline->n_commands) - 1)
 	{
 		pipe(fd);

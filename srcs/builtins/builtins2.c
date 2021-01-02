@@ -91,9 +91,10 @@ int		builtin_unset(int in, int out, char **argv)
 	char	**tab;
 	int		i;
 
+	(void)in;
+	(void)out;
 	if (tab_len(argv) > 1)
 	{
-		redirect_in_out(in, out);
 		i = 1;
 		while (argv[i])
 		{
