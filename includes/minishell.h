@@ -137,6 +137,7 @@ char				**get_parsed_path(void);
 int					find_file_in_path(char **absolute_path, char *cmd);
 void				redirect_in_out(int in, int out);
 void				queue_pid(int pid);
+int					find_execute_binary(char **cmd, int in, int out);
 int					new_builtin_process(int in, int out,
 						char **argv, int(*builtin)(int, int, char **));
 int					new_process(int in, int out, char **cmd, int *status);

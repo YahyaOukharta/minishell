@@ -35,6 +35,7 @@ SRCS = srcs/main.c\
 	   srcs/parser/get_tokens.c\
 	    \
 	   srcs/execution/processes.c\
+	   srcs/execution/processes_utils.c\
 	   srcs/execution/path.c\
 	   srcs/execution/redirections.c\
 	   srcs/execution/pipelines.c\

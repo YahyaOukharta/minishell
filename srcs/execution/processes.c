@@ -12,35 +12,9 @@
 
 #include "minishell.h"
 
-extern int *g_children;
-
-void	queue_pid(int pid)
-{
-	int i;
-
-	i = 0;
-	g_child = pid;
-	while (g_children[i] != 0)
-		i++;
-	g_children[i] = pid;
-}
-
-void	redirect_in_out(int in, int out)
-{
-	if (in != 0)
-	{
-		dup2(in, 0);
-		close(in);
-	}
-	if (out != 1)
-		dup2(out, 1);
-}
-
 int		new_process(int in, int out, char **cmd, int *status)
 {
 	int		pid;
-	char	*path;
-
 
 	if ((pid = fork()) == -1)
 	{
@@ -48,25 +22,9 @@ int		new_process(int in, int out, char **cmd, int *status)
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
-	{
-		if (!find_file_in_path(&path, cmd[0]))
-		{
-			ft_printf("minishell: command not found: %s\n", cmd[0]);
-			free(path);
-			exit (127);
-		}
-		redirect_in_out(in, out);
-		if ((execve(path, cmd, get_env_tab()) == -1))
-		{
-			ft_printf("minishell: permission denied: %s\n", cmd[0]);
-			free(path);
-			exit (126);
-		}
-		exit(EXIT_SUCCESS);
-	}
+		find_execute_binary(cmd, in, out);
 	else
 		queue_pid(pid);
-	//free(path);
 	return (*status);
 }
 
@@ -79,7 +37,6 @@ int		new_builtin_process(int in, int out,
 	if (string_equal(av[0], "env") ||
 		string_equal(av[0], "pwd") ||
 		string_equal(av[0], "echo") ||
-	//	string_equal(av[0], "cd") ||
 		(string_equal(av[0], "exit") && out != 1))
 	{
 		pid = fork();

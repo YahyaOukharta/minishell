@@ -33,7 +33,6 @@ int		find_file_in_path(char **str, char *cmd)
 	struct stat	buf;
 
 	i = 0;
-	*str = NULL;
 	if (!ft_strlen(cmd))
 		return (0);
 	if (ft_strchr(cmd, '/') && !stat(cmd, &buf))
@@ -44,14 +43,13 @@ int		find_file_in_path(char **str, char *cmd)
 	path = get_parsed_path();
 	while (path[i])
 	{
-		*str = ft_strjoin_va(3, path[i], "/", cmd);
+		*str = ft_strjoin_va(3, path[i++], "/", cmd);
 		if (!stat(*str, &buf))
 		{
 			free_s_tab(path);
 			return (1);
 		}
 		free(*str);
-		i++;
 	}
 	*str = NULL;
 	return (free_s_tab(path));

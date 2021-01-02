@@ -36,26 +36,24 @@ char	*jump_redirection_sign(char *out)
 int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 {
 	int		i;
-	char	*tmp;
 	int		fd;
 	char	*parsed;
 
 	i = 0;
-	parsed = NULL;
 	if (!(tab_len(input_files)))
 		g_status = execute_command(pipe_in, out, tokens);
 	while (i < tab_len(input_files))
 	{
 		parsed = jump_redirection_sign(input_files[i]);
 		fd = open(parsed, O_RDONLY);
-		free(parsed);
 		if (fd < 0)
 		{
-			tmp = "minishell: no such file or directory: %s\n";
-			ft_printf(tmp, input_files[i]);
+			ft_printf("minishell: no such file or directory: %s\n", parsed);
+			free(parsed);
 			return (1);
 		}
 		g_status = execute_command(fd, out, tokens);
+		free(parsed);
 		i++;
 	}
 	return (g_status);
@@ -63,12 +61,13 @@ int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 
 int		truncate_file(char *out)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (out[i] == '>')
 		i++;
-	return (i == 2 ? O_APPEND : O_TRUNC);
+	return (i == 2 ?
+		O_APPEND | O_CREAT | O_WRONLY : O_TRUNC | O_CREAT | O_WRONLY);
 }
 
 int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
@@ -81,10 +80,8 @@ int		redirect_outputs(t_command *cmd, int pipe_in, int pipe_out)
 	while (cmd && i < tab_len(cmd->output_files))
 	{
 		parsed = jump_redirection_sign(cmd->output_files[i]);
-		if ((fd = open(parsed, truncate_file(cmd->output_files[i])
-			| O_CREAT | O_WRONLY, 0644)) < 0)
+		if ((fd = open(parsed, truncate_file(cmd->output_files[i]), 0644)) < 0)
 		{
-			ft_printf("No such file or directory : %s\n", parsed);
 			i++;
 			free(parsed);
 			continue;
