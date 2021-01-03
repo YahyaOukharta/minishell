@@ -87,13 +87,15 @@ char		*ft_env(char *line)
 	in.dbl = 0;
 	while (line[i] != '\0')
 	{
-		if (QUOTE(line[i]))
+		while (QUOTE(line[i]))
 		{
-			in = inp(line + i);
-			while (QUOTE(line[i]))
-				s = append(s, line[i++]);
+			if (line[i] == '\"')
+				in.dbl++;
+			if (line[i] == '\'')
+				in.sgl++;
+			i++;
 		}
-		if (line[i] == '$' && (in.sgl % 2 == 0 || in.dbl > 0))
+		if (line[i] == '$' && in.sgl % 2 != 1)
 			s = env_normed(s, line, &i);
 		else if (line[i] != '\0')
 			s = append(s, line[i++]);
