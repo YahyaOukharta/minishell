@@ -49,7 +49,7 @@ char		*ft_new_inside(char *s, int *start, char quote)
 	tmp = NULL;
 	while (i < (int)ft_strlen(s))
 	{
-		while (s[i] == quote)
+		while (i > 0 && s[i - 1]  != '\\' && s[i] == quote)
 		{
 			i++;
 			in++;
@@ -71,7 +71,7 @@ char		*ft_new_inside(char *s, int *start, char quote)
 			if (tmp)
 				free(tmp);
 		}
-		if (s[i] != quote)
+		if (s[i] != quote || (s[i] == quote && s[i -1] == '\\'))
 			rt = append(rt, s[i]);
 		i++;
 	}
