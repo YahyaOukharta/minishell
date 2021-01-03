@@ -62,7 +62,7 @@ char		*outside_quotes(char *s, int *start)
 	rt = NULL;
 	while (i < (int)ft_strlen(s) && s[i])
 	{
-		if (s[i] == '\\')
+		if (s[i] == '\\' && QUOTE(s[i + 1]))
 			i++;
 		if (s[i] == ' ' || s[i] == '>' || s[i] == '<')
 			break ;
