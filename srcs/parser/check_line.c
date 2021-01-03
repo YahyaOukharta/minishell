@@ -93,7 +93,7 @@ char		*ft_env(char *line)
 				in.dbl++;
 			if (line[i] == '\'')
 				in.sgl++;
-			i++;
+			s = append(s, line[i++]);
 		}
 		if (line[i] == '$' && in.sgl % 2 != 1)
 			s = env_normed(s, line, &i);
