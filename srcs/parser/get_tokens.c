@@ -17,7 +17,7 @@ int			quote_ends(char *s, char c)
 	int	i;
 
 	i = 0;
-	if (QUOTE(s[i]) && i == 0)
+	if (i  > 0 && s[i -1]  != '\\' && QUOTE(s[i])  && i == 0)
 		return (1);
 	while (s[i] != c && s[i] != '\0')
 		i++;

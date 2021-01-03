@@ -41,7 +41,7 @@ t_exp		inp(char *s)
 	in.dbl = 0;
 	while (s[i] != '\0')
 	{
-		while ((size_t)(i + 1) < ft_strlen(s) && QUOTE(s[i]))
+		while ((size_t)(i + 1) < ft_strlen(s) && i  > 0 && s[i -1]  != '\\' && QUOTE(s[i]) )
 		{
 			end = i;
 			if (have_end(s + i, s[i], &end) && s[i] == '\'')
@@ -87,7 +87,7 @@ char		*ft_env(char *line)
 	in.dbl = 0;
 	while (line[i] != '\0')
 	{
-		while (QUOTE(line[i]))
+		while (i  > 0 && s[i -1]  != '\\' && QUOTE(line[i]) )
 		{
 			if (line[i] == '\"')
 				in.dbl++;

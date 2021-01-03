@@ -44,10 +44,12 @@ void	wait_for_children(t_pipeline *p)
 	while (i < get_n_processes(p))
 	{
 		if (g_children[i])
+		{
 			while (g_children[i] != waitpid(
 				g_children[i], &g_status, WUNTRACED))
 				;
 			i++;
+		}
 	}
 }
 

@@ -54,10 +54,12 @@ char		*ft_new_inside(char *s, int *start, char quote)
 			i++;
 			in++;
 		}
+		if (s[i] == '\\')
+			i++;
 		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' ||
 		s[i] == '|' || s[i] == ';') && in % 2 == 0)
 			break ;
-		if ((in % 2 == 0) && s[i] != quote && QUOTE(s[i]))
+		if ((in % 2 == 0) && s[i] != quote && i  > 0 && s[i -1]  != '\\' && QUOTE(s[i]) )
 		{
 			c = ft_new_inside(s + i+ 1, &i, s[i]);
 			tmp = ft_strdup(rt);
@@ -66,6 +68,8 @@ char		*ft_new_inside(char *s, int *start, char quote)
 			rt = ft_strjoin(tmp, c);
 			if (c)
 				free(c);
+			if (tmp)
+				free(tmp);
 		}
 		if (s[i] != quote)
 			rt = append(rt, s[i]);
