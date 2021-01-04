@@ -42,7 +42,7 @@ int			has_alnum(char *s)
 
 	i = 0;
 	while (s[i] != '\0')
-		if (ft_isalnum(s[i++]) || (i  > 0 && s[i -1]  != '\\' && QUOTE(s[i])))
+		if (ft_isalnum(s[i++]) || (i > 0 && s[i - 1] != '\\' && QUOTE(s[i])))
 			return (1);
 	return (0);
 }

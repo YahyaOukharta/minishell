@@ -41,7 +41,7 @@ int			check_arg(char *s)
 		check_inc_arg(s, &i, &in);
 		while (s[i] != '\0')
 		{
-			if (ft_isalnum(s[i]) || (i  > 0 && s[i -1]  != '\\' && QUOTE(s[i])))
+			if (ft_isalnum(s[i]) || (i > 0 && s[i - 1] != '\\' && QUOTE(s[i])))
 				return (0);
 			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
 				ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)

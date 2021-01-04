@@ -67,7 +67,8 @@ t_redir		get_tokens(char *s)
 	init_redir(&redir);
 	while ((size_t)i < ft_strlen(s) && s[i] != '\0')
 	{
-		if (i  > 0 && s[i -1]  != '\\' && QUOTE(s[i])  && (end = quote_ends(s + i + 1, s[i])))
+		if (i > 0 && s[i - 1] != '\\'
+			&& QUOTE(s[i]) && (end = quote_ends(s + i + 1, s[i])))
 			quote_token(s, &i, &redir);
 		else if ((s[i] == '>' && s[i + 1] == '>') ||
 			s[i] == '>' || s[i] == '<')

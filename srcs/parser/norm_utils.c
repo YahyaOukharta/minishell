@@ -66,7 +66,7 @@ char		*outside_quotes(char *s, int *start)
 			i++;
 		if (s[i] == ' ' || s[i] == '>' || s[i] == '<')
 			break ;
-		if (i  > 0 && s[i -1]  != '\\' && QUOTE(s[i]) )
+		if (i > 0 && s[i - 1] != '\\' && QUOTE(s[i]))
 			rt = get_norm_inside(&i, s, rt);
 		else
 			rt = append(rt, s[i]);

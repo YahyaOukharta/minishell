@@ -25,7 +25,7 @@ int		cparser(char *s, char q)
 	end = 0;
 	while (s[i] != '\0')
 	{
-		if (i  > 0 && s[i -1]  != '\\' && QUOTE(s[i])  && in == 0)
+		if (i > 0 && s[i - 1] != '\\' && QUOTE(s[i]) && in == 0)
 		{
 			end = i + 1;
 			if (have_end(s + i + 1, s[i], &end))
@@ -69,6 +69,7 @@ void	get_arg_helper(char *line, int *end, int *in, char **tmp)
 		*in = 1;
 		free(*tmp);
 	}
+	*in = 1;
 }
 
 char	*get_arg(char *line, char c, int *pos)
@@ -83,11 +84,10 @@ char	*get_arg(char *line, char c, int *pos)
 	ft_bzero(tmp, 2 * sizeof(char *));
 	while (line[i])
 	{
-		if (in == 0 && i  > 0 && line[i -1]  != '\\' && QUOTE(line[i]) )
+		if (in == 0 && i > 0 && line[i - 1] != '\\' && QUOTE(line[i]))
 		{
 			end = i + 1;
 			get_arg_helper(&line[i], &end, &in, &tmp[1]);
-			in = 1;
 		}
 		(i + 1 == end) ? (in = 0) : 0;
 		if (line[i] == c && in == 0)
