@@ -43,7 +43,6 @@ int		find_execute_binary(char **cmd, int in, int out)
 	if (!find_file_in_path(&path, cmd[0]))
 	{
 		ft_printf("minishell: command not found: %s\n", cmd[0]);
-		free(path);
 		exit(127);
 	}
 	redirect_in_out(in, out);
