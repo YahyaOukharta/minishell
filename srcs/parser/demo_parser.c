@@ -6,11 +6,31 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:34 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 12:08:46 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/06 10:02:04 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		_escape(char *s, int pos)
+{
+	int i;
+	int c;
+
+	c = 0;
+	i = 0;
+	while (pos >= i)
+	{
+		if (s[pos] == '\\')
+			c++;
+		else
+			break ;
+		pos--;
+	}
+	if (c % 2 != 0)
+		return (1);
+	return (0);
+}
 
 int		cparser(char *s, char q)
 {
@@ -25,7 +45,7 @@ int		cparser(char *s, char q)
 	end = 0;
 	while (s[i] != '\0')
 	{
-		if (QUOTE(s[i]) && in == 0)
+		if (QUOTE(s[i]) && !_escape(s, i - 1) && in == 0)
 		{
 			end = i + 1;
 			if (have_end(s + i + 1, s[i], &end))
@@ -33,7 +53,7 @@ int		cparser(char *s, char q)
 		}
 		if (i == end)
 			in = 0;
-		if (in == 0 && s[i] == q)
+		if (in == 0 && s[i] == q && !_escape(s, i - 1))
 			c++;
 		i++;
 	}
@@ -83,14 +103,14 @@ char	*get_arg(char *line, char c, int *pos)
 	ft_bzero(tmp, 2 * sizeof(char *));
 	while (line[i])
 	{
-		if (in == 0 && QUOTE(line[i]))
+		if (in == 0 && QUOTE(line[i]) && !_escape(line, i - 1))
 		{
 			end = i + 1;
 			get_arg_helper(&line[i], &end, &in, &tmp[1]);
 			in = 1;
 		}
 		(i + 1 == end) ? (in = 0) : 0;
-		if (line[i] == c && in == 0)
+		if (line[i] == c && in == 0 && !_escape(line, i - 1))
 		{
 			*pos += i;
 			break ;

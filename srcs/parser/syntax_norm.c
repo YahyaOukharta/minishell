@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:39:29 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 10:00:39 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/06 18:49:08 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ int			check_arg(char *s)
 		check_inc_arg(s, &i, &in);
 		while (s[i] != '\0')
 		{
-			if (ft_isalnum(s[i]) || QUOTE(s[i]))
+			if (ft_isalnum(s[i]) || (QUOTE(s[i]) && !_escape(s, i - 1)))
 				return (0);
 			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
-				ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0)
+				ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0) && in == 0 && !_escape(s, i - 1))
 				return (1);
 			if (s[i] != '\0')
 				i++;
@@ -84,7 +84,7 @@ int			ft_strsearch(char *s, char n)
 			in == 0 ? norm_quote(s, &i, &in, &end) : 0;
 			if (i == end)
 				in = 0;
-			if (s[i] == n && in == 0)
+			if (s[i] == n && in == 0 && !_escape(s, i - 1))
 				return (1);
 			i++;
 		}
@@ -99,13 +99,13 @@ int			check_redir(char *s)
 	i = 0;
 	while (has_redir(s + i, &i) == 1 && s[i] != '\0')
 	{
-		if (ft_strsearch(s + i, '>') && !ft_strnstr(s + i, ">>", ft_strlen(s)))
+		if (ft_strsearch(s + i, '>') && !ft_strnstr(s + i, ">>", ft_strlen(s)) && !_escape(s, i - 1))
 			if (check_arg(s + i))
 				return (0);
-		if (ft_strsearch(s + i, '<') && !ft_strnstr(s + i, "<<", ft_strlen(s)))
+		if (ft_strsearch(s + i, '<') && !ft_strnstr(s + i, "<<", ft_strlen(s)) && !_escape(s, i - 1))
 			if (check_arg(s + i))
 				return (0);
-		if (ft_strnstr(s + i, ">>", ft_strlen(s + i)) != NULL)
+		if (ft_strnstr(s + i, ">>", ft_strlen(s + i)) != NULL && !_escape(s, i - 1))
 			if (check_arg(s + i))
 				return (0);
 		if (s[i] != '\0')

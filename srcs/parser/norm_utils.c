@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:16:09 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 15:31:11 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/06 17:07:08 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,40 @@ char		*outside_quotes(char *s, int *start)
 {
 	int		i;
 	char	*rt;
+	int		end;
+	char	*tmp;
 
 	i = 0;
 	rt = NULL;
+	end = 0;
+	tmp = NULL;
 	while (i < (int)ft_strlen(s) && s[i])
 	{
-		if (s[i] == ' ' || s[i] == '>' || s[i] == '<')
+		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<') && !_escape(s, i - 1))
 			break ;
-		if (QUOTE(s[i]))
+		if (QUOTE(s[i]) && have_end(s + i + 1, s[i], &end) && !_escape(s, i - 1))
 			rt = get_norm_inside(&i, s, rt);
 		else
-			rt = append(rt, s[i]);
-		if (i < (int)ft_strlen(s) && s[i] != ' ')
-			i++;
-		else
-			break ;
+		{
+			if (s[i] == '\\' && s[i + 1] == '\0')
+			{
+				i++;
+				tmp = ft_strdup(rt);
+				if (rt)
+					free(rt);
+				rt = ft_strjoin(tmp, " ");
+				if (tmp)
+					free(tmp);
+			}
+			else if (s[i] == '\\')
+			{
+				i++;
+				rt = append(rt, s[i]);
+			}
+			else
+				rt = append(rt, s[i]);
+		}
+		i++;
 	}
 	*start += i;
 	if (i >= (int)ft_strlen(s) || s[i] == '\0')

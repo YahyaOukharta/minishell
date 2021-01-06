@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:23:07 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 15:18:45 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/06 18:40:37 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,14 @@ char		*ft_new_inside(char *s, int *start, char quote)
 	tmp = NULL;
 	while (i < (int)ft_strlen(s))
 	{
-		while (s[i] == quote)
+		if (s[i] == '\\' && s[i + 1] == '\\' && quote == '\"')
+			i++;
+		if (s[i] == '\\' && s[i + 1] == '\"' && quote == '\"')
+		{
+			i++;
+			rt = append(rt, s[i++]);
+		}
+		while (s[i] == quote && !_escape(s, i - 1))
 		{
 			i++;
 			in++;
@@ -57,7 +64,7 @@ char		*ft_new_inside(char *s, int *start, char quote)
 		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' ||
 		s[i] == '|' || s[i] == ';') && in % 2 == 0)
 			break ;
-		if ((in % 2 == 0) && s[i] != quote && QUOTE(s[i]))
+		if ((in % 2 == 0) && s[i] != quote && QUOTE(s[i]) && !_escape(s, i - 1))
 		{
 			c = ft_new_inside(s + i+ 1, &i, s[i]);
 			tmp = ft_strdup(rt);

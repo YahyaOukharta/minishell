@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:57:12 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 12:00:03 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/06 18:41:42 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char		*ft_env(char *line)
 	in.dbl = 0;
 	while (line[i] != '\0')
 	{
-		while (QUOTE(line[i]))
+		while ((QUOTE(line[i]) && i == 0) || (i > 0 && line[i - 1] != '\\' && (QUOTE(line[i]))))
 		{
 			if (line[i] == '\"')
 				in.dbl++;
@@ -95,7 +95,8 @@ char		*ft_env(char *line)
 				in.sgl++;
 			s = append(s, line[i++]);
 		}
-		if (line[i] == '$' && in.sgl % 2 != 1)
+		i += (line[i] == '\\' && line[i + 1] == '$' && in.sgl == 0 ? 1 : 0);
+		if (i > 1 && line[i - 1] != '\\' && line[i] == '$' && in.sgl % 2 != 1)
 			s = env_normed(s, line, &i);
 		else if (line[i] != '\0')
 			s = append(s, line[i++]);

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 18:45:36 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/30 11:59:40 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/06 10:01:26 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,4 +176,5 @@ void				inc_(int *i, char *s);
 void				rarg_norm(char *line, int *i, int *end, int *in);
 char				*get_inside(char *s, int *start, char quote);
 char				*ft_new_inside(char *s, int *start, char quote);
+int					_escape(char *s, int pos);
 #endif

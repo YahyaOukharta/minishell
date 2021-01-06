@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:29:27 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 10:48:20 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/06 18:46:43 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,12 @@ int			have_end(char *s, char quote, int *start)
 {
 	while (*start < (int)ft_strlen(s))
 	{
-		if (s[*start] == quote)
+		if (s[*start] == quote && (!_escape(s, *start - 1) && quote == '\"'))
+		{
+			*start += 1;
+			return (1);
+		}
+		else if (s[*start] == quote && quote != '\"')
 		{
 			*start += 1;
 			return (1);

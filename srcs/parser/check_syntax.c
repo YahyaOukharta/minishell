@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:20 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 10:48:03 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/06 18:50:00 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			check_quotes(char *s, int *pos)
 	quote = '0';
 	while (start < end)
 	{
-		if (s[start] == '\'' || s[start] == '\"')
+		if ((s[start] == '\'' || s[start] == '\"') && !_escape(s, start - 1))
 		{
 			*pos = start;
 			quote = s[start++];
@@ -108,9 +108,9 @@ int			check_pipeline(char *s)
 	{
 		while (s[i] != '\0')
 		{
-			if (s[i] == ';' && i == 0)
+			if (s[i] == ';' && i == 0 && !_escape(s, i - 1))
 				return (0);
-			if (s[i] == ';' && no_alpha(s + i + 1) == 1)
+			if (s[i] == ';' && no_alpha(s + i + 1) == 1 && !_escape(s, i - 1))
 				return (0);
 			i++;
 		}
