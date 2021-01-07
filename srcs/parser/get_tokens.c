@@ -51,8 +51,7 @@ void		quote_token(char *s, int *i, t_redir *redir)
 
 void		inc_(int *i, char *s)
 {
-	if ((size_t)*i < ft_strlen(s) &&
-	s[*i] != '\0' && (s[*i] == ' ' || s[*i + 1] == '\0')
+	if ((size_t)*i < ft_strlen(s) && s[*i] == ' '
 	&& s[*i] != '>' && s[*i] != '<')
 		*i += 1;
 }

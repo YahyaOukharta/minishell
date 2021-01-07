@@ -41,14 +41,12 @@ char		*ft_new_inside(char *s, int *start, char quote)
 	int		in;
 	char	*c;
 	char	*tmp;
-	int		end;
 
 	in = 1;
 	i = 0;
 	rt = NULL;
 	c = NULL;
 	tmp = NULL;
-	end = 0;
 	while (i < (int)ft_strlen(s))
 	{
 		if ((s[i] == '\\' && s[i + 1] == '\\' && quote == '\"') ||
