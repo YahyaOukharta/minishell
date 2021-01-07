@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:23:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/07 18:29:55 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/07 18:34:36 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ char		*ft_new_inside(char *s, int *start, char quote)
 	end = 0;
 	while (i < (int)ft_strlen(s))
 	{
-		if (s[i] == '\\' && s[i + 1] == '\\' && quote == '\"')
-			i++;
-		if (s[i] == '\\' && s[i + 1] == '\"' && quote == '\"')
+		if ((s[i] == '\\' && s[i + 1] == '\\' && quote == '\"') ||
+		(s[i] == '\\' && s[i + 1] == '\"' && quote == '\"'))
 		{
 			i++;
 			rt = append(rt, s[i++]);
