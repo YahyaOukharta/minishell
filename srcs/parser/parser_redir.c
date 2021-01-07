@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char		**realloc__(char **s, char *t)
+char		**realloc__(char **s, char *t, int len)
 {
 	int		i;
 	char	**r;
@@ -21,18 +21,24 @@ char		**realloc__(char **s, char *t)
 	i = -1;
 	if (!(r = (char **)malloc(sizeof(char *) * (tab_len(s) + 2))))
 		return (NULL);
+	while (++i < tab_len(s) && i < len)
+	{
+		r[i] = ft_strdup(s[i]);
+		//if (s[i])
+		//	free(s[i]);
+	}
+	//if (s)
+	//	free(s);
+	r[i] = ft_strdup(t);
+	//if (t)
+	//	free(t);
 	while (++i < tab_len(s))
 	{
 		r[i] = ft_strdup(s[i]);
-		if (s[i])
-			free(s[i]);
+		//if (s[i])
+		//	free(s[i]);
 	}
-	if (s)
-		free(s);
-	r[i] = ft_strdup(t);
-	if (t)
-		free(t);
-	r[i + 1] = NULL;
+	r[i] = NULL;
 	return (r);
 }
 

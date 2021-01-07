@@ -21,6 +21,10 @@
 # include <sys/types.h>
 # include <signal.h>
 # include <stdio.h>
+#include <dirent.h>
+#include <sys/dir.h>
+#include <string.h>
+
 
 # define STDOUT 1
 # define STDIN  0
@@ -168,7 +172,7 @@ int					no_alpha(char *s);
 int					quote_ends(char *s, char c);
 void				quote_token(char *s, int *i, t_redir *redir);
 void				fill_redir(t_redir *redir, char *s, int *i, int in);
-char				**realloc__(char **s, char *t);
+char				**realloc__(char **s, char *t, int len);
 char				*get_rarg(char *line, int *pos);
 char				*rarg_fill_norm(char *s, char *line, int *i);
 void				init_redir(t_redir *redir);

@@ -73,7 +73,7 @@ t_redir		get_tokens(char *s)
 			s[i] == '>' || s[i] == '<')
 			fill_redir(&redir, s, &i, in);
 		else if (s[i] != ' ')
-			redir.tokens = realloc__(redir.tokens, outside_quotes(s + i, &i));
+			redir.tokens = realloc__(redir.tokens, outside_quotes(s + i, &i), tab_len(redir.tokens));
 		inc_(&i, s);
 	}
 	return (redir);

@@ -30,11 +30,11 @@ void		fill_redir(t_redir *redir, char *s, int *i, int in)
 			s[*i] == '>' || s[*i] == '<'))
 	{
 		if (s[*i] == '>' && s[*i + 1] == '>')
-			redir->outs = realloc__(redir->outs, get_rarg(s + *i, i));
+			redir->outs = realloc__(redir->outs, get_rarg(s + *i, i), tab_len(redir->tokens));
 		else if (s[*i] == '>')
-			redir->outs = realloc__(redir->outs, get_rarg(s + *i, i));
+			redir->outs = realloc__(redir->outs, get_rarg(s + *i, i), tab_len(redir->tokens));
 		else
-			redir->ins = realloc__(redir->ins, get_rarg(s + *i, i));
+			redir->ins = realloc__(redir->ins, get_rarg(s + *i, i), tab_len(redir->tokens));
 		if ((size_t)i < ft_strlen(s) &&
 		s[*i] != '\0' && ((s[*i] == ' ' || s[*i + 1] == '\0')
 				&& s[*i] != '>' && s[*i] != '<'))
@@ -46,7 +46,7 @@ void		quote_token(char *s, int *i, t_redir *redir)
 {
 	*i += 1;
 	redir->tokens = realloc__(redir->tokens,
-		ft_new_inside(s + *i, i, s[*i - 1]));
+		ft_new_inside(s + *i, i, s[*i - 1]), tab_len(redir->tokens));
 }
 
 void		inc_(int *i, char *s)

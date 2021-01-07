@@ -12,6 +12,60 @@
 
 #include "minishell.h"
 
+char			**filter_str(int i, char **str)
+{
+	char			**rt;
+	struct dirent	**namelist;
+    int				n;
+	char			*tmp;
+	int				c;
+
+	c = -1;
+	rt = NULL;
+	tmp = NULL;
+    n = scandir(".", &namelist, NULL, alphasort);
+	rt = (char **)malloc(sizeof(char *) * (i + 1));
+	while (++c < i)
+		rt[c] = ft_strdup(str[c]);
+    rt[c] = NULL;
+	if (n < 0)
+        perror("scandir");
+    else
+	{
+        while (n--)
+		{
+			if (namelist[n]->d_name[0] == '.')
+			{
+				free(namelist[n]);
+				continue ;
+			}
+			if (ft_strlen(namelist[n]->d_name))
+				rt = realloc__(rt, namelist[n]->d_name, tab_len(rt));
+            free(namelist[n]);
+        }
+        free(namelist);
+    }
+	return (rt);
+}
+
+char			**ft_filter(char **s)
+{
+	int			i;
+	char		*p;
+	char		**star;
+
+	i = 0;
+	p = NULL;
+	star = realloc__(s, ft_strdup(""), tab_len(s));
+	while (i < tab_len(star))
+	{
+		if (ft_strsearch(star[i], '*'))
+			star = filter_str(i, star);
+		i++;
+	}
+	return (star);
+}
+
 t_command		*new_cmd(char *line)
 {
 	t_command	*cmd;
@@ -19,9 +73,9 @@ t_command		*new_cmd(char *line)
 
 	cmd = (t_command *)malloc(sizeof(t_command));
 	redir = get_tokens(line);
-	cmd->tokens = redir.tokens;
-	cmd->input_files = redir.ins;
-	cmd->output_files = redir.outs;
+	cmd->tokens = ft_filter(redir.tokens);
+	cmd->input_files = ft_filter(redir.ins);
+	cmd->output_files = ft_filter(redir.outs);
 	return (cmd);
 }
 
