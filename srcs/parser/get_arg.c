@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:29:27 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/06 18:46:43 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/07 18:13:37 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ t_redir		get_tokens(char *s)
 
 int			have_end(char *s, char quote, int *start)
 {
+	if (!s)
+		return (0);
 	while (*start < (int)ft_strlen(s))
 	{
 		if (s[*start] == quote && (!_escape(s, *start - 1) && quote == '\"'))

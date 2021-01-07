@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:48 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/06 18:26:11 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/07 14:54:13 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,4 @@ int			main(int ac, char **argv, char **env)
 		ft_putstr_fd("Usage : ./minishell\n", STDERR);
 	return (g_return);
 }
+  

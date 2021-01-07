@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:23:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/06 19:09:46 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/07 18:29:55 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,23 @@ char		*ft_new_inside(char *s, int *start, char quote)
 		{
 			i++;
 			rt = append(rt, s[i++]);
+			continue ;
 		}
-		while (s[i] == quote && !_escape(s, i - 1))
+		while ((s[i] == quote && !_escape(s, i - 1) && quote == '\"') || ((s[i] == quote && quote == '\'')))
 		{
 			i++;
 			in++;
 		}
+		if (s[i] == '\\' && s[i + 1] == quote && quote == '\'' && (in % 2) == 0)
+		{
+			i++;
+			rt = append(rt, s[i++]);
+			continue ;
+		}
 		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' ||
 		s[i] == '|' || s[i] == ';') && in % 2 == 0)
 			break ;
-		if ((in % 2 == 0) && s[i] != quote && have_end(s + i + 1, s[i], &end) && QUOTE(s[i]) && !_escape(s, i - 1))
+		if ((in % 2 == 0) && s[i] != quote && QUOTE(s[i]) && !_escape(s, i - 1))
 		{
 			c = ft_new_inside(s + i+ 1, &i, s[i]);
 			tmp = ft_strdup(rt);
@@ -78,9 +85,8 @@ char		*ft_new_inside(char *s, int *start, char quote)
 			if (tmp)
 				free(tmp);
 		}
-		if (s[i] != quote && s[i] != '\\')
-			rt = append(rt, s[i]);
-		i++;
+		if (s[i] != quote)
+			rt = append(rt, s[i++]);
 	}
 	*start += i;
 	return (rt);
