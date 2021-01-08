@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:23 by malaoui           #+#    #+#             */
-/*   Updated: 2020/12/30 10:39:39 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/08 09:59:13 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ char		**realloc__(char **s, char *t, int len)
 {
 	int		i;
 	char	**r;
-
+	int		l;
 
 	i = -1;
-	if (!(r = (char **)malloc(sizeof(char *) * (tab_len(s) + 2))))
+	l = 2;
+	if (t == NULL)
+		l -= 1;
+	if (!(r = (char **)malloc(sizeof(char *) * (tab_len(s) + l))))
 		return (NULL);
 	while (++i < tab_len(s) && i < len)
 	{
@@ -29,12 +32,17 @@ char		**realloc__(char **s, char *t, int len)
 	}
 	//if (s)
 	//	free(s);
-	r[i] = ft_strdup(t);
+	if (t != NULL)
+	{
+		r[i] = ft_strdup(t);
+		i++;
+	}
 	//if (t)
 	//	free(t);
-	while (++i < tab_len(s))
+	while (i < tab_len(s))
 	{
 		r[i] = ft_strdup(s[i]);
+		i++;
 		//if (s[i])
 		//	free(s[i]);
 	}

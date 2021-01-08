@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/06 16:59:27 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/08 09:52:03 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char			**ft_filter(char **s)
 
 	i = 0;
 	p = NULL;
-	star = realloc__(s, ft_strdup(""), tab_len(s));
+	star = realloc__(s, NULL, tab_len(s));
 	while (i < tab_len(star))
 	{
 		if (ft_strsearch(star[i], '*'))
