@@ -6,46 +6,80 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/08 09:52:03 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/08 15:03:15 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char			**filter_str(int i, char **str)
+char			*matching_key(char *s)
 {
-	char			**rt;
-	struct dirent	**namelist;
-    int				n;
-	char			*tmp;
-	int				c;
+	int 	i;
+	int 	len;
+	char 	*key;
 
-	c = -1;
-	rt = NULL;
-	tmp = NULL;
-    n = scandir(".", &namelist, NULL, alphasort);
-	rt = (char **)malloc(sizeof(char *) * (i + 1));
-	while (++c < i)
-		rt[c] = ft_strdup(str[c]);
-    rt[c] = NULL;
+	i = 0;
+	len = ft_strlen(s);
+	key = NULL;
+	while (i < len)
+	{
+		if (s[i] == '*')
+			return (key);
+		key = append(key, s[i++]);
+	}
+	key[i] = '\0';
+	return (key);
+}
+
+char			**matched(char **s, char *str, int pos)
+{
+	int 		i;
+	char		*key;
+	struct dirent	**namelist;
+	int 		n;
+
+	i = 0;
+	key = matching_key(str);	
+	n = scandir(".", &namelist, NULL, alphasort);
 	if (n < 0)
         perror("scandir");
     else
 	{
-        while (n--)
+		while (i < n)
 		{
-			if (namelist[n]->d_name[0] == '.')
+			if (namelist[i])
 			{
-				free(namelist[n]);
-				continue ;
+				if (namelist[i]->d_name[0] == '.')
+				{
+					free(namelist[i]);
+					i++;
+					continue ;
+				}
+				if (ft_strlen(namelist[i]->d_name) && !ft_strncmp(namelist[i]->d_name, key, ft_strlen(key)))
+					s = realloc__(s, namelist[i]->d_name, tab_len(s));
+				free(namelist[i]);
 			}
-			if (ft_strlen(namelist[n]->d_name))
-				rt = realloc__(rt, namelist[n]->d_name, tab_len(rt));
-            free(namelist[n]);
-        }
-        free(namelist);
-    }
-	return (rt);
+			i++;
+		}
+		free(namelist);
+	}
+	return (s);
+}
+
+char			**filter_str(int i, char **str)
+{
+	char			*tmp;
+	int				c;
+	char			**match;
+
+	c = -1;
+	tmp = NULL;
+	match = (char **)malloc(sizeof(char *) * (i + 1));
+	while (++c < i)
+		match[c] = ft_strdup(str[c]);
+    match[c] = NULL;
+	match = matched(match, str[c], c);
+	return (match);
 }
 
 char			**ft_filter(char **s)

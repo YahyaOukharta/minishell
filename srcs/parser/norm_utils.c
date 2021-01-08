@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:16:09 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/06 19:02:05 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/08 10:13:07 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char		*outside_quotes(char *s, int *start)
 				if (tmp)
 					free(tmp);
 			}
-			else if (s[i] == '\\')
+			else if (s[i] == '\\' && s[i + 1] != '*')
 			{
 				i++;
 				rt = append(rt, s[i]);
