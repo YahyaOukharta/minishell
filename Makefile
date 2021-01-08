@@ -46,7 +46,7 @@ SRCS = srcs/main.c\
 	   srcs/utils/tab_utils.c\
 	   srcs/utils/utils.c\
 
-FLAGS = -g -o3  -Wall -Wextra  -fsanitize=address
+FLAGS = -g -o3  -Wall -Wextra -Werror # -fsanitize=address
 
 GCC = gcc
 

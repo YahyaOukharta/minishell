@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:23:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/07 18:34:36 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/08 18:16:44 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,18 @@ char		*ft_new_inside(char *s, int *start, char quote)
 			rt = append(rt, s[i++]);
 			continue ;
 		}
+		if (s[i] == '\\' && (in % 2 == 0))
+		{
+			i++;
+			rt = append(rt, s[i++]);
+			continue ;
+		}
 		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' ||
 		s[i] == '|' || s[i] == ';') && in % 2 == 0)
 			break ;
 		if ((in % 2 == 0) && s[i] != quote && QUOTE(s[i]) && !_escape(s, i - 1))
 		{
-			c = ft_new_inside(s + i+ 1, &i, s[i]);
+			c = ft_new_inside(s + i + 1, &i, s[i]);
 			tmp = ft_strdup(rt);
 			if (rt)
 				free(rt);
