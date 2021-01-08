@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:20 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/06 18:50:00 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/08 18:40:39 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ int			check_pipe(char *s)
 	int		v;
 	int		rt;
 	int		i;
+	int		len;
 
 	i = -1;
 	rt = 0;
 	split = parser_split(s, '|');
+	len = tab_len(split);
 	v = 0;
 	while (split[++i] != NULL)
 	{
@@ -65,7 +67,7 @@ int			check_pipe(char *s)
 		free(split[i]);
 	}
 	free(split);
-	if ((v - 1) == cparser(s, '|'))
+	if ((v - 1) == cparser(s, '|') || len == cparser(s, '|'))
 		rt = 1;
 	return (rt);
 }

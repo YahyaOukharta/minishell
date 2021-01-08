@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:34 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/06 10:02:04 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/08 18:36:48 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		cparser(char *s, char q)
 
 	i = 0;
 	in = 0;
-	c = 0;
+	c = 1;
 	end = 0;
 	while (s[i] != '\0')
 	{
@@ -131,7 +131,7 @@ char	**parser_split(char *line, char c)
 
 	i = 0;
 	j = 0;
-	nb_c = cparser(line, c) + 1;
+	nb_c = cparser(line, c);
 	if (!(split = (char **)malloc(sizeof(char *) * (nb_c + 1))))
 		return (NULL);
 	i = 0;

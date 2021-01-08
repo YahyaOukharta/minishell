@@ -119,7 +119,7 @@ exec_test $EXPORT_SHOW
 exec_test 'export TEST="ls       -l     - a" ; echo $TEST ; $LS ; ' $ENV_SHOW
 
 # REDIRECTIONS
-exec_test 'echo test > ls ; cat ls'
+exec_test \'echo test > ls ; cat ls\'
 exec_test 'echo test > ls >> ls >> ls ; echo test >> ls; cat ls'
 exec_test '> lol echo test lol; cat lol'
 exec_test '>lol echo > test>lol>test>>lol>test mdr >lol test >test; cat test'
