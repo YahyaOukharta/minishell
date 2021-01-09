@@ -30,3 +30,17 @@ int		is_blank(char c)
 {
 	return ((c > 8 && c < 14) || c == 32);
 }
+
+int		is_number(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]) && (i != 0 ||(s[0] != '-' && s[0] == '+')))
+			return (0);
+		i++;
+	}
+	return (1);
+}

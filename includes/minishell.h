@@ -114,6 +114,7 @@ int					free_s_tab(char **tab);
 void				*free_and_return(void *ptr, void *ret);
 int					string_equal(char *s1, char *s2);
 int					is_blank(char c);
+int					is_number(char *s);
 void				init_environment(char **envp);
 int					get_env_len();
 t_env				*new_env(char *key, char *value);

@@ -113,6 +113,12 @@ int		builtin_exit(int in, int out, char **argv)
 {
 	(void)in;
 	(void)out;
-	g_return = (tab_len(argv) > 1 ? ft_atoi(argv[1]) : 0);
+	
+	if (tab_len(argv) == 2)
+		g_return = (is_number(argv[1]) ? ft_atoi(argv[1]) : 2); 	
+	else if (tab_len(argv) > 2)
+		g_return = 1;
+	else
+		g_return = g_status;
 	return (-1);
 }

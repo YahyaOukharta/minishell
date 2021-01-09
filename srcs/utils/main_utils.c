@@ -18,18 +18,18 @@ int				ft_prompt(char **line)
 
 	ft_bzero(cwd, 1000);
 	getcwd(cwd, 1000);
-	ft_putstr_fd("\033[0;32m", STDOUT);
+	ft_putstr_fd("\033[0;32m", STDERR);
 	if (g_signal_c == 1)
 	{
-		ft_putchar_fd('\r', STDOUT);
+		ft_putchar_fd('\r', STDERR);
 		g_signal_c = 0;
 	}
 	if (g_signal_d == 1)
 	{
-		ft_putstr_fd(cwd, STDOUT);
-		ft_putstr_fd(" $ ", STDOUT);
+		ft_putstr_fd(cwd, STDERR);
+		ft_putstr_fd(" $ ", STDERR);
 	}
-	ft_putstr_fd("\033[0m", STDOUT);
+	ft_putstr_fd("\033[0m", STDERR);
 	return (get_next_line(STDIN, line));
 }
 
@@ -95,7 +95,7 @@ void			exec_parsed(t_pipeline **parsed_line)
 	int i;
 
 	i = 0;
-	while (parsed_line[i] != NULL)
+	while (parsed_line[i] != NULL && g_status != -1)
 	{
 		if (parsed_line[i]->cmds)
 			g_status = execute_pipeline(parsed_line[i]);

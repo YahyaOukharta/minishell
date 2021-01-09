@@ -47,7 +47,7 @@ void	wait_for_children(t_pipeline *p)
 			while (g_children[i] != waitpid(
 				g_children[i], &g_status, WUNTRACED))
 				;
-			i++;
+		i++;
 	}
 }
 
