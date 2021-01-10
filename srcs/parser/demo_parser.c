@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:34 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/08 18:36:48 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/10 15:29:13 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,10 @@ int		cparser(char *s, char q)
 		if (QUOTE(s[i]) && !_escape(s, i - 1) && in == 0)
 		{
 			end = i + 1;
-			if (have_end(s + i + 1, s[i], &end))
+			if (have_end(s + i + 1, s[i], &i))
 				in = 1;
 		}
-		if (i == end)
-			in = 0;
-		if (in == 0 && s[i] == q && !_escape(s, i - 1))
+		if (s[i] == q && !_escape(s, i - 1))
 			c++;
 		i++;
 	}
