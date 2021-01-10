@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipelines.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youkhart <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:50:06 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/27 15:50:10 by youkhart         ###   ########.fr       */
+/*   Updated: 2021/01/10 16:51:01 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		*g_children;
 
-int	get_n_processes(t_pipeline *pipeline)
+int		get_n_processes(t_pipeline *pipeline)
 {
 	int	i;
 	int n;

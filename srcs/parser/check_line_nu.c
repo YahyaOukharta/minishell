@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:23:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/08 18:16:44 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/10 18:02:14 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char		*ft_new_inside(char *s, int *start, char quote)
 
 	in = 1;
 	i = 0;
-	rt = NULL;
+	rt = ft_strdup("");
 	c = NULL;
 	tmp = NULL;
 	while (i < (int)ft_strlen(s))

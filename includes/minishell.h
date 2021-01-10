@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 18:45:36 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/06 10:01:26 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/10 17:06:45 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <signal.h>
 # include <stdio.h>
+# include <errno.h>
 
 # define STDOUT 1
 # define STDIN  0

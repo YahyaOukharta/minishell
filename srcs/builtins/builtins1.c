@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youkhart <youkhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:02:51 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/30 15:21:43 by youkhart         ###   ########.fr       */
+/*   Updated: 2021/01/10 17:12:39 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int		builtin_exit(int in, int out, char **argv)
 {
 	(void)in;
 	(void)out;
-
 	if (tab_len(argv) == 2)
 		g_return = (is_number(argv[1]) ? ft_atoi(argv[1]) : 255); 
 	else if (tab_len(argv) > 2)

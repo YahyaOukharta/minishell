@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:01 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/07 18:46:53 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/10 16:51:23 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ t_pipeline		**parse_data(char *line)
 	if (!(checked_line = check_line(line)))
 	{
 		free(line);
+		g_status = 2;
 		return (NULL);
 	}
 	parsed_line = parser(checked_line);

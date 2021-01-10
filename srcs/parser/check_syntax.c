@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:20 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/10 15:10:22 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/10 18:07:26 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,12 @@ int			check_pipe(char *s)
 	{
 		if (ft_strlen(ft_strtrim(split[i], " \t")) > 0 && has_alnum(split[i]))
 			v++;
+		else
+			return (rt);
 		free(split[i]);
 	}
 	free(split);
-	if ((v - 1) == cparser(s, '|') || len == cparser(s, '|'))
+	if (v == cparser(s, '|'))
 		rt = 1;
 	return (rt);
 }
