@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:29:27 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/07 18:13:37 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/10 18:34:20 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ char		*get_rarg(char *line, int *pos)
 		((line[n.i] == '>' && (line[n.i + 1] != '>' && line[n.i - 1] != '>'))
 			|| line[n.i] == '<'))
 			break ;
-		s = append(s, line[n.i]);
-		(n.i)++;
+		s = append(s, line[n.i++]);
 	}
 	*pos += n.i;
 	return (s);
