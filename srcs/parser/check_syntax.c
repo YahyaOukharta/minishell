@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:20 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/10 18:07:26 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/10 18:08:09 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ int			check_pipe(char *s)
 	{
 		if (ft_strlen(ft_strtrim(split[i], " \t")) > 0 && has_alnum(split[i]))
 			v++;
-		else
-			return (rt);
+
 		free(split[i]);
 	}
 	free(split);

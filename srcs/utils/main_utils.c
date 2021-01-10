@@ -81,6 +81,7 @@ t_pipeline		**parse_data(char *line)
 	checked_line = NULL;
 	if (!(checked_line = check_line(line)))
 	{
+		g_status = 2;
 		free(line);
 		g_status = 2;
 		return (NULL);

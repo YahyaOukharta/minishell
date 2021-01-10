@@ -105,7 +105,6 @@ char	*get_arg(char *line, char c, int *pos)
 		{
 			end = i + 1;
 			get_arg_helper(&line[i], &end, &in, &tmp[1]);
-			in = 1;
 		}
 		(i + 1 == end) ? (in = 0) : 0;
 		if (line[i] == c && in == 0 && !_escape(line, i - 1))

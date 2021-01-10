@@ -38,7 +38,7 @@ int		is_number(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (!ft_isdigit(s[i]) && (i != 0 ||(s[0] != '-' && s[0] == '+')))
+		if (!ft_isdigit(s[i]) && (i != 0 || (s[0] != '-' && s[0] == '+')))
 			return (0);
 		i++;
 	}

@@ -93,7 +93,6 @@ char		*outside_quotes(char *s, int *start)
 		if (i < (int)ft_strlen(s) && ft_strchr(" <>", s[i]) && !_escape(s, i - 1))
 			break ;
 		i++;
-		
 	}
 	*start += i;
 	if (i >= (int)ft_strlen(s) || s[i] == '\0')

@@ -46,7 +46,11 @@ void		ft_minishell(char **env)
 			set_line(&g_line);
 		if (!(parsed_line = parse_data(g_line)))
 			continue ;
+<<<<<<< HEAD
 		print_parsed_line(parsed_line);
+=======
+		//print_parsed_line(parsed_line);
+>>>>>>> 40592352a5c8bb09268db1b7c9fa9b45e792c1c8
 		exec_parsed(parsed_line);
 		free_pipeline(parsed_line);
 		if (g_saved)
