@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:16:09 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/10 17:26:42 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/10 18:37:27 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char		*outside_quotes(char *s, int *start)
 	tmp = NULL;
 	while (i < (int)ft_strlen(s) && s[i])
 	{
+		if (i < (int)ft_strlen(s) && ft_strchr(" <>", s[i]) && !_escape(s, i - 1))
+			break ;
 		if (QUOTE(s[i]) && have_end(s + i + 1, s[i], &end) && !_escape(s, i - 1))
 			rt = get_norm_inside(&i, s, rt);
 		else if (s[i] != ' ')
@@ -90,9 +92,8 @@ char		*outside_quotes(char *s, int *start)
 			else
 				rt = append(rt, s[i]);
 		}
-		if (i < (int)ft_strlen(s) && ft_strchr(" <>", s[i]) && !_escape(s, i - 1))
-			break ;
 		i++;
+		
 	}
 	*start += i;
 	if (i >= (int)ft_strlen(s) || s[i] == '\0')
