@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:16:09 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/08 18:14:37 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/10 15:01:08 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char		*get_norm_inside(int *i, char *s, char *rt)
 	if (rt != NULL)
 		free(rt);
 	t = ft_new_inside(s + *i, i, s[*i - 1]);
+	if (t == NULL)
+		t = ft_strdup("");
 	rt = ft_strjoin(tmp, t);
 	if (t)
 		free(t);
