@@ -45,10 +45,7 @@ void		ft_minishell(char **env)
 		if ((g_exec && rt))
 			set_line(&g_line);
 		if (!(parsed_line = parse_data(g_line)))
-		{
-			g_status = 2;
 			continue ;
-		}
 		//print_parsed_line(parsed_line);
 		exec_parsed(parsed_line);
 		free_pipeline(parsed_line);

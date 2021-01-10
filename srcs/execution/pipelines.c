@@ -14,7 +14,7 @@
 
 int		*g_children;
 
-int	get_n_processes(t_pipeline *pipeline)
+int		get_n_processes(t_pipeline *pipeline)
 {
 	int	i;
 	int n;

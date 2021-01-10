@@ -87,12 +87,11 @@ char		*ft_env(char *line)
 	in.dbl = 0;
 	while (line[i] != '\0')
 	{
-		while ((QUOTE(line[i]) && i == 0) || (i > 0 && line[i - 1] != '\\' && (QUOTE(line[i]))))
+		while ((QUOTE(line[i]) && i == 0)
+			|| (i > 0 && line[i - 1] != '\\' && (QUOTE(line[i]))))
 		{
-			if (line[i] == '\"')
-				in.dbl++;
-			if (line[i] == '\'')
-				in.sgl++;
+			in.dbl += (line[i] == '\"' ? 1 : 0);
+			in.sgl += (line[i] == '\'' ? 1 : 0);
 			s = append(s, line[i++]);
 		}
 		i += (line[i] == '\\' && line[i + 1] == '$' && in.sgl == 0 ? 1 : 0);

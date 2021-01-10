@@ -17,7 +17,6 @@ char		**realloc__(char **s, char *t)
 	int		i;
 	char	**r;
 
-
 	i = -1;
 	if (!(r = (char **)malloc(sizeof(char *) * (tab_len(s) + 2))))
 		return (NULL);
