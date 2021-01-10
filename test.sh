@@ -152,4 +152,4 @@ exec_test "ls -Z"
 exec_test "cd gdhahahad"
 exec_test "ls -la | wtf"
 
-rm lol ls test
+rm lol ls\> test\>
