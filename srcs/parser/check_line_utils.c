@@ -91,8 +91,21 @@ char		*handle_env(char *line, int *pos)
 		s = dollar_norm(s, &i, g_child);
 	if (line[i] == '$' && line[i + 1] == '?')
 		s = dollar_norm(s, &i, g_status);
-	else if (line[i] == '$')
+	else if (line[i] == '$' && !ft_strchr("0123456789-+=", line[i + 1]))
 		s = dollar_norm_dollar(s, &i, line);
+	else if (line[i] == '$' && !ft_strchr("0123456789", line[i + 1]))
+	{
+		s = append(s, line[i++]);
+		s = append(s, line[i++]);
+	}
+	else
+	{
+		i += 2;
+		if (line[i] == '\0')
+			s = append(s, '\0');
+		while (i < (int)ft_strlen(line))
+			s = append(s, line[i++]);
+	}
 	*pos += i;
 	return (s);
 }
