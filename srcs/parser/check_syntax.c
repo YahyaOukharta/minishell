@@ -53,12 +53,10 @@ int			check_pipe(char *s)
 	int		v;
 	int		rt;
 	int		i;
-	int		len;
 
 	i = -1;
 	rt = 0;
 	split = parser_split(s, '|');
-	len = tab_len(split);
 	v = 0;
 	while (split[++i] != NULL)
 	{

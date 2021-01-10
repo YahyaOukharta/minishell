@@ -37,20 +37,15 @@ int		cparser(char *s, char q)
 	int		i;
 	int		in;
 	int		c;
-	int		end;
 
 	i = 0;
 	in = 0;
 	c = 1;
-	end = 0;
 	while (s[i] != '\0')
 	{
 		if (QUOTE(s[i]) && !_escape(s, i - 1) && in == 0)
-		{
-			end = i + 1;
 			if (have_end(s + i + 1, s[i], &i))
 				in = 1;
-		}
 		if (s[i] == q && !_escape(s, i - 1))
 			c++;
 		i++;

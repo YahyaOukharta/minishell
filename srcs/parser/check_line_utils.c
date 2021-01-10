@@ -22,7 +22,7 @@ char		*ft_get_value(char *line, int *pos)
 	i = 0;
 	s = NULL;
 	key = NULL;
-	while (line[i] != '\0' && (ft_isalnum(line[i]) || !ft_strchr(" \"\';|><", line[i])))
+	while (line[i] != '\0' && (ft_isalnum(line[i]) || !ft_strchr(" =\"\';|><", line[i])))
 		i++;
 	key = ft_substr(line, 0, i);
 	env = env_with_key(key);
