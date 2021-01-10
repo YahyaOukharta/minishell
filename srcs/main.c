@@ -46,7 +46,7 @@ void		ft_minishell(char **env)
 			set_line(&g_line);
 		if (!(parsed_line = parse_data(g_line)))
 		{
-			//g_status = 2;
+			g_status = 2;
 			continue ;
 		}
 		//print_parsed_line(parsed_line);
@@ -67,4 +67,3 @@ int			main(int ac, char **argv, char **env)
 		ft_putstr_fd("Usage : ./minishell\n", STDERR);
 	return (g_return);
 }
-  
