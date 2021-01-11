@@ -179,4 +179,5 @@ void				rarg_norm(char *line, int *i, int *end, int *in);
 char				*get_inside(char *s, int *start, char quote);
 char				*ft_new_inside(char *s, int *start, char quote);
 int					_escape(char *s, int pos);
+char				*ft_env(char *line);
 #endif

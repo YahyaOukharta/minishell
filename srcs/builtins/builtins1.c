@@ -91,21 +91,20 @@ int		builtin_cd(int in, int out, char **argv)
 	out = 0;
 	(void)in;
 	(void)out;
+	dir = (tab_len(argv) == 1 ? env_with_key("HOME")->value : argv[1]);
 	ft_bzero(cwd, 1000);
 	getcwd(cwd, 1000);
-	if (tab_len(argv) > 2)
-	{
-		ft_printf("cd: wrong number of arguments\n");
-		return (1);
-	}
-	dir = (tab_len(argv) == 1 ? env_with_key("HOME")->value : argv[1]);
+	dir = ft_strlen(dir) ? dir : ".";
 	ret = chdir(dir);
 	if (ret < 0)
 	{
-		ft_printf("cd: no such file or directory: %s\n", dir);
+		ft_printf("minishell: cd: %s: %s\n", dir, strerror(errno));
 		return (1);
 	}
-	set_env("OLDPWD", cwd);
+	set_env("OLDPWD", ft_strdup(cwd));
+	ft_bzero(cwd, 1000);
+	getcwd(cwd, 1000);
+	set_env("PWD", ft_strdup(cwd));
 	return (0);
 }
 

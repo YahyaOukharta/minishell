@@ -67,9 +67,12 @@ void	init_environment(char **envp)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		new = new_env(ft_key(envp[i]), ft_value(envp[i]));
-		new->next = g_env;
-		g_env = new;
+		if (!string_equal(ft_key(envp[i]), "OLDPWD"))
+		{
+			new = new_env(ft_key(envp[i]), ft_value(envp[i]));
+			new->next = g_env;
+			g_env = new;
+		}
 		i++;
 	}
 }
@@ -88,7 +91,7 @@ void	set_env(char *key, char *value)
 		while (tmp->next && !string_equal(tmp->key, key))
 			tmp = tmp->next;
 		if (!tmp->next && !string_equal(tmp->key, key))
-			tmp->next = new_env(key, value);
+			tmp->next = new_env(ft_strdup(key), ft_strdup(value));
 		else
 		{
 			free(tmp->value);

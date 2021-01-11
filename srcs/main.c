@@ -46,8 +46,8 @@ void		ft_minishell(char **env)
 			set_line(&g_line);
 		if (!(parsed_line = parse_data(g_line)))
 			continue ;
-		print_parsed_line(parsed_line);
-		exec_parsed(parsed_line);
+		//print_parsed_line(parsed_line);
+		//exec_parsed(parsed_line);
 		free_pipeline(parsed_line);
 		if (g_saved)
 			free(g_saved);
@@ -55,11 +55,32 @@ void		ft_minishell(char **env)
 	free_env();
 }
 
+void		ft_minishell_test(char **env, char *line)
+{
+	int			rt;
+	t_pipeline	**parsed_line;
+
+	rt = 0;
+	init_shell(env);
+	g_signal_bs = 0;
+	if (!(parsed_line = parse_data(line)))
+		return ;
+	//print_parsed_line(parsed_line);
+	//exec_parsed(parsed_line);
+	free_pipeline(parsed_line);
+	if (g_saved)
+		free(g_saved);
+	free_env();
+	g_return = g_status;
+}
+
 int			main(int ac, char **argv, char **env)
 {
 	(void)argv;
 	if (ac == 1)
 		ft_minishell(env);
+	else if (ac == 3 && string_equal(argv[1], "-c"))
+		ft_minishell_test(env, ft_strdup(argv[2]));
 	else
 		ft_putstr_fd("Usage : ./minishell\n", STDERR);
 	return (g_return);

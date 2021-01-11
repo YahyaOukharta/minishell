@@ -56,8 +56,11 @@ t_pipeline		**parser(char *line)
 	i = 0;
 	while (pipelines[i] != NULL)
 	{
+		pipelines[i] = ft_env(pipelines[i]);
 		split = parser_split(pipelines[i], '|');
 		parsed_line[i] = new_pipeline(split);
+		if (parsed_line[i]->cmds)
+			g_status = execute_pipeline(parsed_line[i]);
 		free(pipelines[i]);
 		free_s_tab(split);
 		i++;

@@ -112,7 +112,7 @@ char		*check_line(char *line)
 		return (NULL);
 	if (!(check_syntax(line)))
 		return (NULL);
-	if (ft_strchr(line, '$'))
+	/*if (ft_strchr(line, '$'))
 	{
 		rt = ft_env(line);
 		if (line)
@@ -120,6 +120,6 @@ char		*check_line(char *line)
 		line = ft_strdup(rt);
 		if (rt)
 			free(rt);
-	}
+	}*/
 	return (line);
 }

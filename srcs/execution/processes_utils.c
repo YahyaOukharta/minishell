@@ -42,13 +42,13 @@ int		find_execute_binary(char **cmd, int in, int out)
 
 	if (!find_file_in_path(&path, cmd[0]))
 	{
-		ft_printf("minishell: command not found: %s\n", cmd[0]);
+		ft_printf("minishell: %s: command not found\n", cmd[0]);
 		exit(127);
 	}
 	redirect_in_out(in, out);
 	if ((execve(path, cmd, get_env_tab()) == -1))
 	{
-		ft_printf("minishell: permission denied: %s\n", cmd[0]);
+		ft_printf("minishell: %s: permission denied\n", cmd[0]);
 		free(path);
 		exit(126);
 	}

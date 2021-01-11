@@ -35,7 +35,11 @@ int				ft_prompt(char **line)
 
 void			init_shell(char **env)
 {
+	char *s;
+	s = ft_calloc(1000,1);
+	getcwd(s, 999);
 	init_environment(env);
+	set_env("PWD", s);
 	init_builtins();
 	g_status = 0;
 	g_signal_c = 0;
