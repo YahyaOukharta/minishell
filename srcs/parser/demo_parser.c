@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:34 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/11 12:16:12 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/11 12:25:09 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int		cparser(char *s, char q)
 	i = 0;
 	in = 0;
 	c = 1;
-	while (s[i] != '\0')
+	while (i < (int)ft_strlen(s) && s[i] != '\0')
 	{
-		if ((in == 0) && QUOTE(s[i]) && !_escape(s, i - 1))
+		if ((in == 0) && !_escape(s, i - 1) && QUOTE(s[i]))
 		{
 			i++;
 			if (have_end(s, s[i - 1], &i))
@@ -99,7 +99,7 @@ char	*get_arg(char *line, char c, int *pos)
 	ft_bzero(tmp, 2 * sizeof(char *));
 	while (line[i])
 	{
-		if (in == 0 && QUOTE(line[i]) && !_escape(line, i - 1))
+		if ((in == 0) && !_escape(line, i - 1) && QUOTE(line[i]))
 		{
 			end = i + 1;
 			get_arg_helper(&line[i], &end, &in, &tmp[1]);
