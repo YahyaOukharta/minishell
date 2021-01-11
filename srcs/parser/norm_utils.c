@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:16:09 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/11 14:42:05 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/11 15:12:30 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char		*outside_quotes(char *s, int *start)
 		
 		if (QUOTE(s[i]) && have_end(s + i + 1, s[i], &end) && !_escape(s, i - 1))
 			rt = get_norm_inside(&i, s, rt);
-		else if (s[i] != ' ')
+		else if (!ft_strchr(" <>", s[i]))
 		{
 			if (s[i] == '\\' && s[i + 1] == '\0')
 			{
