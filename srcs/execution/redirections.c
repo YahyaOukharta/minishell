@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:49:37 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/28 16:29:57 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/12 15:03:35 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 		fd = open(parsed, O_RDONLY);
 		if (fd < 0)
 		{
-			ft_printf("minishell: no such file or directory: %s\n", parsed);
+			ft_printf("minishell: No such file or directory: %s\n", parsed);
 			free(parsed);
 			return (1);
 		}

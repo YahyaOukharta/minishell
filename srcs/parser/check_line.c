@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:57:12 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/06 18:41:42 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/12 15:16:21 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char		*ft_env(char *line)
 			s = append(s, line[i++]);
 		}
 		i += (line[i] == '\\' && line[i + 1] == '$' && in.sgl == 0 ? 1 : 0);
-		if (i > 1 && line[i - 1] != '\\' && line[i] == '$' && in.sgl % 2 != 1)
+		if (i > 1 && line[i - 1] != '\\' && line[i] == '$' && (line[i + 1] != '\0' && line[i + 1] != '\\') && in.sgl % 2 != 1)
 			s = env_normed(s, line, &i);
 		else if (line[i] != '\0')
 			s = append(s, line[i++]);
@@ -112,14 +112,5 @@ char		*check_line(char *line)
 		return (NULL);
 	if (!(check_syntax(line)))
 		return (NULL);
-	/*if (ft_strchr(line, '$'))
-	{
-		rt = ft_env(line);
-		if (line)
-			free(line);
-		line = ft_strdup(rt);
-		if (rt)
-			free(rt);
-	}*/
 	return (line);
 }

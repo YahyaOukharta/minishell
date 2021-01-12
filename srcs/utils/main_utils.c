@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:01 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/10 16:51:23 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/12 14:06:27 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,17 @@ int				ft_prompt(char **line)
 void			init_shell(char **env)
 {
 	char *s;
+	t_env	*shlvl;
+
 	s = ft_calloc(1000,1);
 	getcwd(s, 999);
 	init_environment(env);
+	shlvl = env_with_key("SHLVL");
 	set_env("PWD", s);
+	if (shlvl != NULL)
+		set_env("SHLVL", ft_itoa(ft_atoi(shlvl->value) + 1));
+	else
+		set_env("SHLVL", "1");
 	init_builtins();
 	g_status = 0;
 	g_signal_c = 0;
