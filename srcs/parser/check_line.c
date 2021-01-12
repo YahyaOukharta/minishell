@@ -111,6 +111,9 @@ char		*check_line(char *line)
 	if (line == NULL)
 		return (NULL);
 	if (!(check_syntax(line)))
-		return (NULL);
+	{
+		g_status = 2;
+		return (0);
+	}
 	return (line);
 }

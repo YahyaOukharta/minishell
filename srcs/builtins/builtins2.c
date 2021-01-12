@@ -31,15 +31,30 @@ int		builtin_env(int in, int out, char **argv)
 	return (0);
 }
 
+int		is_special(char c)
+{
+	return (ft_strchr("$\\\"", c));
+}
+
 void	export_env(void)
 {
-	t_env	*t;
+	t_env	*env;
+	int		i;
 
-	t = g_env;
-	while (t != NULL)
+	env = g_env;
+	while (env != NULL)
 	{
-		ft_printf("declare -x %s=\"%s\"\n", t->key, t->value);
-		t = t->next;
+		ft_printf("declare -x %s=\"", env->key);
+		i = 0;
+		while (i < ft_strlen(env->value))
+		{
+			if (is_special(env->value[i]))
+				write(1, "\\", 1);
+			write(1, env->value + i, 1);
+			i++;
+		}
+		ft_printf("\"\n");
+		env = env->next;
 	}
 }
 

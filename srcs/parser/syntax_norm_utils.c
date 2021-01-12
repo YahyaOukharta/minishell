@@ -36,7 +36,7 @@ int			check_pipe_norm(char *s)
 {
 	if (check_pipe(s) == 0)
 	{
-		ft_printf("Syntax Error Near %s\n", ft_strchr(s, '|'));
+		ft_printf("minishell: syntax error near unexpected token `|'\n");
 		return (0);
 	}
 	return (1);
