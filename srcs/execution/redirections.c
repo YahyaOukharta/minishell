@@ -48,7 +48,7 @@ int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 		fd = open(parsed, O_RDONLY);
 		if (fd < 0)
 		{
-			ft_printf("minishell: No such file or directory: %s\n", parsed);
+			ft_printf("minishell: %s: No such file or directory\n", parsed);
 			free(parsed);
 			return (1);
 		}

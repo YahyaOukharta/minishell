@@ -44,6 +44,13 @@ int is_regular_file(const char *path)
     return S_ISREG(path_stat.st_mode);
 }
 
+int is_link_file(const char *path)
+{
+    struct stat path_stat;
+
+    return (!lstat(path, &path_stat));
+}
+
 int is_exe_usr(const char *path)
 {
     struct stat path_stat;
@@ -78,7 +85,7 @@ int		find_execute_binary(char **cmd, int in, int out)
 		exit(127);
 	}
 	redirect_in_out(in, out);
-	if ((execve(path, cmd, get_env_tab()) == -1 && errno))
+	if ((execve(path, cmd, get_env_tab()) == -1))
 	{
 		if (errno == 13 && is_regular_file(path))
 			ft_printf("minishell: %s: Permission denied\n", cmd[0], errno);
@@ -93,7 +100,7 @@ int		find_execute_binary(char **cmd, int in, int out)
 			}
 			exit((int)free_and_return((void *)path, (void *)0));
 		}
-		exit((int)free_and_return((void *)path, (void *)126));
+		exit(errno == 2 ? 127 : 126);
 	}
 	exit(EXIT_SUCCESS);
 }
