@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:23:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/12 14:51:45 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/12 19:02:43 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ char		*ft_new_inside(char *s, int *start, char quote)
 				free(tmp);
 			i++;
 		}
+		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' ||
+		s[i] == '|' || s[i] == ';') && in % 2 == 0)
+			break ;
 		if (s[i] != quote)
 			rt = append(rt, s[i++]);
 	}

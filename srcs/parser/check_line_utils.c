@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:14:38 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/12 15:01:37 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/12 17:05:18 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char		*ft_get_value(char *line, int *pos)
 	i = 0;
 	s = NULL;
 	key = NULL;
-	while (line[i] != '\0' && (ft_isalnum(line[i]) || !ft_strchr(" =\"\']@;|><", line[i])))
+	while (line[i] != '\0' && (ft_isalnum(line[i]) || !ft_strchr(" =\"\']$@;|><", line[i])))
 		i++;
 	key = ft_substr(line, 0, i);
 	env = env_with_key(key);
@@ -73,7 +73,7 @@ char		*dollar_norm_dollar(char *s, int *i, char *line)
 	}
 	else
 		tmp = ft_strdup("");
-	if (ft_isalnum(line[*i]))
+	if (ft_isalnum(line[*i]) || line[*i] == '_')
 		env = 1;
 	p = ft_get_value(line + *i, i);
 	s = ft_strjoin(tmp, ((ft_strlen(p) == 0 && env == 0) ? "$" : p));
@@ -95,7 +95,7 @@ char		*handle_env(char *line, int *pos)
 		s = dollar_norm(s, &i, g_child);
 	if (line[i] == '$' && line[i + 1] == '?')
 		s = dollar_norm(s, &i, g_status);
-	else if (line[i] == '$' && !ft_strchr("0123456789-+=", line[i + 1]))
+	else if (line[i] == '$' && (line[i + 1] == '_' || !ft_strchr("0123456789-+=", line[i + 1])))
 		s = dollar_norm_dollar(s, &i, line);
 	else if (line[i] == '$' && !ft_strchr("0123456789", line[i + 1]))
 	{

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:29:27 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/10 18:34:20 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/12 18:57:36 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int			fill_arg(char *line, t_arg *n, char **s)
 {
-	if (n->in == 0 && QUOTE(line[n->i]))
+	if (QUOTE(line[n->i]) && (n->in == 0))
 		rarg_norm(line, &n->i, &n->end, &n->in);
-	if (n->i == n->end + 1 && n->in == 1)
+	if ((n->i == n->end + 1) && n->in == 1)
 	{
 		n->in = 0;
 		if (!ft_isalnum(line[n->i + 1]))
 			return (1);
 	}
-	if (ft_isalnum(line[n->i]) && n->in == 0)
+	if (ft_isalnum(line[n->i]) && (n->in == 0))
 	{
 		*s = rarg_fill_norm(*s, line, &n->i);
 		return (1);

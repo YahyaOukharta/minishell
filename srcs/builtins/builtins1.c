@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:02:51 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/12 15:03:35 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/12 16:46:44 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,21 @@ void	init_builtins(void)
 	g_builtins[6] = &builtin_exit;
 }
 
+int		checker(char *s)
+{
+	int i;
+
+	i = 2;
+	if (!(ft_strncmp("-n", s, 2)))
+	{
+		while (i < (int)ft_strlen(s))
+			if (s[i++] != 'n')
+				return (0);
+		return (1);
+	}
+	return (0);
+}
+
 int		builtin_echo(int in, int out, char **argv)
 {
 	int endl;
@@ -47,7 +62,7 @@ int		builtin_echo(int in, int out, char **argv)
 	else
 	{
 		argv++;
-		while (*argv && !ft_strncmp(*argv, "-n", MIN(ft_strlen(*argv), 2)))
+		while (*argv && ft_strlen(*argv) > 0 && checker(*argv))
 		{
 			argv++;
 			endl = 0;
