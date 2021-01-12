@@ -38,7 +38,7 @@ void	export_env(void)
 	t = g_env;
 	while (t != NULL)
 	{
-		ft_printf("export %s=%s\n", t->key, t->value);
+		ft_printf("declare -x %s=\"%s\"\n", t->key, t->value);
 		t = t->next;
 	}
 }

@@ -38,7 +38,7 @@ int		new_builtin_process(int in, int out,
 		string_equal(av[0], "pwd") ||
 		string_equal(av[0], "echo") ||
 		(string_equal(av[0], "exit") && out != 1) ||
-		(string_equal(av[0], "export") && (out != 1 || in != 1)))
+		(string_equal(av[0], "export") && (out != 1 || in != 0)))
 	{
 		pid = fork();
 		if (pid == -1)
