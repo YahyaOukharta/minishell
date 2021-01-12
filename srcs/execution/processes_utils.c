@@ -44,7 +44,7 @@ int is_regular_file(const char *path)
     return S_ISREG(path_stat.st_mode);
 }
 
-int is_exe(const char *path)
+int is_exe_usr(const char *path)
 {
     struct stat path_stat;
 
@@ -52,12 +52,20 @@ int is_exe(const char *path)
     return ((S_IXUSR) & path_stat.st_mode);
 }
 
-int is_exe2(const char *path)
+int is_exe_grp(const char *path)
 {
     struct stat path_stat;
 
     stat(path, &path_stat);
-    return ((S_IXOTH | S_IXGRP) & path_stat.st_mode);
+    return ((S_IXGRP) & path_stat.st_mode);
+}
+
+int is_exe_oth(const char *path)
+{
+    struct stat path_stat;
+
+    stat(path, &path_stat);
+    return ((S_IXOTH) & path_stat.st_mode);
 }
 
 int		find_execute_binary(char **cmd, int in, int out)
@@ -78,16 +86,11 @@ int		find_execute_binary(char **cmd, int in, int out)
 			ft_printf("minishell: %s: is a directory\n", cmd[0], errno);
 		else if (errno == 8)
 		{
-			if (!is_exe(path))
+			if (!is_exe_usr(path) && is_exe_oth(path) && is_exe_grp(path))
 			{
 				ft_printf("minishell: %s: Permission denied\n", cmd[0], errno);
 				exit((int)free_and_return((void *)path, (void *)126));
 			}
-			// if (!is_exe2(path))
-			// {
-			// 	ft_printf("minishell: %s: Permission denied\n", cmd[0], errno);
-			// 	exit((int)free_and_return((void *)path, (void *)0));
-			// }
 			exit((int)free_and_return((void *)path, (void *)0));
 		}
 		exit((int)free_and_return((void *)path, (void *)126));
