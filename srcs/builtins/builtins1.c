@@ -47,7 +47,7 @@ int		builtin_echo(int in, int out, char **argv)
 	else
 	{
 		argv++;
-		while (*argv && !ft_strncmp(*argv, "-n", MAX(ft_strlen(*argv), 2)))
+		while (*argv && !ft_strncmp(*argv, "-n", MIN(ft_strlen(*argv), 2)))
 		{
 			argv++;
 			endl = 0;
@@ -86,12 +86,21 @@ int		builtin_cd(int in, int out, char **argv)
 	int		ret;
 	char	*dir;
 	char	cwd[1024];
+	t_env	*tmp;
 
-	in = 0;
-	out = 0;
 	(void)in;
 	(void)out;
-	dir = (tab_len(argv) == 1 ? env_with_key("HOME")->value : argv[1]);
+	if (tab_len(argv) == 1)
+	{
+		if (!(tmp = env_with_key("HOME")))
+		{
+			ft_printf("minishell: cd: HOME not set\n");
+			return (1);
+		}
+		dir = tmp->value;
+	}
+	else
+		dir = argv[1];
 	ft_bzero(cwd, 1000);
 	getcwd(cwd, 1000);
 	dir = ft_strlen(dir) ? dir : ".";
@@ -101,7 +110,10 @@ int		builtin_cd(int in, int out, char **argv)
 		ft_printf("minishell: cd: %s: %s\n", dir, strerror(errno));
 		return (1);
 	}
-	set_env("OLDPWD", ft_strdup(cwd));
+	if (!(tmp = env_with_key("PWD")))
+		set_env("OLDPWD", ft_strdup(""));
+	else
+		set_env("OLDPWD", ft_strdup(tmp->value));
 	ft_bzero(cwd, 1000);
 	getcwd(cwd, 1000);
 	set_env("PWD", ft_strdup(cwd));

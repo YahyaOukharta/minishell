@@ -28,6 +28,7 @@
 # define STDERR 2
 # define QUOTE(x)   (x == '\'' || x == '\"') ? 1 : 0
 # define MAX(a , b) (a > b ? a : b)
+# define MIN(a , b) (a < b ? a : b)
 
 int					g_status;
 int					g_signal_c;

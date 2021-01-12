@@ -87,7 +87,6 @@ t_pipeline		**parse_data(char *line)
 	{
 		g_status = 2;
 		free(line);
-		g_status = 2;
 		return (NULL);
 	}
 	parsed_line = parser(checked_line);

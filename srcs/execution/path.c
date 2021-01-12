@@ -35,10 +35,18 @@ int		find_file_in_path(char **str, char *cmd)
 	i = 0;
 	if (!ft_strlen(cmd))
 		return (0);
-	if (ft_strchr(cmd, '/') && !stat(cmd, &buf))
+	if (ft_strchr(cmd, '/'))
 	{
-		*str = ft_strdup(cmd);
-		return (1);
+		if (!stat(cmd, &buf))
+		{
+			*str = ft_strdup(cmd);
+			return (1);
+		}
+		else
+		{
+			ft_printf("minishell: %s: No such file or directory\n", cmd);
+			return (126);
+		}
 	}
 	path = get_parsed_path();
 	while (path[i])

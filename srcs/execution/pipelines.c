@@ -26,7 +26,8 @@ int		get_n_processes(t_pipeline *pipeline)
 	{
 		if (pipeline->cmds[i]->tokens &&
 		!string_equal(pipeline->cmds[i]->tokens[0], "unset")
-		&& !string_equal(pipeline->cmds[i]->tokens[0], "export"))
+		&& (!string_equal(pipeline->cmds[i]->tokens[0], "export")
+			|| pipeline->n_commands != 1))
 		{
 			tmp = tab_len(pipeline->cmds[i]->input_files);
 			n += (tmp ? tmp : 1);
