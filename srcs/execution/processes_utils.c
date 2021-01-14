@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:49:48 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/12 15:03:35 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/14 16:59:34 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ int		find_execute_binary(char **cmd, int in, int out)
 	if ((execve(path, cmd, get_env_tab()) == -1))
 	{
 		if (errno == 13 && is_regular_file(path))
-			ft_printf("minishell: %s: Permission denied\n", cmd[0], errno);
+			ft_printf("minishell: %s: Permission denied\n", path, errno);
 		else if (errno == 13)
-			ft_printf("minishell: %s: is a directory\n", cmd[0], errno);
+			ft_printf("minishell: %s: is a directory\n", path, errno);
 		else if (errno == 8)
 		{
 			if (!is_exe_usr(path) && is_exe_oth(path) && is_exe_grp(path))

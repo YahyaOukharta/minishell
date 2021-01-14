@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:02:51 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/30 15:22:04 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/14 17:40:01 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		builtin_env(int in, int out, char **argv)
 	return (0);
 }
 
-int		is_special(char c)
+char		*is_special(char c)
 {
 	return (ft_strchr("$\\\"", c));
 }
@@ -44,6 +44,12 @@ void	export_env(void)
 	env = g_env;
 	while (env != NULL)
 	{
+		if (ft_strncmp(env->key, "_", MAX(ft_strlen("_"), ft_strlen(env->value))) == 0)
+		{
+			i++;
+			env = env->next;
+			continue;
+		}
 		ft_printf("declare -x %s=\"", env->key);
 		i = 0;
 		while (i < ft_strlen(env->value))
@@ -67,13 +73,13 @@ int		export_helper(char *s)
 	{
 		*eq = '\0';
 		j = 0;
-		while (ft_isalnum(s[j]))
+		while (ft_isalnum(s[j]) || s[j] == '_')
 			j++;
-		if (s[j] == '\0')
+		if (s[j] == '\0' && !ft_isdigit(s[0]))
 			set_env(ft_strdup(s), ft_strdup(eq + 1));
 		else
 		{
-			ft_printf("export: not a valid identifier\n");
+			ft_printf("minishell: export: `%s': not a valid identifier\n", s);
 			return (0);
 		}
 	}
