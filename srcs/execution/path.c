@@ -21,7 +21,7 @@ char	**get_parsed_path(void)
 	if (!g_env)
 		return (0);
 	env = env_with_key("PATH");
-	if (env)
+	if (env != NULL)
 		return (ft_split(env->value, ':'));
 	return (0);
 }
@@ -31,10 +31,15 @@ int		find_file_in_path(char **str, char *cmd)
 	char		**path;
 	int			i;
 	struct stat	buf;
+	t_env		*e;
 
 	i = 0;
+	e = env_with_key("PATH");
 	if (!ft_strlen(cmd))
 		return (0);
+	char s[1000];
+	ft_bzero(s, 1000);
+	getcwd(s, 999);
 	if (ft_strchr(cmd, '/'))
 	{
 		if (!stat(cmd, &buf))
@@ -48,7 +53,14 @@ int		find_file_in_path(char **str, char *cmd)
 			return (126);
 		}
 	}
-	path = get_parsed_path();
+	else if (!stat(ft_strjoin_va(3, s, "/", cmd), &buf)
+		&& e && !tab_len(ft_split(e->value, ':')))
+	{
+		*str = ft_strdup(cmd);
+		return (1);
+	}
+	if (!(path = get_parsed_path()))
+		return (0);
 	while (path[i])
 	{
 		*str = ft_strjoin_va(3, path[i++], "/", cmd);

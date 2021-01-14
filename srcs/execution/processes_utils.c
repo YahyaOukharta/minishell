@@ -78,10 +78,15 @@ int is_exe_oth(const char *path)
 int		find_execute_binary(char **cmd, int in, int out)
 {
 	char	*path;
+	t_env	*env;
 
 	if (!find_file_in_path(&path, cmd[0]))
 	{
-		ft_printf("minishell: %s: command not found\n", cmd[0]);
+		env = env_with_key("PATH");
+		if (env != NULL && ft_strlen(env->value))
+			ft_printf("minishell: %s: command not found\n", cmd[0]);
+		else
+			ft_printf("minishell: %s: No such file or directory\n", cmd[0]);
 		exit(127);
 	}
 	redirect_in_out(in, out);
@@ -93,7 +98,7 @@ int		find_execute_binary(char **cmd, int in, int out)
 			ft_printf("minishell: %s: is a directory\n", path, errno);
 		else if (errno == 8)
 		{
-			if (!is_exe_usr(path) && is_exe_oth(path) && is_exe_grp(path))
+			if (!is_exe_usr(path) && (is_exe_oth(path) && is_exe_grp(path)))
 			{
 				ft_printf("minishell: %s: Permission denied\n", cmd[0], errno);
 				exit((int)free_and_return((void *)path, (void *)126));

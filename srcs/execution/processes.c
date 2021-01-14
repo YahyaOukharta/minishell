@@ -67,7 +67,8 @@ int		execute_command(int in, int out, char **argv)
 
 	path_info = NULL;
 	path = env_with_key("PATH");
-	path_info = ft_strrchr(path->value, ':') == NULL ? path->value : ft_strrchr(path->value, ':') + 1;
+	if (path != NULL)
+		path_info = ft_strrchr(path->value, ':') == NULL ? path->value : ft_strrchr(path->value, ':') + 1;
 	if (tab_len(argv))
 	{
 		//if (ft_strncmp(*argv, "export", 6) && ft_strncmp(*argv, "unset", 5) 
