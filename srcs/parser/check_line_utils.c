@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:14:38 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/12 17:05:18 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/14 11:49:40 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char		*ft_get_value(char *line, int *pos)
 	i = 0;
 	s = NULL;
 	key = NULL;
-	while (line[i] != '\0' && (ft_isalnum(line[i]) || !ft_strchr(" =\"\']$@;|><", line[i])))
+	while (line[i] != '\0' && (ft_isalnum(line[i]) || !ft_strchr(" =\"\'],$@;|><", line[i])))
 		i++;
 	key = ft_substr(line, 0, i);
 	env = env_with_key(key);

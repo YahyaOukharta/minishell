@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:57:12 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/12 15:16:21 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/14 11:47:32 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char		*ft_env(char *line)
 	s = NULL;
 	in.sgl = 0;
 	in.dbl = 0;
-	while (line[i] != '\0')
+	while (i < (int )ft_strlen(line) && line[i] != '\0')
 	{
 		while ((QUOTE(line[i]) && i == 0)
 			|| (i > 0 && line[i - 1] != '\\' && (QUOTE(line[i]))))
@@ -95,9 +95,9 @@ char		*ft_env(char *line)
 			s = append(s, line[i++]);
 		}
 		i += (line[i] == '\\' && line[i + 1] == '$' && in.sgl == 0 ? 1 : 0);
-		if (i > 1 && line[i - 1] != '\\' && line[i] == '$' && (line[i + 1] != '\0' && line[i + 1] != '\\') && in.sgl % 2 != 1)
+		if ((i > 1 || (line[i] == '$' && i == 0)) && line[i - 1] != '\\' && line[i] == '$' && (line[i + 1] != '\0' && line[i + 1] != '\\') && in.sgl % 2 != 1)
 			s = env_normed(s, line, &i);
-		else if (line[i] != '\0')
+		else if (i < (int )ft_strlen(line) && line[i] != '\0')
 			s = append(s, line[i++]);
 	}
 	return (s);

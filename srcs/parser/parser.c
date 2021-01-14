@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/12 16:48:49 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/14 12:07:27 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ t_pipeline		**parser(char *line)
 	i = 0;
 	while (pipelines[i] != NULL)
 	{
-		pipelines[i] = ft_env(pipelines[i]);
+		if (ft_strchr(pipelines[i], '$'))
+			pipelines[i] = ft_env(pipelines[i]);
 		split = parser_split(pipelines[i], '|');
 		parsed_line[i] = new_pipeline(split);
 		if (parsed_line[i]->cmds)
