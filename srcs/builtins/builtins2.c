@@ -87,14 +87,13 @@ int		export_helper(char *s)
 	char	*tmp;
 
 	tmp = ft_strdup(s);
+	j = 0;
 	if ((eq = ft_strchr(s, '=')))
 	{
-		*eq = '\0';
-		j = 0;
 		while (ft_isalnum(s[j]) || s[j] == '_')
 			j++;
-		if (s[j] == '\0' && !ft_isdigit(s[0]))
-			set_env(ft_strdup(s), ft_strdup(eq + 1));
+		if (s[j] == '=' && !ft_isdigit(s[0]))
+			set_env(ft_substr(s, 0, j), ft_strdup(eq + 1));
 		else
 		{
 			ft_printf("minishell: export: `%s': not a valid identifier\n", tmp);
@@ -104,9 +103,16 @@ int		export_helper(char *s)
 	}
 	else
 	{
-		ft_printf("minishell: export: `%s': not a valid identifier\n", tmp);
-		free(tmp);
-		return (0);
+		while (ft_isalnum(s[j]) || s[j] == '_')
+			j++;
+		if (s[j] == '\0' && !ft_isdigit(s[0]))
+			set_env(ft_substr(s, 0, j), ft_strdup(""));
+		else
+		{
+			ft_printf("minishell: export: `%s': not a valid identifier\n", tmp);
+			free(tmp);
+			return (0);
+		}
 	}
 	return (1);
 }
