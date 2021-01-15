@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:14:38 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/14 17:34:53 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/14 20:00:23 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,28 @@ char		*dollar_norm(char *s, int *i, int value)
 	return (s);
 }
 
+char		*handle_escape(char *s)
+{
+	int 	i;
+	char	*r;
+	int 	len;
+
+	i = 0;
+	r = ft_strdup("");
+	len = ft_strlen(s);
+	while (i < len)
+	{
+		if (s[i] == '\\')
+		{
+			r = append(r, '\\');
+			r = append(r, s[i++]);
+		}
+		else
+			r = append(r, s[i++]);
+	}
+	return (r);
+}
+
 char		*dollar_norm_dollar(char *s, int *i, char *line)
 {
 	char	*tmp;
@@ -75,7 +97,7 @@ char		*dollar_norm_dollar(char *s, int *i, char *line)
 		tmp = ft_strdup("");
 	if (ft_isalnum(line[*i]) || line[*i] == '_')
 		env = 1;
-	p = ft_get_value(line + *i, i);
+	p = handle_escape(ft_get_value(line + *i, i));
 	s = ft_strjoin(tmp, ((ft_strlen(p) == 0 && env == 0) ? "$" : p));
 	if (tmp)
 		free(tmp);

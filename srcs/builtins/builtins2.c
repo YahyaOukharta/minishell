@@ -6,11 +6,27 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:02:51 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/14 17:40:01 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/15 10:37:40 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		isallalphanum(char *s)
+{
+	int i;
+	int len;
+
+	i = 0;
+	len = ft_strlen(s);
+	while (i < len)
+	{
+		if (!ft_isalnum(s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int		builtin_env(int in, int out, char **argv)
 {
@@ -68,7 +84,9 @@ int		export_helper(char *s)
 {
 	char	*eq;
 	int		j;
+	char	*tmp;
 
+	tmp = ft_strdup(s);
 	if ((eq = ft_strchr(s, '=')))
 	{
 		*eq = '\0';
@@ -79,9 +97,16 @@ int		export_helper(char *s)
 			set_env(ft_strdup(s), ft_strdup(eq + 1));
 		else
 		{
-			ft_printf("minishell: export: `%s': not a valid identifier\n", s);
+			ft_printf("minishell: export: `%s': not a valid identifier\n", tmp);
+			free(tmp);
 			return (0);
 		}
+	}
+	else
+	{
+		ft_printf("minishell: export: `%s': not a valid identifier\n", tmp);
+		free(tmp);
+		return (0);
 	}
 	return (1);
 }
@@ -89,42 +114,53 @@ int		export_helper(char *s)
 int		builtin_export(int in, int out, char **argv)
 {
 	int		i;
+	int		flag;
 
 	(void)in;
 	(void)out;
+	flag = 0;
 	if (tab_len(argv) > 1)
 	{
 		i = 1;
 		while (argv[i])
 		{
 			if (!export_helper(argv[i]))
-				return (1);
+				flag = 1;
 			i++;
 		}
 	}
 	else if (tab_len(argv) == 1)
 		export_env();
-	return (0);
+	return (flag);
 }
 
 int		builtin_unset(int in, int out, char **argv)
 {
 	char	**tab;
 	int		i;
+	char	*tmp;
+	int		flag;
 
 	(void)in;
 	(void)out;
+	tmp = ft_strdup("");
+	flag = 0;
 	if (tab_len(argv) > 1)
 	{
 		i = 1;
 		while (argv[i])
 		{
 			tab = ft_split(argv[i], '=');
-			if (tab_len(tab) == 1)
+			if ((tab_len(tab) == 1) && isallalphanum(argv[i]))
 				unset_env(tab[0]);
+			else
+			{
+				ft_printf("minishell: unset: `%s': not a valid identifier\n", argv[i]);			
+				flag = 1;
+			}
 			free_s_tab(tab);
 			i++;
 		}
 	}
-	return (0);
+	return (flag);
 }
