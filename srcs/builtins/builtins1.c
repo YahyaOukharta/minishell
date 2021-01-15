@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:02:51 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/12 16:46:44 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/15 12:52:10 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,15 +135,44 @@ int		builtin_cd(int in, int out, char **argv)
 	return (0);
 }
 
+int		isallnum(char *s)
+{
+	int i;
+	int len;
+	int flag;
+	int	sign;
+
+	i = 0;
+	len = ft_strlen(s);
+	flag = 0;
+	sign = 0;
+	while (i <  len)
+	{
+		if (s[i] == '-' || s[i] == '+')
+			sign++;
+		if (sign > 1)
+			return (0);
+		if (!ft_isdigit(s[i]))
+			flag = 1;
+		i++;
+	}
+	return (!flag);
+}
+
 int		builtin_exit(int in, int out, char **argv)
 {
 	(void)in;
 	(void)out;
-	if (tab_len(argv) == 2)
-		g_return = (is_number(argv[1]) ? ft_atoi(argv[1]) : 255);
+	if (tab_len(argv) == 2 && isallnum(argv[1]))
+		g_return = (is_number(argv[1]) ? ft_atoi(argv[1]) : 0);
+	else if (tab_len(argv) != 0 && !isallnum(argv[1]))
+		ft_printf("minishell: exit: %s: numeric argument required\n", argv[1]);
+		g_return = 0;
+	/*if (tab_len(argv) == 2)
+		g_return = (is_number(argv[1]) ? ft_atoi(argv[1]) : 0);
 	else if (tab_len(argv) > 2)
 		g_return = 1;
 	else
-		g_return = g_status;
+		g_return = g_status;*/
 	return (-1);
 }
