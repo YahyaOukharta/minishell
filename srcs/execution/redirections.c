@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:49:37 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/12 15:03:35 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/15 12:38:52 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int		redirect_inputs(char **tokens, int out, int pipe_in, char **input_files)
 			free(parsed);
 			return (1);
 		}
-		g_status = execute_command(fd, out, tokens);
+		if (i == tab_len(input_files) - 1)
+			g_status = execute_command(fd, out, tokens);
 		free(parsed);
 		i++;
 	}

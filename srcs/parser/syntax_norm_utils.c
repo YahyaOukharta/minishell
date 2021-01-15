@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:55:48 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/15 12:14:53 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/15 12:35:54 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int			check_multiple(char *s, int pos)
 {
 	if (check_pipeline(s) == 0)
 	{
-		ft_printf("minishell: syntax error near unexpected token `%s'\n", s + pos);
+		ft_printf("minishell: syntax error near unexpected token `;'\n", s + pos);
 		return (0);
 	}
 	return (1);
@@ -53,7 +53,10 @@ int			check_redir_norm(char *s)
 	if (check_redir(s) == 0)
 	{
 		e = ft_strnstr(s, ">", (ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
-		ft_printf("minishell: syntax error near unexpected token `%s'\n", e);
+		if (e != NULL)
+			ft_printf("minishell: syntax error near unexpected token `%s'\n", e);
+		else
+			ft_printf("minishell: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
 	return (1);
@@ -64,6 +67,7 @@ int			check_syntax(char *s)
 	int		pos;
 
 	pos = 0;
+	s = ft_strtrim(s, " \t");
 	if (ft_strsearch(s, ';'))
 		if (check_multiple(s, pos) == 0)
 			return (0);
