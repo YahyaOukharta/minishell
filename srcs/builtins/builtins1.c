@@ -178,10 +178,14 @@ int		builtin_exit(int in, int out, char **argv)
 	if (tab_len(argv) == 2 && (tmp = skip_blank(argv[1])) && ft_isdigit(tmp[0]))
 		g_return = ft_atoi(skip_blank(argv[1]));
 	else if (tab_len(argv) == 2 && !isallnum(skip_blank(argv[1])))
+	{
+		g_return = 255;
 		ft_printf("minishell: exit: %s: numeric argument required\n", argv[1]);
-	if (tab_len(argv) == 2)
+	}
+	else if (tab_len(argv) == 2)
 		g_return = (is_number(skip_blank(argv[1])) ? ft_atoi(skip_blank(argv[1])) : 0);
 	else if (tab_len(argv) > 2)
 		g_return = 1;
+	g_return %= 256;
 	return (-1);
 }

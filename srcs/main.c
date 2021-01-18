@@ -53,6 +53,7 @@ void		ft_minishell(char **env)
 			free(g_saved);
 	}
 	free_env();
+	g_return = g_status;	
 }
 
 void		ft_minishell_test(char **env, char *line)
@@ -75,6 +76,8 @@ void		ft_minishell_test(char **env, char *line)
 	if (g_saved)
 		free(g_saved);
 	free_env();
+	if (g_status != -1)
+		g_return = g_status;	
 }
 
 int			main(int ac, char **argv, char **env)

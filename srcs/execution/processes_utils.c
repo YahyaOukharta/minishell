@@ -90,6 +90,7 @@ int		find_execute_binary(char **cmd, int in, int out)
 		exit(127);
 	}
 	redirect_in_out(in, out);
+	set_env("_", path);
 	if ((execve(path, cmd, get_env_tab()) == -1))
 	{
 		if (errno == 13 && is_regular_file(path))

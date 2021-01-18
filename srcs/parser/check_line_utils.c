@@ -58,9 +58,9 @@ char		*dollar_norm(char *s, int *i, int value)
 
 char		*handle_escape(char *s)
 {
-	int 	i;
+	int		i;
 	char	*r;
-	int 	len;
+	int		len;
 
 	i = 0;
 	r = ft_strdup("");

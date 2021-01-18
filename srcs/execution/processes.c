@@ -83,9 +83,8 @@ int		execute_command(int in, int out, char **argv)
 	{
 		//if (ft_strncmp(*argv, "export", 6) && ft_strncmp(*argv, "unset", 5) 
 		set_env("_",*(argv + tab_len(argv) - 1));
-		if ((index = index_of_in_tab(lower_str(argv[0]), g_builtins_str)) > -1)
+		if ((index = index_of_in_tab(argv[0], g_builtins_str)) > -1)
 			g_status = new_builtin_process(in, out, argv, g_builtins[index]);
-
 		else
 			g_status = new_process(in, out, argv, &g_status);
 	}

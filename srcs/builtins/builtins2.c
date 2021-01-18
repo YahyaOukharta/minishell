@@ -41,7 +41,8 @@ int		builtin_env(int in, int out, char **argv)
 	env = g_env;
 	while (env)
 	{
-		ft_printf("%s=%s\n", env->key, env->value);
+		if (ft_strlen(env->value) != 0)
+			ft_printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
 	return (0);
@@ -105,7 +106,7 @@ int		export_helper(char *s)
 	{
 		while (ft_isalnum(s[j]) || s[j] == '_')
 			j++;
-		if (s[j] == '\0' && !ft_isdigit(s[0]))
+		if (ft_strlen(s) != 0 && s[j] == '\0' && !ft_isdigit(s[0]))
 			set_env(ft_substr(s, 0, j), ft_strdup(""));
 		else
 		{

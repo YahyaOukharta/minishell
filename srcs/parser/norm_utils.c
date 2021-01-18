@@ -71,7 +71,7 @@ char		*outside_quotes(char *s, int *start)
 		
 		if (QUOTE(s[i]) && have_end(s + i + 1, s[i], &end) && !_escape(s, i - 1))
 			rt = get_norm_inside(&i, s, rt);
-		else if (!ft_strchr(" <>", s[i]))
+		else if (!ft_strchr(" <>\t", s[i]))
 		{
 			if (s[i] == '\\' && s[i + 1] == '\0')
 			{
@@ -92,7 +92,7 @@ char		*outside_quotes(char *s, int *start)
 				rt = append(rt, s[i]);
 		}
 		
-		if (i < (int)ft_strlen(s) && ft_strchr(" <>", s[i]) && !_escape(s, i - 1))
+		if (i < (int)ft_strlen(s) && ft_strchr(" <>\t\r\f", s[i]) && !_escape(s, i - 1))
 			break ;
 		else
 			i++;
