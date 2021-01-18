@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:50:06 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/10 16:51:01 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/18 10:19:56 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	wait_for_children(t_pipeline *p)
 	}
 }
 
-int		execute_pipeline(t_pipeline *pipeline)
+int		 execute_pipeline(t_pipeline *pipeline)
 {
 	int		i;
 	int		fd[2];

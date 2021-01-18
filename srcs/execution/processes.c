@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:49:48 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/14 17:32:09 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/18 10:31:42 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,16 @@ int		new_builtin_process(int in, int out,
 	return (g_status);
 }
 
+char	*lower_str(char *s)
+{
+	int i;
+
+	i = -1;
+	while (s[++i] != '\0')
+		s[i] = ft_tolower(s[i]);
+	return (s);
+}
+
 int		execute_command(int in, int out, char **argv)
 {
 	int		index;
@@ -72,9 +82,10 @@ int		execute_command(int in, int out, char **argv)
 	if (tab_len(argv))
 	{
 		//if (ft_strncmp(*argv, "export", 6) && ft_strncmp(*argv, "unset", 5) 
-		set_env("_", ft_strjoin(path_info, ft_strjoin("/", *argv)));
-		if ((index = index_of_in_tab(argv[0], g_builtins_str)) > -1)
+		set_env("_",*(argv + tab_len(argv) - 1));
+		if ((index = index_of_in_tab(lower_str(argv[0]), g_builtins_str)) > -1)
 			g_status = new_builtin_process(in, out, argv, g_builtins[index]);
+
 		else
 			g_status = new_process(in, out, argv, &g_status);
 	}

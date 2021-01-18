@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:01 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/14 12:00:54 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/18 10:33:09 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void			init_shell(char **env)
 		set_env("SHLVL", ft_itoa(ft_atoi(shlvl->value) + 1));
 	else
 		set_env("SHLVL", "1");
+	set_env("_", ft_strjoin(s, "/minishell"));
 	init_builtins();
 	g_status = 0;
 	g_signal_c = 0;
