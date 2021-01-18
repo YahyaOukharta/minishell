@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:55:48 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/15 12:35:54 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/18 09:45:53 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			check_quotes_norm(char *s, int *pos)
 {
 	if (check_quotes(s, pos) == 0)
 	{
-		if (s[*pos + 1] == '\0')
+		if (pos >= (int )ft_strlen(s) - 2)
 			ft_printf("minishell: unexpected EOF while looking for matching `%c'\n", s[*pos]);
 		else
 			ft_printf("minishell: syntax error near unexpected token `%s'\n", s + *pos);
@@ -39,7 +39,7 @@ int			check_pipe_norm(char *s)
 {
 	if (check_pipe(s) == 0)
 	{
-		ft_printf("minishell: minishell: syntax error near unexpected token %s\n", ft_strchr(s, '|'));
+		ft_printf("minishell: syntax error near unexpected token `|'\n");
 		return (0);
 	}
 	return (1);
