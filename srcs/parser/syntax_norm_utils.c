@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:55:48 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/18 09:45:53 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/18 09:59:02 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int			check_redir_norm(char *s)
 	{
 		e = ft_strnstr(s, ">", (ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
 		if (e != NULL)
-			ft_printf("minishell: syntax error near unexpected token `%s'\n", e);
+			ft_printf("minishell: syntax error near unexpected token `%c'\n", *e);
 		else
 			ft_printf("minishell: syntax error near unexpected token `newline'\n");
 		return (0);
@@ -71,11 +71,11 @@ int			check_syntax(char *s)
 	if (ft_strsearch(s, ';'))
 		if (check_multiple(s, pos) == 0)
 			return (0);
-	if (ft_strchr(s, '\"') || ft_strchr(s, '\''))
-		if (check_quotes_norm(s, &pos) == 0)
-			return (0);
 	if (ft_strsearch(s, '|'))
 		if (check_pipe_norm(s) == 0)
+			return (0);
+	if (ft_strchr(s, '\"') || ft_strchr(s, '\''))
+		if (check_quotes_norm(s, &pos) == 0)
 			return (0);
 	if (ft_strchr(s, '>') || ft_strchr(s, '<') || ft_strnstr(s, ">>",
 		(ft_strlen(s) < 3 ? 3 : ft_strlen(s))))

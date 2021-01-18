@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:20 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/10 18:08:09 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/18 09:53:18 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,25 @@ int			has_redir(char *s, int *pos)
 int			check_pipeline(char *s)
 {
 	int i;
+	int flag;
 
 	i = 0;
+	flag = 0;
 	if (s)
 	{
+		while (s[i] != '\0' && s[i] != ';')
+		{
+			if (ft_isalnum(s[i]))
+				flag = 1;
+			i++;
+		}
+		if (!flag && s[i] == ';')
+			return (0);
 		while (s[i] != '\0')
 		{
 			if (s[i] == ';' && i == 0 && !_escape(s, i - 1))
 				return (0);
-			if (s[i] == ';' && no_alpha(s + i + 1) == 1 && !_escape(s, i - 1))
+			if (s[i] == ';' && (no_alpha(s + i + 1) == 1) && !_escape(s, i - 1))
 				return (0);
 			i++;
 		}
