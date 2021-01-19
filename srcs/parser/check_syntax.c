@@ -23,7 +23,7 @@ int			check_quotes(char *s, int *pos)
 	quote = '0';
 	while (start < end)
 	{
-		if ((s[start] == '\'' || s[start] == '\"') && !_escape(s, start - 1))
+		if ((s[start] == '\'' || s[start] == '\"') && !escape(s, start - 1))
 		{
 			*pos = start;
 			quote = s[start++];
@@ -62,7 +62,6 @@ int			check_pipe(char *s)
 	{
 		if (ft_strlen(ft_strtrim(split[i], " \t")) > 0 && has_alnum(split[i]))
 			v++;
-
 		free(split[i]);
 	}
 	free(split);
@@ -119,9 +118,9 @@ int			check_pipeline(char *s)
 			return (0);
 		while (s[i] != '\0')
 		{
-			if (s[i] == ';' && i == 0 && !_escape(s, i - 1))
+			if (s[i] == ';' && i == 0 && !escape(s, i - 1))
 				return (0);
-			if (s[i] == ';' && (no_alpha(s + i + 1) == 1) && !_escape(s, i - 1))
+			if (s[i] == ';' && (no_alpha(s + i + 1) == 1) && !escape(s, i - 1))
 				return (0);
 			i++;
 		}

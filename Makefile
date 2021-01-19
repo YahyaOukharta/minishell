@@ -18,7 +18,8 @@ SRCS = srcs/main.c\
 		\
 	   srcs/builtins/builtins1.c\
 	   srcs/builtins/builtins2.c\
-	    \
+	   srcs/builtins/builtins_utils.c\
+		\
 	   srcs/parser/check_syntax.c\
 	   srcs/parser/check_line.c\
 	   srcs/parser/parser_env.c\
@@ -33,20 +34,21 @@ SRCS = srcs/main.c\
 	   srcs/parser/check_line_nu.c\
 	   srcs/parser/get_arg.c\
 	   srcs/parser/get_tokens.c\
-	    \
+		\
 	   srcs/execution/processes.c\
 	   srcs/execution/processes_utils.c\
+	   srcs/execution/perm_utils.c\
 	   srcs/execution/path.c\
 	   srcs/execution/redirections.c\
 	   srcs/execution/pipelines.c\
-	    \
+		\
 	   srcs/signals/signals.c\
 		\
 	   srcs/utils/main_utils.c\
 	   srcs/utils/tab_utils.c\
 	   srcs/utils/utils.c\
 
-FLAGS = -g -o3  #-fsanitize=address #-Wall -Wextra -Werror
+FLAGS = -g -o3 -Wall -Wextra -Werror #-fsanitize=address 
 
 GCC = gcc
 

@@ -84,7 +84,7 @@ int			have_end(char *s, char quote, int *start)
 		return (0);
 	while (*start < (int)ft_strlen(s))
 	{
-		if (s[*start] == quote && (!_escape(s, *start - 1) && quote == '\"'))
+		if (s[*start] == quote && (!escape(s, *start - 1) && quote == '\"'))
 		{
 			*start += 1;
 			return (1);

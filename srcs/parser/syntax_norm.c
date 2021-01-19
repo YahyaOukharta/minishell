@@ -41,11 +41,11 @@ int			check_arg(char *s)
 		check_inc_arg(s, &i, &in);
 		while (s[i] != '\0')
 		{
-			if (ft_isalnum(s[i]) || (QUOTE(s[i]) && !_escape(s, i - 1)))
+			if (ft_isalnum(s[i]) || (QUOTE(s[i]) && !escape(s, i - 1)))
 				return (0);
 			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
 				ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0)
-				&& in == 0 && !_escape(s, i - 1))
+				&& in == 0 && !escape(s, i - 1))
 				return (1);
 			if (s[i] != '\0')
 				i++;
@@ -66,7 +66,6 @@ void		norm_quote(char *s, int *i, int *in, int *end)
 			*in = 1;
 		if (tmp)
 			free(tmp);
-		//in = 1;
 	}
 }
 
@@ -83,12 +82,11 @@ int			ft_strsearch(char *s, char n)
 	{
 		while (s[i] != '\0')
 		{
-			//in == 0 ? norm_quote(s, &i, &in, &end) : 0;
 			if (in == 0)
 				norm_quote(s, &i, &in, &end);
 			if (i == end)
 				in = 0;
-			if (s[i] == n && in == 0 && !_escape(s, i - 1))
+			if (s[i] == n && in == 0 && !escape(s, i - 1))
 				return (1);
 			i++;
 		}
@@ -104,15 +102,15 @@ int			check_redir(char *s)
 	while (has_redir(s + i, &i) == 1 && s[i] != '\0')
 	{
 		if (ft_strsearch(s + i, '>') && !ft_strnstr(s + i, ">>",
-				ft_strlen(s)) && !_escape(s, i - 1))
+				ft_strlen(s)) && !escape(s, i - 1))
 			if (check_arg(s + i))
 				return (0);
 		if (ft_strsearch(s + i, '<') && !ft_strnstr(s + i, "<<",
-				ft_strlen(s)) && !_escape(s, i - 1))
+				ft_strlen(s)) && !escape(s, i - 1))
 			if (check_arg(s + i))
 				return (0);
 		if (ft_strnstr(s + i, ">>", ft_strlen(s + i)) != NULL &&
-				!_escape(s, i - 1))
+				!escape(s, i - 1))
 			if (check_arg(s + i))
 				return (0);
 		if (s[i] != '\0')

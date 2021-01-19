@@ -48,7 +48,6 @@ t_pipeline		**parser(char *line)
 	int			i;
 	char		**split;
 
-	split = NULL;
 	line = ft_strtrim(line, " \t");
 	pipelines = parser_split(line, ';');
 	parsed_line = (t_pipeline **)malloc(
@@ -62,12 +61,11 @@ t_pipeline		**parser(char *line)
 		parsed_line[i] = new_pipeline(split);
 		if (parsed_line[i]->cmds && g_status != -1)
 			g_status = execute_pipeline(parsed_line[i]);
-		free(pipelines[i]);
 		free_s_tab(split);
 		i++;
 	}
 	free(line);
-	free(pipelines);
+	free_s_tab(pipelines);
 	parsed_line[i] = 0;
 	return (parsed_line);
 }

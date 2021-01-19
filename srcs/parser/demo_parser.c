@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		_escape(char *s, int pos)
+int		escape(char *s, int pos)
 {
 	int i;
 	int c;
@@ -43,13 +43,13 @@ int		cparser(char *s, char q)
 	c = 1;
 	while (i < (int)ft_strlen(s) && s[i] != '\0')
 	{
-		if ((in == 0) && !_escape(s, i - 1) && QUOTE(s[i]))
+		if ((in == 0) && !escape(s, i - 1) && QUOTE(s[i]))
 		{
 			i++;
 			if (have_end(s, s[i - 1], &i))
 				in = 1;
 		}
-		if (s[i] == q && !_escape(s, i - 1))
+		if (s[i] == q && !escape(s, i - 1))
 			c++;
 		i++;
 	}
@@ -99,13 +99,13 @@ char	*get_arg(char *line, char c, int *pos)
 	ft_bzero(tmp, 2 * sizeof(char *));
 	while (line[i])
 	{
-		if ((in == 0) && !_escape(line, i - 1) && QUOTE(line[i]))
+		if ((in == 0) && !escape(line, i - 1) && QUOTE(line[i]))
 		{
 			end = i + 1;
 			get_arg_helper(&line[i], &end, &in, &tmp[1]);
 		}
 		(i + 1 == end) ? (in = 0) : 0;
-		if (line[i] == c && in == 0 && !_escape(line, i - 1))
+		if (line[i] == c && in == 0 && !escape(line, i - 1))
 		{
 			*pos += i;
 			break ;

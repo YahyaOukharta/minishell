@@ -22,7 +22,8 @@ char		*ft_get_value(char *line, int *pos)
 	i = 0;
 	s = NULL;
 	key = NULL;
-	while (line[i] != '\0' && (ft_isalnum(line[i]) || !ft_strchr(" =\\\"\'],$@;|><", line[i])))
+	while (line[i] != '\0' && (ft_isalnum(line[i])
+	|| !ft_strchr(" =\\\"\'],$@;|><", line[i])))
 		i++;
 	key = ft_substr(line, 0, i);
 	env = env_with_key(key);
@@ -117,7 +118,8 @@ char		*handle_env(char *line, int *pos)
 		s = dollar_norm(s, &i, g_child);
 	if (line[i] == '$' && line[i + 1] == '?')
 		s = dollar_norm(s, &i, g_status);
-	else if (line[i] == '$' && (line[i + 1] == '_' || !ft_strchr("0123456789-+=", line[i + 1])))
+	else if (line[i] == '$' && (line[i + 1] == '_' ||
+	!ft_strchr("0123456789-+=", line[i + 1])))
 		s = dollar_norm_dollar(s, &i, line);
 	else if (line[i] == '$' && !ft_strchr("0123456789", line[i + 1]))
 	{
@@ -127,8 +129,7 @@ char		*handle_env(char *line, int *pos)
 	else
 	{
 		i += 2;
-		if (line[i] == '\0')
-			s = append(s, '\0');
+		s = line[i] == '\0' ? append(s, '\0') : s;
 		while (i < (int)ft_strlen(line))
 			s = append(s, line[i++]);
 	}

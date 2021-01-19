@@ -34,8 +34,7 @@ int		new_builtin_process(int in, int out,
 	int		pid;
 	int		ret;
 
-	if (string_equal(av[0], "env") ||
-		string_equal(av[0], "pwd") ||
+	if (string_equal(av[0], "env") || string_equal(av[0], "pwd") ||
 		string_equal(av[0], "echo") ||
 		(string_equal(av[0], "exit") && out != 1) ||
 		(string_equal(av[0], "export") && (out != 1 || in != 0)))
@@ -78,11 +77,11 @@ int		execute_command(int in, int out, char **argv)
 	path_info = NULL;
 	path = env_with_key("PATH");
 	if (path != NULL)
-		path_info = ft_strrchr(path->value, ':') == NULL ? path->value : ft_strrchr(path->value, ':') + 1;
+		path_info = ft_strrchr(path->value, ':') == NULL ?
+		path->value : ft_strrchr(path->value, ':') + 1;
 	if (tab_len(argv))
 	{
-		//if (ft_strncmp(*argv, "export", 6) && ft_strncmp(*argv, "unset", 5) 
-		set_env("_",*(argv + tab_len(argv) - 1));
+		set_env("_", *(argv + tab_len(argv) - 1));
 		if ((index = index_of_in_tab(argv[0], g_builtins_str)) > -1)
 			g_status = new_builtin_process(in, out, argv, g_builtins[index]);
 		else

@@ -83,9 +83,8 @@ char		*ft_env(char *line)
 
 	i = 0;
 	s = NULL;
-	in.sgl = 0;
-	in.dbl = 0;
-	while (i < (int )ft_strlen(line) && line[i] != '\0')
+	ft_bzero(&in, sizeof(t_exp));
+	while (i < (int)ft_strlen(line) && line[i] != '\0')
 	{
 		while ((QUOTE(line[i]) && i == 0)
 			|| (i > 0 && line[i - 1] != '\\' && (QUOTE(line[i]))))
@@ -95,9 +94,11 @@ char		*ft_env(char *line)
 			s = append(s, line[i++]);
 		}
 		i += (line[i] == '\\' && line[i + 1] == '$' && in.sgl == 0 ? 1 : 0);
-		if ((line[i] == '$' && i == 0) || (i > 1 && line[i - 1] != '\\' && line[i] == '$' && (line[i + 1] != '\0' && line[i + 1] != '\\') && in.sgl % 2 != 1))
+		if ((line[i] == '$' && i == 0) || (i > 1 && line[i - 1] != '\\'
+		&& line[i] == '$' && (line[i + 1] != '\0' && line[i + 1] != '\\')
+		&& in.sgl % 2 != 1))
 			s = env_normed(s, line, &i);
-		else if (i < (int )ft_strlen(line) && line[i] != '\0')
+		else if (i < (int)ft_strlen(line) && line[i] != '\0')
 			s = append(s, line[i++]);
 	}
 	return (s);

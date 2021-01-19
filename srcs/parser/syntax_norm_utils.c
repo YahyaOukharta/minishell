@@ -16,7 +16,8 @@ int			check_multiple(char *s, int pos)
 {
 	if (check_pipeline(s) == 0)
 	{
-		ft_printf("minishell: syntax error near unexpected token `;'\n", s + pos);
+		ft_printf("minishell: syntax error near unexpected token `;'\n",
+		s + pos);
 		return (0);
 	}
 	return (1);
@@ -26,10 +27,12 @@ int			check_quotes_norm(char *s, int *pos)
 {
 	if (check_quotes(s, pos) == 0)
 	{
-		if (*pos >= (int )ft_strlen(s) - 2 || ft_strchr(s + *pos + 1, s[*pos]))
-			ft_printf("minishell: unexpected EOF while looking for matching `%c'\n", s[*pos]);
+		if (*pos >= (int)ft_strlen(s) - 2 || ft_strchr(s + *pos + 1, s[*pos]))
+			ft_printf(
+		"minishell: unexpected EOF while looking for matching `%c'\n", s[*pos]);
 		else
-			ft_printf("minishell: syntax error near unexpected token `%s'\n", s + *pos);
+			ft_printf("minishell: syntax error near unexpected token `%s'\n",
+			s + *pos);
 		return (0);
 	}
 	return (1);
@@ -54,9 +57,11 @@ int			check_redir_norm(char *s)
 	{
 		e = ft_strnstr(s, ">", (ft_strlen(s) < 3 ? 3 : ft_strlen(s)));
 		if (e != NULL)
-			ft_printf("minishell: syntax error near unexpected token `%c'\n", *e);
+			ft_printf("minishell: syntax error near unexpected token `%c'\n",
+			*e);
 		else
-			ft_printf("minishell: syntax error near unexpected token `newline'\n");
+			ft_printf(
+				"minishell: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
 	return (1);

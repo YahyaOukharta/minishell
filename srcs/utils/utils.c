@@ -44,3 +44,10 @@ int		is_number(char *s)
 	}
 	return (1);
 }
+
+char	*get_cwd(char *s, int size)
+{
+	ft_bzero(s, size);
+	getcwd(s, size);
+	return (s);
+}

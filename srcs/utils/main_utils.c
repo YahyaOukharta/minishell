@@ -35,10 +35,10 @@ int				ft_prompt(char **line)
 
 void			init_shell(char **env)
 {
-	char *s;
+	char	*s;
 	t_env	*shlvl;
 
-	s = ft_calloc(1000,1);
+	s = ft_calloc(1000, 1);
 	getcwd(s, 999);
 	init_environment(env);
 	shlvl = env_with_key("SHLVL");

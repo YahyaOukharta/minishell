@@ -26,42 +26,29 @@ char	**get_parsed_path(void)
 	return (0);
 }
 
-int		find_file_in_path(char **str, char *cmd)
+int		rel_abs_path(char *cmd, char **str)
 {
-	char		**path;
-	int			i;
 	struct stat	buf;
-	t_env		*e;
 
-	i = 0;
-	e = env_with_key("PATH");
-	if (!ft_strlen(cmd))
-		return (0);
-	char s[1000];
-	ft_bzero(s, 1000);
-	getcwd(s, 999);
-	if (ft_strchr(cmd, '/'))
-	{
-		if (!stat(cmd, &buf))
-		{
-			*str = ft_strdup(cmd);
-			return (1);
-		}
-		else
-		{
-			ft_printf("minishell: %s: No such file or directory\n", cmd);
-			return (126);
-		}
-	}
-	else if (!stat(ft_strjoin_va(3, s, "/", cmd), &buf)
-		&& e && !tab_len(ft_split(e->value, ':')))
+	if (!stat(cmd, &buf))
 	{
 		*str = ft_strdup(cmd);
 		return (1);
 	}
-	if (!(path = get_parsed_path()))
-		return (0);
-	while (path[i])
+	else
+	{
+		ft_printf("minishell: %s: No such file or directory\n", cmd);
+		return (126);
+	}
+}
+
+int		loop_over_path(char *cmd, char **path, char **str)
+{
+	int			i;
+	struct stat	buf;
+
+	i = 0;
+	while (path && path[i])
 	{
 		*str = ft_strjoin_va(3, path[i++], "/", cmd);
 		if (!stat(*str, &buf))
@@ -71,6 +58,31 @@ int		find_file_in_path(char **str, char *cmd)
 		}
 		free(*str);
 	}
+	return (0);
+}
+
+int		find_file_in_path(char **str, char *cmd)
+{
+	char		**path;
+	int			i;
+	struct stat	buf;
+	char		s[1000];
+
+	i = 0;
+	if (!ft_strlen(cmd))
+		return (0);
+	get_cwd(s, 999);
+	if (ft_strchr(cmd, '/'))
+		return (rel_abs_path(cmd, str));
+	path = get_parsed_path();
+	if (!stat(ft_strjoin_va(3, s, "/", cmd), &buf)
+		&& path && !tab_len(path))
+	{
+		*str = ft_strdup(cmd);
+		return (1);
+	}
+	if (loop_over_path(cmd, path, str))
+		return (1);
 	*str = NULL;
 	return (free_s_tab(path));
 }

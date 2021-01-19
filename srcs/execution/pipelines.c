@@ -52,7 +52,7 @@ void	wait_for_children(t_pipeline *p)
 	}
 }
 
-int		 execute_pipeline(t_pipeline *pipeline)
+int		execute_pipeline(t_pipeline *pipeline)
 {
 	int		i;
 	int		fd[2];
