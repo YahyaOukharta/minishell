@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 18:45:36 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/10 17:06:45 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/19 18:55:26 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,4 +192,5 @@ char				*get_inside(char *s, int *start, char quote);
 char				*ft_new_inside(char *s, int *start, char quote);
 int					escape(char *s, int pos);
 char				*ft_env(char *line);
+char				*append_n(char *s, char *line, int *i, int n);
 #endif

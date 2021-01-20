@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:14:38 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/14 20:00:23 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/19 18:55:12 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,7 @@ char		*handle_env(char *line, int *pos)
 	!ft_strchr("0123456789-+=", line[i + 1])))
 		s = dollar_norm_dollar(s, &i, line);
 	else if (line[i] == '$' && !ft_strchr("0123456789", line[i + 1]))
-	{
-		s = append(s, line[i++]);
-		s = append(s, line[i++]);
-	}
+		append_n(s, line, &i, 2);
 	else
 	{
 		i += 2;

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:01 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/18 10:33:09 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/19 19:15:54 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ int				ft_prompt(char **line)
 
 	ft_bzero(cwd, 1000);
 	getcwd(cwd, 1000);
-	ft_putstr_fd("\033[0;32m", STDERR);
+	ft_putstr_fd("\033[0;32m", STDOUT);
 	if (g_signal_c == 1)
 	{
-		ft_putchar_fd('\r', STDERR);
+		ft_putchar_fd('\r', STDOUT);
 		g_signal_c = 0;
 	}
 	if (g_signal_d == 1)
 	{
-		ft_putstr_fd(cwd, STDERR);
-		ft_putstr_fd(" $ ", STDERR);
+		ft_putstr_fd(cwd, STDOUT);
+		ft_putstr_fd(" $ ", STDOUT);
 	}
-	ft_putstr_fd("\033[0m", STDERR);
+	ft_putstr_fd("\033[0m", STDOUT);
 	return (get_next_line(STDIN, line));
 }
 

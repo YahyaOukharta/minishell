@@ -34,6 +34,7 @@ SRCS = srcs/main.c\
 	   srcs/parser/check_line_nu.c\
 	   srcs/parser/get_arg.c\
 	   srcs/parser/get_tokens.c\
+	   srcs/parser/append_helper.c\
 		\
 	   srcs/execution/processes.c\
 	   srcs/execution/processes_utils.c\
