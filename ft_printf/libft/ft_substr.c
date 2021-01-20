@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youkhart <youkhart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 19:21:55 by youkhart          #+#    #+#             */
-/*   Updated: 2020/02/19 21:13:52 by youkhart         ###   ########.fr       */
+/*   Updated: 2021/01/20 17:12:31 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ char	*ft_substr(const char *str, unsigned int start, size_t len)
 		ft_strlcpy(sub, str + start, len + 1);
 		return (sub);
 	}
-return (0);
+	return (0);
 }

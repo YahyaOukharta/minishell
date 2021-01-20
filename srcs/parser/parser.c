@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/14 12:07:27 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/20 16:25:37 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,65 +68,4 @@ t_pipeline		**parser(char *line)
 	free_s_tab(pipelines);
 	parsed_line[i] = 0;
 	return (parsed_line);
-}
-
-void			print_parsed_line(t_pipeline **parsed_line)
-{
-	int i;
-	int j;
-	int k;
-
-	i = 0;
-	if (parsed_line)
-	{
-		while (parsed_line[i])
-		{
-			j = 0;
-			ft_printf("***Pipeline %d ***\n" ,i+1 );
-			if (parsed_line[i]->cmds)
-			{
-				while (parsed_line[i]->cmds[j])
-				{
-					ft_printf("\t**** Command %d ****\n", j + 1);
-					k=0;
-					ft_printf("\t  Tokens : ");
-					if (parsed_line[i]->cmds[j]->tokens)
-					{
-						while (parsed_line[i]->cmds[j]->tokens[k])
-						{
-							ft_printf("|%s| ",parsed_line[i]->cmds[j]->tokens[k]);
-							k++;
-						}
-					}
-					ft_printf("\n");
-					k=0;
-					ft_printf("\t  Inputs : ");
-					if (parsed_line[i]->cmds[j]->input_files)
-					{
-						while (parsed_line[i]->cmds[j]->input_files[k])
-						{
-							if ((parsed_line[i]->cmds[j]->input_files[k]) != NULL)
-								ft_printf("%s ",parsed_line[i]->cmds[j]->input_files[k]);
-							k++;
-						}
-					}
-					ft_printf("\n");
-					k=0;
-					ft_printf("\t  Outputs : ");
-					if (parsed_line[i]->cmds[j]->output_files)
-					{
-						while (parsed_line[i]->cmds[j]->output_files[k])
-						{	
-							ft_printf("%s ",parsed_line[i]->cmds[j]->output_files[k]);
-							k++;
-						}
-					}
-					ft_printf("\n");
-					j++;
-				}
-			}
-			i++;
-		}
-	}
-	//ft_printf("\n");
 }

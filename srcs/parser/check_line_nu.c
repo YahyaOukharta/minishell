@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:23:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/19 18:55:43 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/20 17:08:10 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,69 +34,81 @@ char		*ft_insidethequote(char *s, int *i, char *m, char quote)
 	return (m);
 }
 
-char		*ft_new_inside(char *s, int *start, char quote)
+int			check_escape_quote(char *s, t_var *u, char **rt)
 {
-	int		i;
-	char	*rt;
-	int		in;
+	if ((s[u->i] == '\\' && s[u->i + 1] == '\\' && u->quote == '\"') ||
+	(s[u->i] == '\\' && s[u->i + 1] == '\"' && u->quote == '\"'))
+	{
+		u->i++;
+		*rt = append(*rt, s[u->i++]);
+		return (1);
+	}
+	while ((s[u->i] == u->quote && !escape(s, u->i - 1) && u->quote == '\"')
+	|| ((s[u->i] == u->quote && u->quote == '\'')))
+	{
+		u->i++;
+		u->in++;
+	}
+	if ((s[u->i] == '\\' && s[u->i + 1] == u->quote
+	&& u->quote == '\'' && (u->in % 2) == 0)
+	|| (s[u->i] == '\\' && (u->in % 2 == 0)))
+	{
+		u->i++;
+		*rt = append(*rt, s[u->i++]);
+		return (1);
+	}
+	return (0);
+}
+
+int			recur_new_inside(t_var *u, char *s, char **rt)
+{
 	char	*c;
 	char	*tmp;
 
-	in = 1;
-	i = 0;
-	rt = ft_strdup("");
 	c = NULL;
 	tmp = NULL;
-	while (i < (int)ft_strlen(s))
+	if ((u->in % 2 == 0) && s[u->i] != u->quote &&
+	QUOTE(s[u->i]) && !escape(s, u->i - 1))
 	{
-		if ((s[i] == '\\' && s[i + 1] == '\\' && quote == '\"') ||
-		(s[i] == '\\' && s[i + 1] == '\"' && quote == '\"'))
-		{
-			i++;
-			rt = append(rt, s[i++]);
-			continue ;
-		}
-		while ((s[i] == quote && !escape(s, i - 1) && quote == '\"')
-		|| ((s[i] == quote && quote == '\'')))
-		{
-			i++;
-			in++;
-		}
-		if (s[i] == '\\' && s[i + 1] == quote && quote == '\'' && (in % 2) == 0)
-		{
-			i++;
-			rt = append(rt, s[i++]);
-			continue ;
-		}
-		if (s[i] == '\\' && (in % 2 == 0))
-		{
-			i++;
-			rt = append(rt, s[i++]);
-			continue ;
-		}
-		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' ||
-		s[i] == '|' || s[i] == ';') && in % 2 == 0)
-			break ;
-		if ((in % 2 == 0) && s[i] != quote && QUOTE(s[i]) && !escape(s, i - 1))
-		{
-			c = ft_new_inside(s + i + 1, &i, s[i]);
-			tmp = ft_strdup(rt);
-			if (rt)
-				free(rt);
-			rt = ft_strjoin(tmp, c);
-			if (c)
-				free(c);
-			if (tmp)
-				free(tmp);
-			i++;
-			continue ;
-		}
-		if ((s[i] == ' ' || s[i] == '>' || s[i] == '<' ||
-		s[i] == '|' || s[i] == ';') && in % 2 == 0)
-			break ;
-		if (s[i] != quote)
-			rt = append(rt, s[i++]);
+		c = ft_new_inside(s + u->i + 1, &u->i, s[u->i]);
+		tmp = ft_strdup(*rt);
+		if (*rt)
+			free(*rt);
+		*rt = ft_strjoin(tmp, c);
+		if (c)
+			free(c);
+		if (tmp)
+			free(tmp);
+		u->i++;
+		return (1);
 	}
-	*start += i;
+	return (0);
+}
+
+char		*ft_new_inside(char *s, int *start, char quote)
+{
+	char	*rt;
+	t_var	u;
+
+	u.in = 1;
+	u.i = 0;
+	rt = ft_strdup("");
+	u.quote = quote;
+	while (u.i < (int)ft_strlen(s))
+	{
+		if (check_escape_quote(s, &u, &rt) == 1)
+			continue ;
+		if ((s[u.i] == ' ' || s[u.i] == '>' || s[u.i] == '<' ||
+		s[u.i] == '|' || s[u.i] == ';') && u.in % 2 == 0)
+			break ;
+		if (recur_new_inside(&u, s, &rt) == 1)
+			continue ;
+		if ((s[u.i] == ' ' || s[u.i] == '>' || s[u.i] == '<' ||
+		s[u.i] == '|' || s[u.i] == ';') && u.in % 2 == 0)
+			break ;
+		if (s[u.i] != u.quote)
+			rt = append(rt, s[u.i++]);
+	}
+	*start += u.i;
 	return (rt);
 }

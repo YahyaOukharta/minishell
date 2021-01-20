@@ -6,31 +6,11 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:34 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/11 12:25:09 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/20 16:32:17 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		escape(char *s, int pos)
-{
-	int i;
-	int c;
-
-	c = 0;
-	i = 0;
-	while (pos >= i)
-	{
-		if (s[pos] == '\\')
-			c++;
-		else
-			break ;
-		pos--;
-	}
-	if (c % 2 != 0)
-		return (1);
-	return (0);
-}
 
 int		cparser(char *s, char q)
 {

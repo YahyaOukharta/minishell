@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:16:09 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/15 12:07:10 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/20 16:31:39 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,31 @@ char		*get_norm_inside(int *i, char *s, char *rt)
 	return (rt);
 }
 
+char		*outside_quotes_escape_helper(char *s, char *rt, int *i)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (s[*i] == '\\' && s[*i + 1] == '\0')
+	{
+		*i += 1;
+		tmp = ft_strdup(rt);
+		if (rt)
+			free(rt);
+		rt = ft_strjoin(tmp, " ");
+		if (tmp)
+			free(tmp);
+	}
+	else if (s[*i] == '\\')
+	{
+		*i += 1;
+		rt = append(rt, s[*i]);
+	}
+	else
+		rt = append(rt, s[*i]);
+	return (rt);
+}
+
 char		*outside_quotes(char *s, int *start)
 {
 	int		i;
@@ -68,31 +93,12 @@ char		*outside_quotes(char *s, int *start)
 	tmp = NULL;
 	while (i < (int)ft_strlen(s) && s[i])
 	{
-		
 		if (QUOTE(s[i]) && have_end(s + i + 1, s[i], &end) && !escape(s, i - 1))
 			rt = get_norm_inside(&i, s, rt);
 		else if (!ft_strchr(" <>\t", s[i]))
-		{
-			if (s[i] == '\\' && s[i + 1] == '\0')
-			{
-				i++;
-				tmp = ft_strdup(rt);
-				if (rt)
-					free(rt);
-				rt = ft_strjoin(tmp, " ");
-				if (tmp)
-					free(tmp);
-			}
-			else if (s[i] == '\\')
-			{
-				i++;
-				rt = append(rt, s[i]);
-			}
-			else
-				rt = append(rt, s[i]);
-		}
-		
-		if (i < (int)ft_strlen(s) && ft_strchr(" <>\t\r\f", s[i]) && !escape(s, i - 1))
+			rt = outside_quotes_escape_helper(s, rt, &i);
+		if (i < (int)ft_strlen(s) &&
+		ft_strchr(" <>\t\r\f", s[i]) && !escape(s, i - 1))
 			break ;
 		else
 			i++;

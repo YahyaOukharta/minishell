@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 18:45:36 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/19 18:55:26 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/20 17:14:30 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int					g_return;
 char				*g_line;
 char				*g_saved;
 int					g_exec;
-int					g_signal_bs;
 
 typedef struct		s_exp
 {
@@ -79,6 +78,13 @@ typedef	struct		s_arg
 	int				in;
 	int				end;
 }					t_arg;
+
+typedef	struct		s_variables
+{
+	int				i;
+	int				in;
+	char			quote;
+}					t_var;
 
 t_arg				g_arg;
 t_env				*g_env;

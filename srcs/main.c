@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:48 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/20 14:39:08 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/20 17:11:31 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void		ft_minishell(char **env)
 	init_shell(env);
 	while (g_status != -1)
 	{
-		g_signal_bs = 0;
 		g_line = NULL;
 		g_child = 0;
 		rt = ft_prompt(&g_line);
@@ -65,7 +64,6 @@ void		ft_minishell_test(char **env, char *line)
 
 	rt = 0;
 	init_shell(env);
-	g_signal_bs = 0;
 	if (!(parsed_line = parse_data(line)))
 	{
 		g_status = 2;
