@@ -47,6 +47,7 @@ t_pipeline		**parser(char *line)
 	t_pipeline	**parsed_line;
 	int			i;
 	char		**split;
+	char	*tmp;
 
 	line = ft_strtrim(line, " \t");
 	pipelines = parser_split(line, ';');
@@ -56,7 +57,11 @@ t_pipeline		**parser(char *line)
 	while (pipelines[i] != NULL)
 	{
 		if (ft_strchr(pipelines[i], '$'))
-			pipelines[i] = ft_env(pipelines[i]);
+		{
+			tmp = pipelines[i];
+			pipelines[i] = ft_env(tmp);
+			free(tmp);
+		}
 		split = parser_split(pipelines[i], '|');
 		parsed_line[i] = new_pipeline(split);
 		if (parsed_line[i]->cmds && g_status != -1)

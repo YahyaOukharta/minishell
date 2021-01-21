@@ -75,16 +75,16 @@ int			check_syntax(char *s)
 	s = ft_strtrim(s, " \t");
 	if (ft_strsearch(s, ';'))
 		if (check_multiple(s, pos) == 0)
-			return (0);
+			return ((int)free_and_return((void *)s, (void *)0));
 	if (ft_strsearch(s, '|'))
 		if (check_pipe_norm(s) == 0)
-			return (0);
+			return ((int)free_and_return((void *)s, (void *)0));
 	if (ft_strchr(s, '\"') || ft_strchr(s, '\''))
 		if (check_quotes_norm(s, &pos) == 0)
-			return (0);
+			return ((int)free_and_return((void *)s, (void *)0));
 	if (ft_strchr(s, '>') || ft_strchr(s, '<') || ft_strnstr(s, ">>",
 		(ft_strlen(s) < 3 ? 3 : ft_strlen(s))))
 		if (check_redir_norm(s) == 0)
-			return (0);
-	return (1);
+			return ((int)free_and_return((void *)s, (void *)0));
+	return ((int)free_and_return((void *)s, (void *)1));
 }

@@ -76,3 +76,6 @@ re: fclean all
 
 c: re
 	./$(NAME)
+
+n:
+	norminette $(SRCS) $(INCLUDES)

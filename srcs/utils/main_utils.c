@@ -35,19 +35,23 @@ int				ft_prompt(char **line)
 
 void			init_shell(char **env)
 {
-	char	*s;
+	char	s[1024];
 	t_env	*shlvl;
-
-	s = ft_calloc(1000, 1);
+	char	*t;
+	ft_bzero(s, 1000);
 	getcwd(s, 999);
 	init_environment(env);
 	shlvl = env_with_key("SHLVL");
 	set_env("PWD", s);
 	if (shlvl != NULL)
-		set_env("SHLVL", ft_itoa(ft_atoi(shlvl->value) + 1));
+	{
+		set_env("SHLVL", (t = ft_itoa(ft_atoi(shlvl->value) + 1)));
+		free(t);
+	}
 	else
 		set_env("SHLVL", "1");
-	set_env("_", ft_strjoin(s, "/minishell"));
+	set_env("_", (t = ft_strjoin(s, "/minishell")));
+	free(t);
 	init_builtins();
 	g_status = 0;
 	g_signal_c = 0;

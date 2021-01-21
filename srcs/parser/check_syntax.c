@@ -53,6 +53,7 @@ int			check_pipe(char *s)
 	int		v;
 	int		rt;
 	int		i;
+	char	*t;
 
 	i = -1;
 	rt = 0;
@@ -60,8 +61,10 @@ int			check_pipe(char *s)
 	v = 0;
 	while (split[++i] != NULL)
 	{
-		if (ft_strlen(ft_strtrim(split[i], " \t")) > 0 && has_alnum(split[i]))
+		if (ft_strlen((t = ft_strtrim(split[i], " \t"))) > 0
+			&& has_alnum(split[i]))
 			v++;
+		free(t);
 		free(split[i]);
 	}
 	free(split);
