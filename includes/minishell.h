@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 18:45:36 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/20 17:14:30 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:13:47 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@
 # define STDOUT 1
 # define STDIN  0
 # define STDERR 2
-# define QUOTE(x)   (x == '\'' || x == '\"') ? 1 : 0
-# define MAX(a , b) (a > b ? a : b)
-# define MIN(a , b) (a < b ? a : b)
 
 int					g_status;
 int					g_signal_c;
@@ -199,4 +196,7 @@ char				*ft_new_inside(char *s, int *start, char quote);
 int					escape(char *s, int pos);
 char				*ft_env(char *line);
 char				*append_n(char *s, char *line, int *i, int n);
+int					is_q(char x);
+int					min_v(int a, int b);
+int					max_v(int a, int b);
 #endif

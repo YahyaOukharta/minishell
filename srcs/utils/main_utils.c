@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:01 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/20 14:43:19 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:17:26 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int				ft_prompt(char **line)
 	ft_bzero(cwd, 1000);
 	getcwd(cwd, 1000);
 	ft_putstr_fd("\033[0;32m", STDERR);
-	if (g_signal_c == 1)
+	if (g_signal_c == 1 && g_signal_d != 0)
 	{
 		ft_putchar_fd('\r', STDERR);
 		g_signal_c = 0;

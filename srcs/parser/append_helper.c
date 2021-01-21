@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 16:20:47 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/20 16:32:27 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:13:32 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,19 @@ int			escape(char *s, int pos)
 	if (c % 2 != 0)
 		return (1);
 	return (0);
+}
+
+int			is_q(char x)
+{
+	return ((x == '\'' || x == '\"') ? 1 : 0);
+}
+
+int			max_v(int a, int b)
+{
+	return ((a > b ? a : b));
+}
+
+int			min_v(int a, int b)
+{
+	return ((a < b ? a : b));
 }

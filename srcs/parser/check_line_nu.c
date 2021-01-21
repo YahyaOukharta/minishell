@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:23:07 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/20 17:08:10 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:12:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			recur_new_inside(t_var *u, char *s, char **rt)
 	c = NULL;
 	tmp = NULL;
 	if ((u->in % 2 == 0) && s[u->i] != u->quote &&
-	QUOTE(s[u->i]) && !escape(s, u->i - 1))
+	is_q(s[u->i]) && !escape(s, u->i - 1))
 	{
 		c = ft_new_inside(s + u->i + 1, &u->i, s[u->i]);
 		tmp = ft_strdup(*rt);

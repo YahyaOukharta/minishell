@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:57:12 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/15 12:21:49 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:12:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_exp		inp(char *s)
 	in.dbl = 0;
 	while (s[i] != '\0')
 	{
-		while ((size_t)(i + 1) < ft_strlen(s) && QUOTE(s[i]))
+		while ((size_t)(i + 1) < ft_strlen(s) && is_q(s[i]))
 		{
 			end = i;
 			if (have_end(s + i, s[i], &end) && s[i] == '\'')
@@ -86,8 +86,8 @@ char		*ft_env(char *line)
 	ft_bzero(&in, sizeof(t_exp));
 	while (i < (int)ft_strlen(line) && line[i] != '\0')
 	{
-		while ((QUOTE(line[i]) && i == 0)
-			|| (i > 0 && line[i - 1] != '\\' && (QUOTE(line[i]))))
+		while ((is_q(line[i]) && i == 0)
+			|| (i > 0 && line[i - 1] != '\\' && (is_q(line[i]))))
 		{
 			in.dbl += (line[i] == '\"' ? 1 : 0);
 			in.sgl += (line[i] == '\'' ? 1 : 0);

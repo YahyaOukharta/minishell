@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:16:09 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/20 16:31:39 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:13:05 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char		*outside_quotes(char *s, int *start)
 	tmp = NULL;
 	while (i < (int)ft_strlen(s) && s[i])
 	{
-		if (QUOTE(s[i]) && have_end(s + i + 1, s[i], &end) && !escape(s, i - 1))
+		if (is_q(s[i]) && have_end(s + i + 1, s[i], &end) && !escape(s, i - 1))
 			rt = get_norm_inside(&i, s, rt);
 		else if (!ft_strchr(" <>\t", s[i]))
 			rt = outside_quotes_escape_helper(s, rt, &i);

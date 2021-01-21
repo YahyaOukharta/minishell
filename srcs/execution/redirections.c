@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:49:37 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/15 12:38:52 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:12:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*jump_redirection_sign(char *out)
 	s = NULL;
 	while (*out == '>' || *out == '<' || is_blank(*out))
 		out++;
-	if (QUOTE(*out))
+	if (is_q(*out))
 	{
 		quote = *out;
 		out++;

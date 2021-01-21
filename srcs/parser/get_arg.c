@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:29:27 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/12 18:57:36 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:12:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			fill_arg(char *line, t_arg *n, char **s)
 {
-	if (QUOTE(line[n->i]) && (n->in == 0))
+	if (is_q(line[n->i]) && (n->in == 0))
 		rarg_norm(line, &n->i, &n->end, &n->in);
 	if ((n->i == n->end + 1) && n->in == 1)
 	{
@@ -66,7 +66,7 @@ t_redir		get_tokens(char *s)
 	init_redir(&redir);
 	while ((size_t)i < ft_strlen(s) && s[i] != '\0')
 	{
-		if (QUOTE(s[i]) && (end = quote_ends(s + i + 1, s[i])))
+		if (is_q(s[i]) && (end = quote_ends(s + i + 1, s[i])))
 			quote_token(s, &i, &redir);
 		else if ((s[i] == '>' && s[i + 1] == '>') ||
 			s[i] == '>' || s[i] == '<')

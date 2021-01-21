@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:02:51 by youkhart          #+#    #+#             */
-/*   Updated: 2021/01/15 10:37:40 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:10:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	export_env(void)
 	env = g_env;
 	while (env != NULL)
 	{
-		if (!ft_strncmp(env->key, "_", MAX(1, ft_strlen(env->value))))
+		if (!ft_strncmp(env->key, "_", max_v(1, ft_strlen(env->value))))
 		{
 			i++;
 			env = env->next;

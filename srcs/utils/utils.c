@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youkhart <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:49 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/27 15:53:58 by youkhart         ###   ########.fr       */
+/*   Updated: 2021/01/21 10:10:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		string_equal(char *s1, char *s2)
 {
 	int res;
 
-	res = ft_strncmp(s1, s2, MAX(ft_strlen(s1), ft_strlen(s2)));
+	res = ft_strncmp(s1, s2, max_v(ft_strlen(s1), ft_strlen(s2)));
 	return (res == 0);
 }
 

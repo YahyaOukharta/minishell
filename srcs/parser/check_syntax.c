@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:52:20 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/18 09:53:18 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:12:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			has_alnum(char *s)
 
 	i = 0;
 	while (s[i] != '\0')
-		if (ft_isalnum(s[i++]) || QUOTE(s[i]))
+		if (ft_isalnum(s[i++]) || is_q(s[i]))
 			return (1);
 	return (0);
 }

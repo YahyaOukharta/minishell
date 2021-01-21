@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 10:28:43 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/10 18:30:14 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:12:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			quote_ends(char *s, char c)
 	int	i;
 
 	i = 0;
-	if (QUOTE(s[i]) && i == 0)
+	if (is_q(s[i]) && i == 0)
 		return (1);
 	while (s[i] != c && s[i] != '\0')
 		i++;

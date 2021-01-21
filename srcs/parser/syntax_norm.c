@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:39:29 by malaoui           #+#    #+#             */
-/*   Updated: 2021/01/10 18:01:03 by malaoui          ###   ########.fr       */
+/*   Updated: 2021/01/21 10:12:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			check_arg(char *s)
 		check_inc_arg(s, &i, &in);
 		while (s[i] != '\0')
 		{
-			if (ft_isalnum(s[i]) || (QUOTE(s[i]) && !escape(s, i - 1)))
+			if (ft_isalnum(s[i]) || (is_q(s[i]) && !escape(s, i - 1)))
 				return (0);
 			if ((s[i] == '>' || s[i] == '<' || ft_strncmp(s, ">>",
 				ft_strlen(s) < 3 ? 3 : ft_strlen(s)) == 0)
@@ -59,7 +59,7 @@ void		norm_quote(char *s, int *i, int *in, int *end)
 	char *tmp;
 
 	tmp = NULL;
-	if (*in == 0 && QUOTE(s[*i]))
+	if (*in == 0 && is_q(s[*i]))
 	{
 		*end = *i + 1;
 		if ((tmp = ft_new_inside(s + *i + 1, end, s[*i])))

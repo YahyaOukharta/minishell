@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tab_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youkhart <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 15:53:49 by youkhart          #+#    #+#             */
-/*   Updated: 2020/12/27 15:53:58 by youkhart         ###   ########.fr       */
+/*   Updated: 2021/01/21 10:10:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		exists_in_tab(char *s, char **tab)
 {
 	while (*tab)
 	{
-		if (!ft_strncmp(s, *tab, MAX(ft_strlen(s), ft_strlen(*tab))))
+		if (!ft_strncmp(s, *tab, max_v(ft_strlen(s), ft_strlen(*tab))))
 			return (1);
 		tab++;
 	}
@@ -43,7 +43,7 @@ int		index_of_in_tab(char *s, char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		if (!ft_strncmp(s, tab[i], MAX(ft_strlen(s), ft_strlen(tab[i]))))
+		if (!ft_strncmp(s, tab[i], max_v(ft_strlen(s), ft_strlen(tab[i]))))
 			return (i);
 		i++;
 	}
