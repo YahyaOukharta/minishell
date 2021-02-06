@@ -26,7 +26,7 @@ make
 
 ## Ressources
 
-_For a small documentation of our minishell, please refer to the [Wiki][wiki]._
+For a small documentation of our minishell, please refer to the [wiki](https://github.com/YahyaOukharta/The-minishell/wiki) .
 
 * https://brennan.io/2015/01/16/write-a-shell-in-c/
 * https://stackoverflow.com/questions/8082932/connecting-n-commands-with-pipes-in-a-shell
@@ -35,4 +35,5 @@ _For a small documentation of our minishell, please refer to the [Wiki][wiki]._
 ## Authors
 
 Yahya Oukharta – https://github.com/YahyaOukharta
-Mohamed Alaoui – https://github.com/
+
+Mohammed Alaoui – https://github.com/illusionist99
