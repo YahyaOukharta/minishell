@@ -1,4 +1,4 @@
-# Minishell
+# minishell
 > As beautiful as a shell
 
 ## Requirements
